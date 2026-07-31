@@ -1,0 +1,48 @@
+#+TITLE: Module 1: Introduction to Data Structures and Algorithms
+#+SUBTITLE: Moodle Lesson Source
+#+AUTHOR: Prof. Antigravity
+#+OPTIONS: toc:nil num:t html-postamble:nil
+
+* Page 1: Overview & Learning Objectives
+
+Welcome to *Module 1*! In this module, you will learn the foundational principles of computer science data structures.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Key Learning Objectives:</strong>
+  <ul>
+    <li>Understand asymptotic notation (\(\mathcal{O}, \Omega, \Theta\)).</li>
+    <li>Analyze array vs. linked list memory trade-offs.</li>
+    <li>Implement basic stack and queue operations.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+* Page 2: Asymptotic Analysis
+
+** Big-O Notation Definition
+We say that \(f(n) = \mathcal{O}(g(n))\) if there exist positive constants \(c\) and \(n_0\) such that:
+
+\[
+0 \le f(n) \le c \cdot g(n) \quad \text{for all } n \ge n_0.
+\]
+
+** Code Example: Constant vs Linear Time
+#+BEGIN_SRC python
+def get_first_element(arr):
+    # O(1) Constant Time
+    return arr[0] if arr else None
+
+def find_element(arr, target):
+    # O(n) Linear Time
+    for item in arr:
+        if item == target:
+            return True
+    return False
+#+END_SRC
+
+* Page 3: Summary & Knowledge Check
+
+Before moving to the quiz, make sure you can answer these check questions:
+1. What is the main drawback of fixed-size arrays?
+2. Why does appending to a dynamic array have an *amortized* \(\mathcal{O}(1)\) time complexity?

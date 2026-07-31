@@ -1,0 +1,52 @@
+#+TITLE: Apresentação da Disciplina: Programação de Aplicativos Mobile II (PAM II)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Programação de Aplicativos Mobile II (PAM II)*!
+
+Esta disciplina integra o *Módulo III - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Desenvolvimento de sistemas móveis avançados e integrados.<br>
+  <strong>Carga Horária Total:</strong> 100 horas-aula (80 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Desenvolver aplicativos mobile avançados com armazenamento de dados e publicação.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Elaborar aplicativos mobile com acesso a bancos de dados locais (SQLite/Room) e nuvem.
+- Integrar aplicativos móveis a APIs RESTful e plataformas BaaS.
+- Preparar artefatos e compilar builds para publicação nas lojas virtuais (Play Store / App Store).
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Persistência de Dados Mobile (Armazenamento local, SQLite, Room, Datastore e sincronização em nuvem).
+** 2. Integração de Apps (Consumo de APIs RESTful, Autenticação OAuth2, Push Notifications).
+** 3. Práticas e Publicação (Depuração avançada, testes automatizados e geração de pacotes APK/AAB/IPA para publicação).
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

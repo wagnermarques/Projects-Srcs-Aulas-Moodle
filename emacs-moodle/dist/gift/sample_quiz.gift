@@ -1,0 +1,42 @@
+$CATEGORY: Computer Science/Algorithms
+
+::Time Complexity of Binary Search:: What is the worst-case time complexity of running a *Binary Search* algorithm on a sorted array of \(n\) elements? {
+  =\(\mathcal{O}(\log n)\) #Correct! Halving the search space at each step gives logarithmic time.
+  ~\(\mathcal{O}(n)\) #Incorrect. \(\mathcal{O}(n)\) is the complexity of Linear Search.
+  ~\(\mathcal{O}(n \log n)\) #Incorrect. \(\mathcal{O}(n \log n)\) is the typical complexity of efficient sorting algorithms like Merge Sort.
+  ~\(\mathcal{O}(1)\) #Incorrect. Constant time is achieved by direct array index lookup or hash tables.
+}
+
+
+$CATEGORY: Computer Science/Algorithms
+
+::P vs NP Problem Definition:: The class **NP** consists of all decision problems that can be *verified* in polynomial time by a deterministic Turing Machine. {TRUE}
+
+
+$CATEGORY: Computer Science/Algorithms
+
+::Python Keyword for Function Definition:: What is the exact 3-letter keyword used in Python to define a new function? {
+  =def #Correct! `def` defines functions in Python.
+}
+
+
+$CATEGORY: Computer Science/Algorithms
+
+::Programming Paradigms and Languages:: Match each programming language to its primary paradigm: {
+  =Haskell -> Functional Programming
+  =Prolog -> Logic Programming
+  =Java -> Object-Oriented Programming
+  =C -> Imperative / Procedural Programming
+}
+
+
+$CATEGORY: Computer Science/Algorithms
+
+::Speed of Light Constant:: What is the speed of light in a vacuum in millions of meters per second (approx. \(299.79\))? {
+  =#299.79:5.0 #Correct! The speed of light \(c \approx 299,792,458\text{ m/s}\).
+}
+
+
+$CATEGORY: Mathematics/Calculus
+
+::Fundamental Theorem of Calculus Explanation:: Explain the relationship between differentiation and integration as expressed by the *Fundamental Theorem of Calculus*. Include both Part 1 and Part 2 in your answer. {}

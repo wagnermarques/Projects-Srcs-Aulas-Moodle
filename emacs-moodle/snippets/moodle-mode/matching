@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Matching Question
+# key: matching
+# --
+** [MATCH] ${1:Matching Question Title}
+:PROPERTIES:
+:TYPE: matching
+:DEFAULTGRADE: 1.0
+:END:
+${2:Match each item on the left with its corresponding answer on the right:}
+
+- ${3:Left Item 1} :: ${4:Right Match 1}
+- ${5:Left Item 2} :: ${6:Right Match 2}
+- ${7:Left Item 3} :: ${8:Right Match 3}

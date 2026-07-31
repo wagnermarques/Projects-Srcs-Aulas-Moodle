@@ -1,0 +1,55 @@
+#+TITLE: Apresentação da Disciplina: Bancos de Dados II (BD II)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Bancos de Dados II (BD II)*!
+
+Esta disciplina integra o *Módulo II - Qualificação Profissional de Auxiliar em Desenvolvimento de Sistemas* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Aplicação com modelos de bancos de dados não relacionais (NoSQL).<br>
+  <strong>Carga Horária Total:</strong> 60 horas-aula (50 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Utilizar os diversos modelos de dados não relacionais em contraste com o modelo relacional.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Selecionar modelos de armazenamento adequados a cada problema de software.
+- Operar bancos de dados orientados a documentos (ex: MongoDB).
+- Operar bancos de dados colunares (ex: Cassandra) e chave-valor (ex: Redis).
+- Implementar estratégias de persistência NoSQL em aplicações modernizadas.
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Fundamentos NoSQL (Terminologia, Teorema CAP, Consistência Eventual vs ACID).
+** 2. Banco de Dados de Documentos (MongoDB: Coleções, Documentos BSON, Queries, Agregações, CRUD).
+** 3. Banco de Dados Colunar e Chave-Valor (Cassandra e Redis: Arquitetura, modelagem e cache).
+** 4. Outras Arquiteturas Notáveis (Bancos em Grafos, Armazenamento de Objetos S3/MinIO, Search Engines/Elasticsearch).
+** 5. Comparativo Prático: Quando utilizar bancos Relacionais vs NoSQL.
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

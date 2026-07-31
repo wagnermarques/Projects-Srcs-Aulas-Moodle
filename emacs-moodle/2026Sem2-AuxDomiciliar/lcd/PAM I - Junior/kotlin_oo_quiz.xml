@@ -1,0 +1,679 @@
+<?xml version="1.0" ?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Kotlin/Orientacao_A_Objetos</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Conceito de Classe e Objeto em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é a relação correta entre uma **Classe** e um **Objeto** na programação orientada a objetos?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[A Classe é o molde/modelo abstrato, enquanto o Objeto é a instância concreta criada a partir desse molde.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! A classe especifica a estrutura e o objeto é a instância em memória.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[O Objeto é o código fonte e a Classe é a variável executada em tempo de compilação.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. O objeto é uma instância em tempo de execução.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[A Classe só pode conter métodos estáticos e o Objeto armazena apenas dados sem métodos.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Classes Kotlin contêm atributos e métodos.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Não há diferença entre Classe e Objeto em Kotlin.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. São conceitos distintos.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Modificador de Herança Padrão em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Em Kotlin, todas as classes são `open` por padrão, permitindo herança direta sem necessidade de palavras-chave adicionais.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="0">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto! Em Kotlin, todas as classes são `final` por padrão para garantir segurança e imutabilidade.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! É necessário declarar a classe com a palavra-chave `open` para permitir que ela seja herdada.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Declaração de Propriedade Imutável</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é a palavra-chave usada em Kotlin para declarar uma propriedade de apenas leitura (imutável)?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>val</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `val` declara valores imutáveis (somente leitura).]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Diferença entre val e var no Construtor Primário</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual a diferença fundamental entre declarar uma propriedade no construtor com `val` versus `var`?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[`val` gera apenas o &lt;strong&gt;getter&lt;/strong&gt; (somente leitura), enquanto `var` gera &lt;strong&gt;getter&lt;/strong&gt; e &lt;strong&gt;setter&lt;/strong&gt; (leitura e escrita).]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `val` torna a propriedade imutável externamente.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[`val` pode ter seu valor alterado a qualquer momento, mas `var` é constante.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. O comportamento é exatamente o inverso.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[`val` só funciona para números inteiros e `var` para textos (Strings).]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Ambos funcionam com qualquer tipo de dado.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[`var` elimina a necessidade de inicializar a variável.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Variáveis em Kotlin devem ser inicializadas.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Modificadores de Acesso em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Associe cada modificador de acesso ao seu alcance de visibilidade em Kotlin:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[public]]></text>
+      <answer>
+        <text>Visível em qualquer lugar do projeto (padrão)</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[private]]></text>
+      <answer>
+        <text>Visível apenas dentro da própria classe</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[protected]]></text>
+      <answer>
+        <text>Visível na classe declarante e em suas subclasses</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[internal]]></text>
+      <answer>
+        <text>Visível apenas dentro do mesmo módulo do projeto</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Permitindo Herança de Métodos</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Além de marcar a classe como `open`, o que deve ser feito para permitir que um método específico seja sobrescrito por subclasses?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[O método também deve ser marcado explicitamente com a palavra-chave `open`.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Em Kotlin, métodos são `final` por padrão a menos que sejam marcados como `open`.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[O método deve ser marcado como `private`.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Métodos privados não podem ser sobrescritos.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Nada, pois todos os métodos de uma classe `open` podem ser sobrescritos automaticamente.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Os métodos também precisam do modificador `open`.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[O método deve ser estático.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Recursos das Data Classes</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Uma `data class` em Kotlin gera automaticamente os métodos `equals()`, `hashCode()`, `toString()` e `copy()`.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O Kotlin gera automaticamente todos esses métodos utilitários para data classes.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Esses métodos são gerados automaticamente pelo compilador.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Encapsulamento do Setter de uma Propriedade</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Como permitimos que o saldo de uma conta bancária seja lido por qualquer código, mas alterado apenas internamente pela própria classe?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Declarando `var saldo: Double = 0.0` seguido de `private set`.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Isso mantém o getter público e restringe o setter como privado.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Declarando a variável como `private val saldo`.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Isso impediria a leitura externa do saldo.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Usando a palavra-chave `protected var saldo`.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. `protected` permite alteração por subclasses.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Não é possível fazer isso em Kotlin.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. A sintaxe `private set` é nativa em Kotlin.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Sobrescrita de Métodos em Subclasses</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual palavra-chave obrigatória deve anteceder a declaração de um método em uma subclasse ao redefinir a implementação da classe mãe?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>override</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O modificador `override` é obrigatório ao sobrescrever membros em Kotlin.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Os 4 Pilares da POO - Encapsulamento</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual pilar da POO é diretamente aplicado ao ocultar os detalhes de implementação de um objeto e proteger seus dados internos?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Encapsulamento]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O encapsulamento protege os dados e esconde os detalhes internos.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Polimorfismo]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Polimorfismo se refere à capacidade de tratar objetos de diferentes formas.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Herança]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Herança compartilha código entre superclasse e subclasse.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Compilação]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Compilação é uma etapa do ciclo de desenvolvimento, não um pilar da POO.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Os 4 Pilares da Programação Orientada a Objetos</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Associe cada pilar da POO à sua definição correspondente:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[Abstração]]></text>
+      <answer>
+        <text>Focar apenas nos aspectos essenciais da entidade do mundo real</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Encapsulamento]]></text>
+      <answer>
+        <text>Proteger o estado interno do objeto expondo apenas métodos seguros</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Herança]]></text>
+      <answer>
+        <text>Reutilizar atributos e comportamentos de uma classe base</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Polimorfismo]]></text>
+      <answer>
+        <text>Tratar objetos de classes distintas através de um tipo comum</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Implementações Padrão em Interfaces</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Em Kotlin, uma `interface` pode conter a implementação padrão de um método com corpo.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Em Kotlin, interfaces podem ter métodos com implementações padrão.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Interfaces em Kotlin aceitam métodos com corpo/implementação padrão.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Escopo do Modificador Internal</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é a visibilidade exata fornecida pelo modificador `internal` em Kotlin?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Visível para qualquer código compilado dentro do mesmo módulo do projeto.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O escopo de `internal` é o módulo (conjunto de arquivos compilados juntos).]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Visível apenas dentro do mesmo arquivo .kt.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Isso seria equivalente a `private` no nível do arquivo.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Visível para qualquer projeto no mesmo computador.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Visível apenas para classes herdadas.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Esse é o papel do `protected`.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="numerical">
+    <name>
+      <text>Quantidade Mínima de Parâmetros em Data Class</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é o número mínimo de parâmetros que o construtor primário de uma `data class` em Kotlin deve ter?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>1</text>
+      <tolerance>0.0</tolerance>
+      <feedback format="html">
+        <text><![CDATA[Correto! Uma `data class` precisa de pelo menos 1 parâmetro no construtor primário (marcado com `val` ou `var`).]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Método copy() em Data Classes</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Para que serve o método `copy()` em uma `data class` em Kotlin?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Permite criar uma nova instância alterando seletivamente apenas algumas propriedades e mantendo as demais.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O método `copy()` aceita parâmetros nomeados para imutabilidade conveniente.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Apaga o objeto original da memória RAM.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Copia o arquivo fonte da classe para outro pacote.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Converte a classe para um arquivo JSON.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Operador `new` em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Assim como em Java e C++, em Kotlin é obrigatório utilizar a palavra-chave `new` ao instanciar um novo objeto.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="0">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto! Kotlin não possui a palavra-chave `new`. Objetos são instanciados invocando a classe como uma função.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Em Kotlin instanciamos objetos diretamente, como `Pessoa()`.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Declaração de Classe Abstrata</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual palavra-chave é usada para definir uma classe que não pode ser instanciada diretamente e serve como base estrutural?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>abstract</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `abstract` define classes abstratas em Kotlin.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Erro de Compilação ao Herdar sem Modificador</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[O que acontece se você tentar criar a subclasse `class Carro : Veiculo()` onde `Veiculo` é uma classe normal declarada sem o modificador `open`?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Ocorre um erro de compilação informando que a classe `Veiculo` é final e não pode ser herdada.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Sem `open`, a classe é final por padrão.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[O código compila com um aviso, mas funciona em tempo de execução.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. É um erro de compilação estrito.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[A subclasse é ignorada no tempo de execução.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[O Kotlin converte a classe automaticamente em uma interface.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Tipos de Classes Especiais em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Associe o tipo especial de classe à sua finalidade em Kotlin:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[data class]]></text>
+      <answer>
+        <text>Classe para armazenar dados com métodos equals/hashCode/copy gerados automaticamente</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[abstract class]]></text>
+      <answer>
+        <text>Classe base que não pode ser instanciada e pode conter membros abstratos</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[open class]]></text>
+      <answer>
+        <text>Classe normal liberada para permitir herança por outras subclasses</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[interface]]></text>
+      <answer>
+        <text>Contrato de métodos e propriedades que podem ser implementados por múltiplas classes</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="essay">
+    <name>
+      <text>Vantagens do Design de Orientação a Objetos em Kotlin</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Descreva com suas palavras as principais vantagens da sintaxe de Orientação a Objetos em Kotlin em comparação com linguagens tradicionais. Cite o papel da imutabilidade por padrão (`val`), ausência do operador `new` e geradores automáticos (`data class`).]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>5.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <responseformat>editor</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>15</responsefieldlines>
+    <attachments>0</attachments>
+  </question>
+</quiz>

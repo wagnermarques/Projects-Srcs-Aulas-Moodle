@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: MCQ Question
+# key: mcq
+# --
+** [MCQ] ${1:Question Title}
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: ${2:true}
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:END:
+${3:Question text / prompt...}
+
+- [X] ${4:Correct Option} :: ${5:Feedback for correct answer.}
+- [ ] ${6:Distractor 1} :: ${7:Feedback for distractor 1.}
+- [ ] ${8:Distractor 2} :: ${9:Feedback for distractor 2.}

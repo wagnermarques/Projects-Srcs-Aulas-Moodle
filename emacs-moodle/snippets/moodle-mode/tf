@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: True/False Question
+# key: tf
+# --
+** [TF] ${1:True/False Question Title}
+:PROPERTIES:
+:TYPE: truefalse
+:DEFAULTGRADE: 1.0
+:END:
+${2:Statement to evaluate as True or False.}
+
+- [X] ${3:True} :: ${4:Feedback when answered True.}
+- [ ] ${5:False} :: ${6:Feedback when answered False.}

@@ -1,0 +1,199 @@
+#+TITLE: Aula: Orientação a Objetos em Kotlin
+#+SUBTITLE: Conceitos Fundamentais, Pilares e Exemplos Práticos
+#+AUTHOR: Prof. Wagner
+#+DATE: 2026-07-30
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Introdução à Programação Orientada a Objetos (POO)
+
+A **Programação Orientada a Objetos (POO)** é um paradigma de programação que organiza o código em torno de **Objetos**, que representam entidades do mundo real encapsulando dados (atributos/propriedades) e comportamentos (métodos/funções).
+
+Em **Kotlin**, a POO é moderna, concisa e segura por padrão:
+- As propriedades geram automaticamente *getters* e *setters*.
+- Classes são `final` por padrão (promovendo imutabilidade e design seguro).
+- Recursos como =data class= e =sealed class= eliminam código repetitivo (*boilerplate*).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Os 4 Pilares da POO:</strong>
+  <ul>
+    <li><strong>Abstração:</strong> Modelar apenas os aspectos relevantes do mundo real.</li>
+    <li><strong>Encapsulamento:</strong> Proteger os dados internos contra acessos indevidos.</li>
+    <li><strong>Herança:</strong> Reutilizar e estender código de classes existentes.</li>
+    <li><strong>Polimorfismo:</strong> Tratar objetos de classes diferentes de forma unificada.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+---
+
+* 1. Classes, Objetos e Propriedades
+
+Uma **Classe** é o molde (blueprint), e um **Objeto** é a instância concreta desse molde.
+
+**Sintaxe Básica em Kotlin:**
+#+BEGIN_SRC kotlin
+// Classe com Construtor Primário e propriedades
+class Pessoa(
+    val cpf: String,         // val = Imutável (Apenas Leitura / Getter)
+    var nome: String,        // var = Mutável (Read/Write / Getter e Setter)
+    var idade: Int
+) {
+    // Método da classe
+    fun apresentar() {
+        println("Olá! Meu nome é $nome, tenho $idade anos e CPF: $cpf.")
+    }
+}
+
+fun main() {
+    // Instanciando um objeto (sem a palavra 'new' em Kotlin)
+    val pessoa1 = Pessoa("123.456.789-00", "João Silva", 28)
+    pessoa1.apresentar()
+}
+#+END_SRC
+
+---
+
+* 2. Encapsulamento e Modificadores de Acesso
+
+O **Encapsulamento** esconde os detalhes internos da classe e expõe apenas o necessário através de uma interface pública segura.
+
+**Modificadores de Acesso em Kotlin:**
+- =public= (padrão): Acessível de qualquer lugar.
+- =private=: Acessível apenas dentro da própria classe.
+- =protected=: Acessível na classe e em suas subclasses.
+- =internal=: Acessível apenas dentro do mesmo módulo do projeto.
+
+**Exemplo com Getters/Setters Customizados:**
+#+BEGIN_SRC kotlin
+class ContaBancaria(
+    val numeroConta: String,
+    val titular: String
+) {
+    // O saldo só pode ser lido externamente (public get), mas alterado apenas internamente (private set)
+    var saldo: Double = 0.0
+        private set
+
+    fun depositar(valor: Double) {
+        require(valor > 0) { "O valor do depósito deve ser positivo." }
+        saldo += valor
+        println("Depósito de R$$valor realizado. Saldo atual: R$$saldo")
+    }
+
+    fun sacar(valor: Double): Boolean {
+        if (valor > 0 && saldo >= valor) {
+            saldo -= valor
+            println("Saque de R$$valor realizado. Saldo restante: R$$saldo")
+            return true
+        }
+        println("Saque recusado: Saldo insuficiente.")
+        return false
+    }
+}
+#+END_SRC
+
+---
+
+* 3. Herança (=open class= e =override=)
+
+Em Kotlin, todas as classes são =final= por padrão. Para permitir que uma classe seja herdada, devemos marcou-a explicitamente com o modificador =open=.
+
+**Exemplo de Herança:**
+#+BEGIN_SRC kotlin
+// Classe Mãe (Superclasse) marcada como 'open'
+open class Funcionario(
+    val nome: String,
+    val cpf: String,
+    var salarioBase: Double
+) {
+    // Método que pode ser sobrescrito deve ser 'open'
+    open fun calcularBonificacao(): Double {
+        return salarioBase * 0.10 // 10% de bônus padrão
+    }
+}
+
+// Classe Filha (Subclasse) herdando de Funcionario
+class Gerente(
+    nome: String,
+    cpf: String,
+    salarioBase: Double,
+    val setor: String
+) : Funcionario(nome, cpf, salarioBase) {
+
+    // Sobrescrita do método da superclasse usando 'override'
+    override fun calcularBonificacao(): Double {
+        return salarioBase * 0.20 + 500.0 // 20% de bônus + R$500 fixos
+    }
+}
+#+END_SRC
+
+---
+
+* 4. Abstração, Interfaces e Polimorfismo
+
+**Classes Abstratas (=abstract class=)** não podem ser instanciadas diretamente e servem como base estrutural.
+**Interfaces (=interface=)** definem contratos que as classes devem cumprir.
+
+**Exemplo Prático com Polimorfismo:**
+#+BEGIN_SRC kotlin
+interface Tributavel {
+    fun calcularImposto(): Double
+}
+
+abstract class Veiculo(
+    val marca: String,
+    val modelo: String,
+    val ano: Int
+) {
+    abstract fun acelerar()
+}
+
+class Carro(marca: String, modelo: String, ano: Int, val potenciaCv: Int) 
+    : Veiculo(marca, modelo, ano), Tributavel {
+
+    override fun acelerar() {
+        println("O carro $modelo acelerou com $potenciaCv CV de potência!")
+    }
+
+    override fun calcularImposto(): Double {
+        return 1200.0 // Valor simulado do IPVA
+    }
+}
+
+// Polimorfismo em ação: tratando instâncias via interface comum
+fun processarImposto(item: Tributavel) {
+    println("Imposto a pagar: R$${item.calcularImposto()}")
+}
+#+END_SRC
+
+---
+
+* 5. Recursos Poderosos do Kotlin para POO
+
+**Data Classes:** Perfeitas para modelar objetos de transferência de dados (DTOs).
+#+BEGIN_SRC kotlin
+// Gera automaticamente: equals(), hashCode(), toString(), copy() e componentN()
+data class Produto(val id: Long, val nome: String, val preco: Double)
+
+fun main() {
+    val p1 = Produto(1, "Notebook", 4500.00)
+    val p2 = p1.copy(preco = 4200.00) // Copia alterando apenas o preço
+    println(p1) // Output: Produto(id=1, nome=Notebook, preco=4500.0)
+    println(p2) // Output: Produto(id=1, nome=Notebook, preco=4200.0)
+}
+#+END_SRC
+
+---
+
+* 6. Resumo e Exercícios de Fixação
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Por que em Kotlin precisamos usar a palavra <code>open</code> em uma classe para permitir herança?</li>
+    <li>Qual a diferença entre declarações com <code>val</code> e <code>var</code> no construtor primário?</li>
+    <li>O que a palavra-chave <code>data class</code> gera automaticamente em segundo plano?</li>
+  </ol>
+</div>
+#+END_EXPORT

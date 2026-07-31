@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-07-30 qui 22:57 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aula: Orientação a Objetos em Kotlin</title>
+<meta name="author" content="Prof. Wagner" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Aula: Orientação a Objetos em Kotlin
+<br />
+<span class="subtitle">Conceitos Fundamentais, Pilares e Exemplos Práticos</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org6cd5e21">1. Introdução à Programação Orientada a Objetos (POO)</a></li>
+<li><a href="#orgaa736b3">2. 1. Classes, Objetos e Propriedades</a></li>
+<li><a href="#org2eed4b1">3. 2. Encapsulamento e Modificadores de Acesso</a></li>
+<li><a href="#org25b0789">4. 3. Herança (<code>open class</code> e <code>override</code>)</a></li>
+<li><a href="#org320131b">5. 4. Abstração, Interfaces e Polimorfismo</a></li>
+<li><a href="#org4783d08">6. 5. Recursos Poderosos do Kotlin para POO</a></li>
+<li><a href="#org1089072">7. 6. Resumo e Exercícios de Fixação</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6cd5e21" class="outline-2">
+<h2 id="org6cd5e21"><span class="section-number-2">1.</span> Introdução à Programação Orientada a Objetos (POO)</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+A <b><b>Programação Orientada a Objetos (POO)</b></b> é um paradigma de programação que organiza o código em torno de <b><b>Objetos</b></b>, que representam entidades do mundo real encapsulando dados (atributos/propriedades) e comportamentos (métodos/funções).
+</p>
+
+<p>
+Em <b><b>Kotlin</b></b>, a POO é moderna, concisa e segura por padrão:
+</p>
+<ul class="org-ul">
+<li>As propriedades geram automaticamente <b>getters</b> e <b>setters</b>.</li>
+<li>Classes são `final` por padrão (promovendo imutabilidade e design seguro).</li>
+<li>Recursos como <code>data class</code> e <code>sealed class</code> eliminam código repetitivo (<b>boilerplate</b>).</li>
+</ul>
+
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Os 4 Pilares da POO:</strong>
+  <ul>
+    <li><strong>Abstração:</strong> Modelar apenas os aspectos relevantes do mundo real.</li>
+    <li><strong>Encapsulamento:</strong> Proteger os dados internos contra acessos indevidos.</li>
+    <li><strong>Herança:</strong> Reutilizar e estender código de classes existentes.</li>
+    <li><strong>Polimorfismo:</strong> Tratar objetos de classes diferentes de forma unificada.</li>
+  </ul>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-orgaa736b3" class="outline-2">
+<h2 id="orgaa736b3"><span class="section-number-2">2.</span> 1. Classes, Objetos e Propriedades</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Uma <b><b>Classe</b></b> é o molde (blueprint), e um <b><b>Objeto</b></b> é a instância concreta desse molde.
+</p>
+
+<p>
+<b><b>Sintaxe Básica em Kotlin:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">// Classe com Construtor Primário e propriedades
+class Pessoa(
+    val cpf: String,         // val = Imutável (Apenas Leitura / Getter)
+    var nome: String,        // var = Mutável (Read/Write / Getter e Setter)
+    var idade: Int
+) {
+    // Método da classe
+    fun apresentar() {
+        println("Olá! Meu nome é $nome, tenho $idade anos e CPF: $cpf.")
+    }
+}
+
+fun main() {
+    // Instanciando um objeto (sem a palavra 'new' em Kotlin)
+    val pessoa1 = Pessoa("123.456.789-00", "João Silva", 28)
+    pessoa1.apresentar()
+}
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org2eed4b1" class="outline-2">
+<h2 id="org2eed4b1"><span class="section-number-2">3.</span> 2. Encapsulamento e Modificadores de Acesso</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+O <b><b>Encapsulamento</b></b> esconde os detalhes internos da classe e expõe apenas o necessário através de uma interface pública segura.
+</p>
+
+<p>
+<b><b>Modificadores de Acesso em Kotlin:</b></b>
+</p>
+<ul class="org-ul">
+<li><code>public</code> (padrão): Acessível de qualquer lugar.</li>
+<li><code>private</code>: Acessível apenas dentro da própria classe.</li>
+<li><code>protected</code>: Acessível na classe e em suas subclasses.</li>
+<li><code>internal</code>: Acessível apenas dentro do mesmo módulo do projeto.</li>
+</ul>
+
+<p>
+<b><b>Exemplo com Getters/Setters Customizados:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">class ContaBancaria(
+    val numeroConta: String,
+    val titular: String
+) {
+    // O saldo só pode ser lido externamente (public get), mas alterado apenas internamente (private set)
+    var saldo: Double = 0.0
+        private set
+
+    fun depositar(valor: Double) {
+        require(valor &gt; 0) { "O valor do depósito deve ser positivo." }
+        saldo += valor
+        println("Depósito de R$$valor realizado. Saldo atual: R$$saldo")
+    }
+
+    fun sacar(valor: Double): Boolean {
+        if (valor &gt; 0 &amp;&amp; saldo &gt;= valor) {
+            saldo -= valor
+            println("Saque de R$$valor realizado. Saldo restante: R$$saldo")
+            return true
+        }
+        println("Saque recusado: Saldo insuficiente.")
+        return false
+    }
+}
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org25b0789" class="outline-2">
+<h2 id="org25b0789"><span class="section-number-2">4.</span> 3. Herança (<code>open class</code> e <code>override</code>)</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Em Kotlin, todas as classes são <code>final</code> por padrão. Para permitir que uma classe seja herdada, devemos marcou-a explicitamente com o modificador <code>open</code>.
+</p>
+
+<p>
+<b><b>Exemplo de Herança:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">// Classe Mãe (Superclasse) marcada como 'open'
+open class Funcionario(
+    val nome: String,
+    val cpf: String,
+    var salarioBase: Double
+) {
+    // Método que pode ser sobrescrito deve ser 'open'
+    open fun calcularBonificacao(): Double {
+        return salarioBase * 0.10 // 10% de bônus padrão
+    }
+}
+
+// Classe Filha (Subclasse) herdando de Funcionario
+class Gerente(
+    nome: String,
+    cpf: String,
+    salarioBase: Double,
+    val setor: String
+) : Funcionario(nome, cpf, salarioBase) {
+
+    // Sobrescrita do método da superclasse usando 'override'
+    override fun calcularBonificacao(): Double {
+        return salarioBase * 0.20 + 500.0 // 20% de bônus + R$500 fixos
+    }
+}
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org320131b" class="outline-2">
+<h2 id="org320131b"><span class="section-number-2">5.</span> 4. Abstração, Interfaces e Polimorfismo</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+<b><b>Classes Abstratas (<code>abstract class</code>)</b></b> não podem ser instanciadas diretamente e servem como base estrutural.
+<b><b>Interfaces (<code>interface</code>)</b></b> definem contratos que as classes devem cumprir.
+</p>
+
+<p>
+<b><b>Exemplo Prático com Polimorfismo:</b></b>
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">interface Tributavel {
+    fun calcularImposto(): Double
+}
+
+abstract class Veiculo(
+    val marca: String,
+    val modelo: String,
+    val ano: Int
+) {
+    abstract fun acelerar()
+}
+
+class Carro(marca: String, modelo: String, ano: Int, val potenciaCv: Int) 
+    : Veiculo(marca, modelo, ano), Tributavel {
+
+    override fun acelerar() {
+        println("O carro $modelo acelerou com $potenciaCv CV de potência!")
+    }
+
+    override fun calcularImposto(): Double {
+        return 1200.0 // Valor simulado do IPVA
+    }
+}
+
+// Polimorfismo em ação: tratando instâncias via interface comum
+fun processarImposto(item: Tributavel) {
+    println("Imposto a pagar: R$${item.calcularImposto()}")
+}
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org4783d08" class="outline-2">
+<h2 id="org4783d08"><span class="section-number-2">6.</span> 5. Recursos Poderosos do Kotlin para POO</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<b><b>Data Classes:</b></b> Perfeitas para modelar objetos de transferência de dados (DTOs).
+</p>
+<div class="org-src-container">
+<pre class="src src-kotlin">// Gera automaticamente: equals(), hashCode(), toString(), copy() e componentN()
+data class Produto(val id: Long, val nome: String, val preco: Double)
+
+fun main() {
+    val p1 = Produto(1, "Notebook", 4500.00)
+    val p2 = p1.copy(preco = 4200.00) // Copia alterando apenas o preço
+    println(p1) // Output: Produto(id=1, nome=Notebook, preco=4500.0)
+    println(p2) // Output: Produto(id=1, nome=Notebook, preco=4200.0)
+}
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org1089072" class="outline-2">
+<h2 id="org1089072"><span class="section-number-2">7.</span> 6. Resumo e Exercícios de Fixação</h2>
+<div class="outline-text-2" id="text-7">
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Por que em Kotlin precisamos usar a palavra <code>open</code> em uma classe para permitir herança?</li>
+    <li>Qual a diferença entre declarações com <code>val</code> e <code>var</code> no construtor primário?</li>
+    <li>O que a palavra-chave <code>data class</code> gera automaticamente em segundo plano?</li>
+  </ol>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,57 @@
+#+TITLE: Apresentação da Disciplina: Projetos de Tecnologia da Informação e Comunicação (PTIC)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Projetos de Tecnologia da Informação e Comunicação (PTIC)*!
+
+Esta disciplina integra o *Módulo I - Sem Certificação Técnica* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Operação de sistemas informatizados básicos e especialistas e execução de atividades essenciais em computação.<br>
+  <strong>Carga Horária Total:</strong> 100 horas-aula (80 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Gerenciar e organizar arquivos e informações digitais de forma segura e eficiente.
+- Solucionar problemas utilizando os pilares do pensamento computacional.
+- Desenvolver soluções práticas explorando ferramentas de Inteligência Artificial Generativa (IAGen).
+- Utilizar ferramentas digitais e tecnologias específicas para otimizar processos e comunicação.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Utilizar métodos eficazes para organização e segurança de arquivos em dispositivos locais e em nuvem.
+- Decompor problemas complexos, reconhecer padrões, aplicar abstração e elaborar algoritmos.
+- Correlacionar o funcionamento da IA Generativa com IA Tradicional e utilizar ferramentas como ChatGPT/DALL-E.
+- Avaliar e selecionar aplicativos digitais para solucionar problemas e otimizar processos.
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Gerenciamento de Arquivos e Aplicativos de Produtividade (Arquivos, backups, ABNT, planilhas, apresentações).
+** 2. Pensamento Computacional (Pilares: Decomposição, Reconhecimento de Padrões, Abstração e Algoritmos).
+** 3. Inteligência Artificial Generativa (Introdução à IA/IAGen, geração de textos e imagens, ética e impactos sociais).
+** 4. Projetos Práticos Integradores de IAGen e Produtividade.
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

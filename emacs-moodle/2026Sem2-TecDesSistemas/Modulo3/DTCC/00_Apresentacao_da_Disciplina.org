@@ -1,0 +1,54 @@
+#+TITLE: Apresentação da Disciplina: Desenvolvimento do Trabalho de Conclusão de Curso (DTCC)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Desenvolvimento do Trabalho de Conclusão de Curso (DTCC)*!
+
+Esta disciplina integra o *Módulo III - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Desenvolvimento, implementação e gerenciamento do projeto final de curso.<br>
+  <strong>Carga Horária Total:</strong> 60 horas-aula (50 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Planejar e executar as fases do projeto de conclusão de curso/startup de tecnologia.
+- Avaliar recursos, acompanhar cronograma físico-financeiro e validar resultados obtidos.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Construir e testar a solução tecnológica proposta (software/hardware).
+- Compilar dados da pesquisa, redigir o relatório monográfico segundo normas ABNT.
+- Apresentar e defender o projeto perante banca examinadora.
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Referencial Teórico e Execução Metodológica do Projeto.
+** 2. Desenvolvimento Prático da Solução Tecnológica (Codificação, prototipagem e testes).
+** 3. Organização e Análise de Dados (Gráficos, tabelas, tabulação e resultados).
+** 4. Documentação Monográfica nas Normas ABNT e Preparação para a Defesa do TCC.
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

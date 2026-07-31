@@ -1,0 +1,72 @@
+#+TITLE: Moodle Question Bank - Fundamentals of Computer Science & Math
+#+AUTHOR: Pedagogical Team
+#+DATE: 2026-07-30
+
+* Category: Computer Science/Algorithms
+
+** [MCQ] Time Complexity of Binary Search
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: Binary search repeatedly divides the search interval in half, yielding logarithmic performance.
+:END:
+What is the worst-case time complexity of running a *Binary Search* algorithm on a sorted array of \(n\) elements?
+
+- [X] \(\mathcal{O}(\log n)\) :: Correct! Halving the search space at each step gives logarithmic time.
+- [ ] \(\mathcal{O}(n)\) :: Incorrect. \(\mathcal{O}(n)\) is the complexity of Linear Search.
+- [ ] \(\mathcal{O}(n \log n)\) :: Incorrect. \(\mathcal{O}(n \log n)\) is the typical complexity of efficient sorting algorithms like Merge Sort.
+- [ ] \(\mathcal{O}(1)\) :: Incorrect. Constant time is achieved by direct array index lookup or hash tables.
+
+** [TF] P vs NP Problem Definition
+:PROPERTIES:
+:TYPE: truefalse
+:DEFAULTGRADE: 1.0
+:END:
+The class **NP** consists of all decision problems that can be *verified* in polynomial time by a deterministic Turing Machine.
+
+- [X] True :: Correct! NP stands for Nondeterministic Polynomial time, meaning solutions can be verified efficiently in polynomial time.
+- [ ] False :: Incorrect. This statement is accurate according to computational complexity theory.
+
+** [SA] Python Keyword for Function Definition
+:PROPERTIES:
+:TYPE: shortanswer
+:DEFAULTGRADE: 1.0
+:END:
+What is the exact 3-letter keyword used in Python to define a new function?
+
+- [X] def :: Correct! `def` defines functions in Python.
+
+** [MATCH] Programming Paradigms and Languages
+:PROPERTIES:
+:TYPE: matching
+:DEFAULTGRADE: 1.0
+:END:
+Match each programming language to its primary paradigm:
+
+- Haskell :: Functional Programming
+- Prolog :: Logic Programming
+- Java :: Object-Oriented Programming
+- C :: Imperative / Procedural Programming
+
+** [NUM] Speed of Light Constant
+:PROPERTIES:
+:TYPE: numerical
+:TOLERANCE: 5.0
+:DEFAULTGRADE: 1.0
+:END:
+What is the speed of light in a vacuum in millions of meters per second (approx. \(299.79\))?
+
+- [X] 299.79 :: Correct! The speed of light \(c \approx 299,792,458\text{ m/s}\).
+
+* Category: Mathematics/Calculus
+
+** [ESSAY] Fundamental Theorem of Calculus Explanation
+:PROPERTIES:
+:TYPE: essay
+:LINES: 20
+:ATTACHMENTS: 1
+:DEFAULTGRADE: 5.0
+:END:
+Explain the relationship between differentiation and integration as expressed by the *Fundamental Theorem of Calculus*. Include both Part 1 and Part 2 in your answer.

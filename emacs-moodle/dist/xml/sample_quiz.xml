@@ -1,0 +1,185 @@
+<?xml version="1.0" ?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Computer Science/Algorithms</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Time Complexity of Binary Search</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[What is the worst-case time complexity of running a &lt;strong&gt;Binary Search&lt;/strong&gt; algorithm on a sorted array of \(n\) elements?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[Binary search repeatedly divides the search interval in half, yielding logarithmic performance.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[\(\mathcal{O}(\log n)\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correct! Halving the search space at each step gives logarithmic time.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\mathcal{O}(n)\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorrect. \(\mathcal{O}(n)\) is the complexity of Linear Search.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\mathcal{O}(n \log n)\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorrect. \(\mathcal{O}(n \log n)\) is the typical complexity of efficient sorting algorithms like Merge Sort.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[\(\mathcal{O}(1)\)]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorrect. Constant time is achieved by direct array index lookup or hash tables.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>P vs NP Problem Definition</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[The class **NP** consists of all decision problems that can be &lt;strong&gt;verified&lt;/strong&gt; in polynomial time by a deterministic Turing Machine.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Correct! NP stands for Nondeterministic Polynomial time, meaning solutions can be verified efficiently in polynomial time.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Incorrect. This statement is accurate according to computational complexity theory.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Python Keyword for Function Definition</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[What is the exact 3-letter keyword used in Python to define a new function?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>def</text>
+      <feedback format="html">
+        <text><![CDATA[Correct! `def` defines functions in Python.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Programming Paradigms and Languages</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Match each programming language to its primary paradigm:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[Haskell]]></text>
+      <answer>
+        <text>Functional Programming</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Prolog]]></text>
+      <answer>
+        <text>Logic Programming</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Java]]></text>
+      <answer>
+        <text>Object-Oriented Programming</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[C]]></text>
+      <answer>
+        <text>Imperative / Procedural Programming</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="numerical">
+    <name>
+      <text>Speed of Light Constant</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[What is the speed of light in a vacuum in millions of meters per second (approx. \(299.79\))?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>299.79</text>
+      <tolerance>5.0</tolerance>
+      <feedback format="html">
+        <text><![CDATA[Correct! The speed of light \(c \approx 299,792,458\text{ m/s}\).]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="category">
+    <category>
+      <text>$course$/Mathematics/Calculus</text>
+    </category>
+  </question>
+  <question type="essay">
+    <name>
+      <text>Fundamental Theorem of Calculus Explanation</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Explain the relationship between differentiation and integration as expressed by the &lt;strong&gt;Fundamental Theorem of Calculus&lt;/strong&gt;. Include both Part 1 and Part 2 in your answer.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[]]></text>
+    </generalfeedback>
+    <defaultgrade>5.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <responseformat>editor</responseformat>
+    <responserequired>1</responserequired>
+    <responsefieldlines>20</responsefieldlines>
+    <attachments>1</attachments>
+  </question>
+</quiz>

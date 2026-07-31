@@ -1,0 +1,55 @@
+#+TITLE: Apresentação da Disciplina: Projetos de Desenvolvimento de Sistemas (PDS)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Projetos de Desenvolvimento de Sistemas (PDS)*!
+
+Esta disciplina integra o *Módulo II - Qualificação Profissional de Auxiliar em Desenvolvimento de Sistemas* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Planejamento e design de soluções de software seguras e de alta qualidade.<br>
+  <strong>Carga Horária Total:</strong> 60 horas-aula (50 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Aplicar métodos ágeis para planejamento e gestão de projetos de software.
+- Interpretar o design de sistemas integrando requisitos de arquitetura, qualidade e segurança.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Organizar o fluxo de trabalho de projetos utilizando papéis, eventos e artefatos do Scrum e Kanban.
+- Identificar padrões arquiteturais (monolito, microsserviços, event-driven) e componentes distribuídos.
+- Incorporar automação de testes, virtualização (Docker/CI/CD) e práticas DevSecOps no ciclo de vida do software.
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Arquitetura e Design de Sistemas (Requisitos não-funcionais, Monolitos vs Microsserviços, Caching, API Gateways, Filas).
+** 2. Gestão Ágil de Projetos (Manifesto Ágil, Scrum, Kanban, User Stories, Planning Poker).
+** 3. Qualidade de Software - QA (Pirâmide de testes: Unitários, Integração, E2E).
+** 4. Automação e DevOps (Virtualização com Docker, Pipelines de CI/CD, IaC).
+** 5. Segurança de Aplicações - DevSecOps (OWASP Top 10, Gestão de Segredos, Autenticação JWT e OAuth2).
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

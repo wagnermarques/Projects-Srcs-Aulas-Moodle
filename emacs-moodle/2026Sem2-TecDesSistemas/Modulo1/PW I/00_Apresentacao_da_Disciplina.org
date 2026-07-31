@@ -1,0 +1,56 @@
+#+TITLE: Apresentação da Disciplina: Programação Web I (PW I)
+#+SUBTITLE: Plano de Curso 960 - Habilitação Profissional de Técnico em Desenvolvimento de Sistemas
+#+AUTHOR: Prof. Wagner França / Equipe Docente
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Visão Geral da Disciplina
+
+Sejam bem-vindos à disciplina de *Programação Web I (PW I)*!
+
+Esta disciplina integra o *Módulo I - Sem Certificação Técnica* do Curso Técnico em Desenvolvimento de Sistemas (Plano de Curso nº 960 - Centro Paula Souza).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Função Profissional:</strong> Codificação de documentos e interfaces em padrões Web estáticos.<br>
+  <strong>Carga Horária Total:</strong> 100 horas-aula (80 horas)
+</div>
+#+END_EXPORT
+
+* Competências Profissionais
+
+Ao concluir esta disciplina, o estudante será capaz de:
+
+- Identificar e aplicar padrões Web para codificação de documentos.
+- Construir e publicar websites estáticos e responsivos.
+
+* Habilidades Específicas Desenvolvidas
+
+Durante as aulas teóricas e práticas, serão trabalhadas as seguintes habilidades:
+
+- Aplicar padrões W3C na construção de páginas web com HTML5 semântico.
+- Estilizar interfaces modernas com CSS3 (Flexbox, Grid, Responsividade).
+- Adicionar interatividade e manipulação do DOM com JavaScript.
+- Implantar e publicar websites em servidores e plataformas de hospedagem.
+
+* Programa da Disciplina e Bases Tecnológicas
+
+** 1. Introdução à Web (Protocolo HTTP, navegadores, DNS, URLs, Ferramentas de Desenvolvedor).
+** 2. HTML5 (Estrutura semântica, metadados, formulários, tabelas, multimídia e acessibilidade WAI-ARIA).
+** 3. CSS3 (Seletores, Box Model, Flexbox, CSS Grid, Media Queries, Animações e Variáveis Customizadas).
+** 4. JavaScript para Web (Manipulação de DOM, eventos, assincronia, Fetch API, JSON, LocalStorage).
+** 5. Ferramentas de Build e Hospedagem (Vite, npm, GitHub Pages, Vercel).
+
+* Metodologia de Ensino e Recursos Didáticos
+
+- *Aulas Práticas em Laboratório:* Desenvolvimento orientado a projetos práticos com utilização de ferramentas e ambientes de desenvolvimento modernos do mercado.
+- *Trabalho em Equipe e Práticas Ágeis:* Estímulo ao aprendizado colaborativo, resolução de problemas reais e versionamento de código.
+- *Tecnologias de Apoio:* Utilização de ferramentas open source, plataformas em nuvem e ecossistemas de desenvolvimento atualizados.
+
+* Critérios de Avaliação e Menções
+
+A avaliação da aprendizagem é contínua e formativa, fundamentada no desenvolvimento demonstrado em projetos, atividades práticas e avaliações diagnósticas:
+
+- *MB (Muito Bom):* O aluno obteve excelente desempenho no desenvolvimento das competências.
+- *B (Bom):* O aluno obteve bom desempenho no desenvolvimento das competências.
+- *R (Regular):* O aluno obteve desempenho regular no desenvolvimento das competências.
+- *I (Insatisfatório):* O aluno obteve desempenho insatisfatório no desenvolvimento das competências (sujeito à recuperação contínua).

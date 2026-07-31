@@ -1,0 +1,161 @@
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Conceito de Classe e Objeto em Kotlin:: Qual é a relação correta entre uma **Classe** e um **Objeto** na programação orientada a objetos? {
+  =A Classe é o molde/modelo abstrato, enquanto o Objeto é a instância concreta criada a partir desse molde. #Correto! A classe especifica a estrutura e o objeto é a instância em memória.
+  ~O Objeto é o código fonte e a Classe é a variável executada em tempo de compilação. #Incorreto. O objeto é uma instância em tempo de execução.
+  ~A Classe só pode conter métodos estáticos e o Objeto armazena apenas dados sem métodos. #Incorreto. Classes Kotlin contêm atributos e métodos.
+  ~Não há diferença entre Classe e Objeto em Kotlin. #Incorreto. São conceitos distintos.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Modificador de Herança Padrão em Kotlin:: Em Kotlin, todas as classes são `open` por padrão, permitindo herança direta sem necessidade de palavras-chave adicionais. {FALSE}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Declaração de Propriedade Imutável:: Qual é a palavra-chave usada em Kotlin para declarar uma propriedade de apenas leitura (imutável)? {
+  =val #Correto! `val` declara valores imutáveis (somente leitura).
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Diferença entre val e var no Construtor Primário:: Qual a diferença fundamental entre declarar uma propriedade no construtor com `val` versus `var`? {
+  =`val` gera apenas o *getter* (somente leitura), enquanto `var` gera *getter* e *setter* (leitura e escrita). #Correto! `val` torna a propriedade imutável externamente.
+  ~`val` pode ter seu valor alterado a qualquer momento, mas `var` é constante. #Incorreto. O comportamento é exatamente o inverso.
+  ~`val` só funciona para números inteiros e `var` para textos (Strings). #Incorreto. Ambos funcionam com qualquer tipo de dado.
+  ~`var` elimina a necessidade de inicializar a variável. #Incorreto. Variáveis em Kotlin devem ser inicializadas.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Modificadores de Acesso em Kotlin:: Associe cada modificador de acesso ao seu alcance de visibilidade em Kotlin: {
+  =public -> Visível em qualquer lugar do projeto (padrão)
+  =private -> Visível apenas dentro da própria classe
+  =protected -> Visível na classe declarante e em suas subclasses
+  =internal -> Visível apenas dentro do mesmo módulo do projeto
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Permitindo Herança de Métodos:: Além de marcar a classe como `open`, o que deve ser feito para permitir que um método específico seja sobrescrito por subclasses? {
+  =O método também deve ser marcado explicitamente com a palavra-chave `open`. #Correto! Em Kotlin, métodos são `final` por padrão a menos que sejam marcados como `open`.
+  ~O método deve ser marcado como `private`. #Incorreto. Métodos privados não podem ser sobrescritos.
+  ~Nada, pois todos os métodos de uma classe `open` podem ser sobrescritos automaticamente. #Incorreto. Os métodos também precisam do modificador `open`.
+  ~O método deve ser estático. #Incorreto.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Recursos das Data Classes:: Uma `data class` em Kotlin gera automaticamente os métodos `equals()`, `hashCode()`, `toString()` e `copy()`. {TRUE}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Encapsulamento do Setter de uma Propriedade:: Como permitimos que o saldo de uma conta bancária seja lido por qualquer código, mas alterado apenas internamente pela própria classe? {
+  =Declarando `var saldo: Double = 0.0` seguido de `private set`. #Correto! Isso mantém o getter público e restringe o setter como privado.
+  ~Declarando a variável como `private val saldo`. #Incorreto. Isso impediria a leitura externa do saldo.
+  ~Usando a palavra-chave `protected var saldo`. #Incorreto. `protected` permite alteração por subclasses.
+  ~Não é possível fazer isso em Kotlin. #Incorreto. A sintaxe `private set` é nativa em Kotlin.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Sobrescrita de Métodos em Subclasses:: Qual palavra-chave obrigatória deve anteceder a declaração de um método em uma subclasse ao redefinir a implementação da classe mãe? {
+  =override #Correto! O modificador `override` é obrigatório ao sobrescrever membros em Kotlin.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Os 4 Pilares da POO - Encapsulamento:: Qual pilar da POO é diretamente aplicado ao ocultar os detalhes de implementação de um objeto e proteger seus dados internos? {
+  =Encapsulamento #Correto! O encapsulamento protege os dados e esconde os detalhes internos.
+  ~Polimorfismo #Incorreto. Polimorfismo se refere à capacidade de tratar objetos de diferentes formas.
+  ~Herança #Incorreto. Herança compartilha código entre superclasse e subclasse.
+  ~Compilação #Incorreto. Compilação é uma etapa do ciclo de desenvolvimento, não um pilar da POO.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Os 4 Pilares da Programação Orientada a Objetos:: Associe cada pilar da POO à sua definição correspondente: {
+  =Abstração -> Focar apenas nos aspectos essenciais da entidade do mundo real
+  =Encapsulamento -> Proteger o estado interno do objeto expondo apenas métodos seguros
+  =Herança -> Reutilizar atributos e comportamentos de uma classe base
+  =Polimorfismo -> Tratar objetos de classes distintas através de um tipo comum
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Implementações Padrão em Interfaces:: Em Kotlin, uma `interface` pode conter a implementação padrão de um método com corpo. {TRUE}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Escopo do Modificador Internal:: Qual é a visibilidade exata fornecida pelo modificador `internal` em Kotlin? {
+  =Visível para qualquer código compilado dentro do mesmo módulo do projeto. #Correto! O escopo de `internal` é o módulo (conjunto de arquivos compilados juntos).
+  ~Visível apenas dentro do mesmo arquivo .kt. #Incorreto. Isso seria equivalente a `private` no nível do arquivo.
+  ~Visível para qualquer projeto no mesmo computador. #Incorreto.
+  ~Visível apenas para classes herdadas. #Incorreto. Esse é o papel do `protected`.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Quantidade Mínima de Parâmetros em Data Class:: Qual é o número mínimo de parâmetros que o construtor primário de uma `data class` em Kotlin deve ter? {
+  =#1:0.0 #Correto! Uma `data class` precisa de pelo menos 1 parâmetro no construtor primário (marcado com `val` ou `var`).
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Método copy() em Data Classes:: Para que serve o método `copy()` em uma `data class` em Kotlin? {
+  =Permite criar uma nova instância alterando seletivamente apenas algumas propriedades e mantendo as demais. #Correto! O método `copy()` aceita parâmetros nomeados para imutabilidade conveniente.
+  ~Apaga o objeto original da memória RAM. #Incorreto.
+  ~Copia o arquivo fonte da classe para outro pacote. #Incorreto.
+  ~Converte a classe para um arquivo JSON. #Incorreto.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Operador `new` em Kotlin:: Assim como em Java e C++, em Kotlin é obrigatório utilizar a palavra-chave `new` ao instanciar um novo objeto. {FALSE}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Declaração de Classe Abstrata:: Qual palavra-chave é usada para definir uma classe que não pode ser instanciada diretamente e serve como base estrutural? {
+  =abstract #Correto! `abstract` define classes abstratas em Kotlin.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Erro de Compilação ao Herdar sem Modificador:: O que acontece se você tentar criar a subclasse `class Carro : Veiculo()` onde `Veiculo` é uma classe normal declarada sem o modificador `open`? {
+  =Ocorre um erro de compilação informando que a classe `Veiculo` é final e não pode ser herdada. #Correto! Sem `open`, a classe é final por padrão.
+  ~O código compila com um aviso, mas funciona em tempo de execução. #Incorreto. É um erro de compilação estrito.
+  ~A subclasse é ignorada no tempo de execução. #Incorreto.
+  ~O Kotlin converte a classe automaticamente em uma interface. #Incorreto.
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Tipos de Classes Especiais em Kotlin:: Associe o tipo especial de classe à sua finalidade em Kotlin: {
+  =data class -> Classe para armazenar dados com métodos equals/hashCode/copy gerados automaticamente
+  =abstract class -> Classe base que não pode ser instanciada e pode conter membros abstratos
+  =open class -> Classe normal liberada para permitir herança por outras subclasses
+  =interface -> Contrato de métodos e propriedades que podem ser implementados por múltiplas classes
+}
+
+
+$CATEGORY: Kotlin/Orientacao_A_Objetos
+
+::Vantagens do Design de Orientação a Objetos em Kotlin:: Descreva com suas palavras as principais vantagens da sintaxe de Orientação a Objetos em Kotlin em comparação com linguagens tradicionais. Cite o papel da imutabilidade por padrão (`val`), ausência do operador `new` e geradores automáticos (`data class`). {}
