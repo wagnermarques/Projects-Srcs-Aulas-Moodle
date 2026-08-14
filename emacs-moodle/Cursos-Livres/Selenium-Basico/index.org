@@ -1,0 +1,230 @@
+#+TITLE: Selenium Básico com Docker e PHP
+#+AUTHOR: Curso Livre
+#+DATE: 2026-08-14
+#+OPTIONS: toc:t num:t
+
+(Texto e projeto criado com o copilot)
+
+* Introdução
+
+Este curso será desenvolvido em conjunto com o projeto deste repositório. A proposta não é apresentar toda a teoria antes da prática, mas sim evoluir o projeto em etapas curtas, executáveis e versionadas.
+
+Em cada etapa, primeiro construiremos ou executaremos uma parte real do projeto; em seguida, explicaremos os conceitos que acabaram de ser usados.
+
+
+Assim, o curso e o projeto caminham juntos:
+
+1. o projeto serve como referência prática;
+2. o =index.org= documenta a mesma etapa que está versionada no repositório;
+3. os conceitos aparecem depois da utilização prática, para reforçar o entendimento com base no que já foi visto em funcionamento.
+
+
+* Lógica de desenvolvimento do curso e do projeto
+
+Este material seguirá sempre a mesma lógica de trabalho:
+
+1. criar ou evoluir uma etapa pequena do projeto;
+2. garantir que essa etapa possa ser executada e compreendida isoladamente;
+3. atualizar este tutorial para refletir exatamente o estado atual do projeto;
+4. explicar os conceitos envolvidos logo após a parte prática;
+5. registrar a etapa no versionamento do repositório.
+
+Para manter o histórico didático claro, cada etapa do curso deve corresponder a um marco no projeto:
+
+1. durante a construção, pode-se usar uma branch com nome descritivo, como =etapa-1-estrutura-execucao=;
+2. quando a etapa estiver concluída e o tutorial atualizado, deve-se criar uma tag correspondente, como =etapa-1=;
+3. a próxima etapa deve partir desse estado já documentado.
+
+* Etapas previstas
+
+** Etapa 1: criação do projeto e compreensão de sua estrutura e de como executá-lo
+
+Nesta etapa, o foco será montar a base mínima do projeto com Docker, PHP e Selenium, deixando claro:
+
+1. quais ficheiros compõem a estrutura inicial;
+2. qual o papel de cada serviço;
+3. como subir o ambiente;
+4. como executar o primeiro script de automação.
+
+** Etapa 2: criação de um teste de login o mais básico possível
+
+Depois que a estrutura inicial estiver pronta e executável, a próxima evolução será um teste de login simples, com o menor número possível de elementos:
+
+1. abrir a página de login;
+2. preencher utilizador e senha;
+3. submeter o formulário;
+4. validar um sinal mínimo de sucesso ou de navegação após o login.
+
+O objetivo desta etapa não é criar ainda uma arquitetura sofisticada de testes, mas mostrar o fluxo mais básico de automação de login funcionando.
+
+* Etapa 1 - Estrutura inicial do projeto
+
+** Parte prática
+
+A primeira entrega prática deste curso deverá deixar o projeto com uma estrutura mínima semelhante a esta:
+
+#+begin_src text
+meu-projeto/
+├── docker-compose.yml
+├── composer.json
+└── tests/
+    └── google_search.php
+#+end_src
+
+O primeiro script pode ser simples, como uma automação de abertura de página e pesquisa, apenas para validar a comunicação entre PHP e Selenium antes de avançarmos para um caso mais realista como login.
+
+Um exemplo mínimo de =docker-compose.yml= para esta etapa é:
+
+#+begin_src yaml
+services:
+  selenium:
+    image: selenium/standalone-chrome:latest
+    container_name: selenium-chrome
+    ports:
+      - "4444:4444"
+    shm_size: 2gb
+
+  php:
+    image: php:8.3-cli
+    container_name: php-selenium
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - selenium
+#+end_src
+
+No projeto, a dependência principal desta etapa será:
+
+#+begin_src bash
+composer require php-webdriver/webdriver
+#+end_src
+
+Um exemplo básico de script PHP para validar a integração é:
+
+#+begin_src php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Facebook\WebDriver\Chrome\ChromeOptions;
+use Facebook\WebDriver\Remote\DesiredCapabilities;
+use Facebook\WebDriver\Remote\RemoteWebDriver;
+use Facebook\WebDriver\WebDriverBy;
+
+$serverUrl = 'http://selenium:4444/wd/hub';
+
+$options = new ChromeOptions();
+$options->addArguments(['--headless=new', '--no-sandbox', '--disable-dev-shm-usage']);
+
+$capabilities = DesiredCapabilities::chrome();
+$capabilities->setCapability(ChromeOptions::CAPABILITY, $options);
+
+$driver = RemoteWebDriver::create($serverUrl, $capabilities);
+
+$driver->get('https://www.google.com');
+
+$input = $driver->findElement(WebDriverBy::name('q'));
+$input->sendKeys('Selenium WebDriver');
+$input->submit();
+
+sleep(2);
+
+echo "Titulo da pagina: " . $driver->getTitle() . PHP_EOL;
+
+$driver->quit();
+#+end_src
+
+** Como executar a etapa 1
+
+#+begin_src bash
+docker compose up -d selenium
+docker compose run --rm php php tests/google_search.php
+#+end_src
+
+Se for necessário executar mais de um comando dentro do contentor PHP:
+
+#+begin_src bash
+docker compose run --rm php sh
+#+end_src
+
+** Conceitos apresentados após a prática
+
+Depois de montar e executar a etapa 1, entram os conceitos que explicam o que acabou de acontecer:
+
+1. **Selenium**: servidor que recebe comandos e controla o navegador remotamente;
+2. **Docker Compose**: forma de subir e relacionar os serviços do ambiente;
+3. **contentor PHP**: ambiente isolado onde os scripts de automação serão executados;
+4. **WebDriver**: biblioteca e protocolo usados para comunicar com o navegador;
+5. **modo headless**: execução do Chrome sem interface gráfica, útil para automação e CI;
+6. **estrutura mínima do projeto**: separação entre configuração do ambiente, dependências e scripts de teste.
+
+** Resultado esperado da etapa 1
+
+Ao final desta etapa, o aluno deve conseguir:
+
+1. identificar a estrutura básica do projeto;
+2. subir o Selenium com Docker;
+3. executar um script PHP de automação;
+4. compreender, a partir da prática já realizada, o papel de cada peça do ambiente.
+
+* Etapa 2 - Primeiro teste de login mais básico possível
+
+** Parte prática
+
+Com a infraestrutura validada, a etapa seguinte será trocar o exemplo genérico por um teste de login simples. A implementação deverá priorizar o menor fluxo possível:
+
+1. abrir a página de login da aplicação alvo;
+2. localizar os campos de autenticação com seletores estáveis;
+3. preencher credenciais de teste;
+4. submeter o formulário;
+5. verificar um único sinal de sucesso, como URL esperada, título, mensagem ou elemento da área autenticada.
+
+Esta etapa deve continuar simples de executar e fácil de ler. Se surgir a necessidade de refatoração, ela deve ficar para etapas futuras, depois que o fluxo básico estiver comprovado.
+
+** Conceitos apresentados após a prática
+
+Depois que o primeiro login automatizado estiver a funcionar, os conceitos associados devem ser explicados:
+
+1. **seletores estáveis**: preferência por =id=, =name= ou atributos próprios de teste;
+2. **esperas**: evitar depender apenas de =sleep()= quando já houver elementos que possam ser aguardados explicitamente;
+3. **validação mínima**: confirmar apenas o essencial para provar que o login funcionou;
+4. **dados de teste**: manter credenciais e ambiente de teste controlados;
+5. **evolução incremental**: primeiro fazer funcionar, depois melhorar organização, reuso e cobertura.
+
+** Resultado esperado da etapa 2
+
+Ao final desta etapa, o projeto deverá demonstrar um login automatizado simples e o tutorial deverá explicar esse fluxo com base no que foi feito, e não como teoria isolada.
+
+* Convenção de versionamento por etapa
+
+Para que o curso e o repositório permaneçam sincronizados, cada etapa deve seguir esta convenção:
+
+1. abrir uma branch de trabalho para a etapa;
+2. implementar a evolução prática no projeto;
+3. atualizar este =index.org= para refletir exatamente o novo estado;
+4. finalizar a etapa com uma tag simples e sequencial.
+
+Exemplo de nomenclatura:
+
+#+begin_src text
+branch: etapa-1-estrutura-execucao
+tag: etapa-1
+
+branch: etapa-2-login-basico
+tag: etapa-2
+#+end_src
+
+* Boas práticas do curso
+
+Durante a evolução do material, manter estas diretrizes:
+
+1. cada etapa deve ser pequena o suficiente para ser entendida de forma isolada;
+2. a prática vem antes da explicação conceitual;
+3. o tutorial deve sempre refletir o estado real do projeto versionado;
+4. a próxima etapa só começa depois que a etapa atual estiver executável e documentada;
+5. explicações mais avançadas, como Page Objects, PHPUnit e CI/CD, devem entrar apenas quando o fluxo básico já estiver sólido.
+
+* Resumo
+
+Este curso será construído como uma sequência de entregas pequenas e versionadas. A etapa 1 estabelece a base do projeto e ensina como executá-lo. A etapa 2 introduz o primeiro teste de login mais simples possível. Em todas as fases, a prática virá primeiro, os conceitos virão logo depois, e o tutorial ficará sincronizado com o estado real do repositório.
