@@ -1,86 +1,79 @@
-#+TITLE: Aula: Introdução à Biblioteca Ripple.js
-#+SUBTITLE: Efeitos de Ondulação (Ripple) no Estilo Material Design
+#+TITLE: Aula: "Ripple" em JavaScript — Três Coisas, Um Nome
+#+SUBTITLE: Efeito Visual, Biblioteca Reativa Clássica e Framework TypeScript Moderno
 #+AUTHOR: Prof. Wagner
 #+DATE: 2026-09-01
 #+OPTIONS: toc:t num:t html-postamble:nil
 
-* Página 1: O que é o Ripple.js?
+* Página 1: Atenção — "Ripple.js" Não é Uma Coisa Só
 
-**Ripple.js** é uma biblioteca JavaScript leve e independente de framework, cujo objetivo é reproduzir o efeito visual de **ondulação** (*ripple effect*) ao clicar em um elemento — a mesma animação popularizada pelo **Material Design**, do Google, em botões, cards e outros componentes interativos.
+Ao pesquisar por "Ripple.js", é fácil confundir projetos completamente diferentes que compartilham o mesmo nome. Nesta aula vamos distinguir **três coisas** que aparecem sob o nome "ripple" no ecossistema JavaScript:
 
-Ao ser clicado, o elemento exibe um pequeno círculo que nasce no ponto exato do clique/toque e se expande suavemente até cobrir a área do componente, desaparecendo em seguida. Esse feedback visual reforça para o usuário que a interação foi reconhecida pela interface.
+1. **O efeito visual de ondulação** ao clique — um *padrão de UI/UX* popularizado pelo Material Design, não uma biblioteca oficial única.
+2. **=ripplejs/ripple=** — uma biblioteca reativa clássica de 2013 ("*a tiny foundation for building reactive views with plugins*"), hoje sem manutenção.
+3. **=Ripple-TS/ripple=** — um framework de UI moderno e ativo, escrito em TypeScript, com arquivos =.tsrx= e reatividade granular.
 
 #+BEGIN_EXPORT html
 <div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
   <strong>Objetivos de Aprendizagem:</strong>
   <ul>
-    <li>Entender o propósito do efeito ripple em interfaces modernas.</li>
-    <li>Aplicar o Ripple.js a botões e outros elementos clicáveis.</li>
-    <li>Customizar cor, duração e comportamento do efeito.</li>
-    <li>Compreender, em linhas gerais, como o efeito é implementado por trás dos panos.</li>
+    <li>Reconhecer que nomes de bibliotecas podem colidir — sempre confira a fonte oficial (repositório, autor, changelog) antes de adotar um pacote.</li>
+    <li>Entender o efeito visual "ripple" como um padrão de UI, implementável sem biblioteca alguma.</li>
+    <li>Conhecer a proposta e a sintaxe básica de <code>ripplejs/ripple</code> (biblioteca reativa clássica).</li>
+    <li>Conhecer a proposta e a sintaxe básica de <code>Ripple-TS/ripple</code> (framework TypeScript moderno).</li>
   </ul>
 </div>
 #+END_EXPORT
 
----
-
-* Página 2: Por que usar o Ripple.js?
-
-O efeito de ondulação virou um padrão de usabilidade em várias plataformas (Android, Angular Material, MUI/React etc.), pois entrega **feedback tátil visual imediato**. Usar uma biblioteca dedicada, em vez de reimplementar o efeito manualmente em cada projeto, traz vantagens:
-
-- **Simplicidade:** basta marcar o elemento (via atributo ou classe) para que ele ganhe o efeito.
-- **Consistência visual:** mesma animação em todos os componentes da aplicação.
-- **Baixo acoplamento:** não exige um framework específico (funciona com HTML/CSS/JS puro).
-- **Leveza:** poucas linhas de JavaScript e CSS, sem dependências externas.
+**Comparativo rápido:**
 
 #+BEGIN_EXPORT html
-<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
-  <strong>Atenção:</strong> existem diversas implementações e pacotes chamados "ripple" no ecossistema JavaScript (biblioteca standalone, plugins jQuery, componentes de frameworks como Angular Material e MUI). O princípio de funcionamento é o mesmo em todas; sempre confira a documentação oficial do pacote específico que seu projeto utiliza antes de aplicar em produção.
+<div style="overflow-x:auto; margin: 15px 0;">
+<table style="border-collapse: collapse; width: 100%; font-size: 14px;">
+  <thead>
+    <tr style="background-color:#2c3e50; color:#fff;">
+      <th style="padding:8px; border:1px solid #ddd; text-align:left;"></th>
+      <th style="padding:8px; border:1px solid #ddd; text-align:left;">Efeito visual "ripple"</th>
+      <th style="padding:8px; border:1px solid #ddd; text-align:left;"><code>ripplejs/ripple</code> (2013)</th>
+      <th style="padding:8px; border:1px solid #ddd; text-align:left;"><code>Ripple-TS/ripple</code> (moderno)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px; border:1px solid #ddd;"><strong>O que é</strong></td>
+      <td style="padding:8px; border:1px solid #ddd;">Padrão visual de UI/UX</td>
+      <td style="padding:8px; border:1px solid #ddd;">Micro-biblioteca de views reativas</td>
+      <td style="padding:8px; border:1px solid #ddd;">Framework de UI completo</td>
+    </tr>
+    <tr style="background-color:#f8f9f9;">
+      <td style="padding:8px; border:1px solid #ddd;"><strong>Estado/dados</strong></td>
+      <td style="padding:8px; border:1px solid #ddd;">Nenhum</td>
+      <td style="padding:8px; border:1px solid #ddd;">Sim, objetos JS simples</td>
+      <td style="padding:8px; border:1px solid #ddd;">Sim, reatividade granular (<code>track()</code>)</td>
+    </tr>
+    <tr>
+      <td style="padding:8px; border:1px solid #ddd;"><strong>Exige build/bundler</strong></td>
+      <td style="padding:8px; border:1px solid #ddd;">Não</td>
+      <td style="padding:8px; border:1px solid #ddd;">Não (script direto)</td>
+      <td style="padding:8px; border:1px solid #ddd;">Sim (Vite/CLI)</td>
+    </tr>
+    <tr style="background-color:#f8f9f9;">
+      <td style="padding:8px; border:1px solid #ddd;"><strong>Situação atual</strong></td>
+      <td style="padding:8px; border:1px solid #ddd;">Conceito genérico</td>
+      <td style="padding:8px; border:1px solid #ddd;">Sem manutenção</td>
+      <td style="padding:8px; border:1px solid #ddd;">Ativo</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 #+END_EXPORT
 
 ---
 
-* Página 3: Instalando e Configurando
+* Página 2: O Efeito Visual "Ripple" (Padrão de UI)
 
-A forma mais simples de utilizar o Ripple.js é incluir o script e a folha de estilos em uma página HTML.
+O **efeito de ondulação ao clique** não é uma biblioteca específica — é um **padrão visual** popularizado pelo Material Design do Google: ao clicar em um elemento, um círculo nasce no ponto do toque e se expande suavemente até desaparecer, dando feedback de que a interação foi reconhecida.
 
-#+BEGIN_SRC html
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Introdução ao Ripple.js</title>
-  <link rel="stylesheet" href="ripple.css">
-</head>
-<body>
-  <button class="btn" data-ripple>Clique aqui</button>
-
-  <script src="ripple.js"></script>
-</body>
-</html>
-#+END_SRC
-
-Em projetos com bundler, a instalação costuma ser feita via *npm*:
-
-#+BEGIN_SRC bash
-npm install ripple-effects
-#+END_SRC
-
----
-
-* Página 4: Uso Básico
-
-Basta marcar o elemento desejado — geralmente com um atributo (=data-ripple=) ou uma classe CSS — e inicializar a biblioteca. A partir daí, todo clique dentro do elemento dispara o efeito automaticamente.
-
-#+BEGIN_SRC javascript
-// Inicializa o efeito ripple em todos os elementos marcados na página
-Ripple.init();
-
-// Ou aplicando manualmente a um elemento específico
-var botao = document.querySelector("#meu-botao");
-Ripple.attach(botao);
-#+END_SRC
+Diversos pacotes implementam esse padrão sob nomes parecidos, mas o princípio é sempre o mesmo e pode ser feito com poucas linhas de JavaScript e CSS puros, sem depender de nenhuma biblioteca externa.
 
 #+BEGIN_SRC css
 .btn {
@@ -96,16 +89,16 @@ Ripple.attach(botao);
 #+END_SRC
 
 #+BEGIN_EXPORT html
-<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
-  <strong>Dica:</strong> a propriedade CSS <code>overflow: hidden</code> no elemento pai é fundamental — é ela que impede o círculo animado de "vazar" para fora dos limites do botão.
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Atenção:</strong> se o seu projeto já usa Angular Material, MUI (React) ou outro design system, o componente de botão já inclui esse efeito pronto — normalmente não é preciso implementá-lo manualmente.
 </div>
 #+END_EXPORT
 
 ---
 
-* Página 5: Demonstração ao Vivo
+* Página 3: Demonstração ao Vivo do Efeito
 
-Clique nos botões abaixo para ver o efeito ripple em ação. Esta demonstração é totalmente funcional e autocontida — implementada em JavaScript puro, sem depender de nenhum arquivo externo, seguindo exatamente os passos apresentados nesta aula.
+Clique nos botões abaixo para ver o efeito em ação. A demonstração é totalmente funcional e autocontida — implementada em JavaScript puro, sem depender de nenhum arquivo externo.
 
 #+BEGIN_EXPORT html
 <style>
@@ -185,38 +178,15 @@ Clique nos botões abaixo para ver o efeito ripple em ação. Esta demonstraçã
 
 ---
 
-* Página 6: Customização
-
-A maioria das implementações de Ripple.js permite configurar cor, duração e opacidade do efeito, seja via atributos =data-*= no HTML, seja via opções passadas na inicialização.
-
-#+BEGIN_SRC html
-<button class="btn"
-        data-ripple
-        data-ripple-color="rgba(255,255,255,0.4)"
-        data-ripple-duration="600">
-  Salvar
-</button>
-#+END_SRC
-
-#+BEGIN_SRC javascript
-Ripple.init({
-  color: "rgba(255, 255, 255, 0.4)", // cor do círculo
-  duration: 600,                     // duração da animação em ms
-  easing: "ease-out"                 // curva de suavização
-});
-#+END_SRC
-
----
-
-* Página 7: Como o Efeito Funciona por Trás dos Panos
+* Página 4: Como o Efeito Funciona por Trás dos Panos
 
 Mesmo variando de implementação para implementação, o princípio do efeito ripple costuma seguir os mesmos passos:
 
-1. **Capturar o clique/toque**, obtendo a posição relativa do evento dentro do elemento (=offsetX=, =offsetY=).
+1. **Capturar o clique/toque**, obtendo a posição relativa do evento dentro do elemento.
 2. **Criar dinamicamente um elemento** (normalmente um =<span>=) posicionado exatamente nesse ponto.
 3. **Calcular o tamanho do círculo** de forma que ele seja grande o suficiente para cobrir todo o elemento pai, mesmo a partir de um clique na borda.
 4. **Animar** a escala (de 0 a 1) e a opacidade (de um valor visível até 0), geralmente com CSS =transition= ou =@keyframes=.
-5. **Remover o elemento** do DOM ao final da animação, usando o evento =transitionend= ou =animationend=.
+5. **Remover o elemento** do DOM ao final da animação, usando o evento =animationend=.
 
 #+BEGIN_SRC javascript
 elemento.addEventListener("click", function (evento) {
@@ -238,17 +208,106 @@ elemento.addEventListener("click", function (evento) {
 
 ---
 
-* Página 8: Resumo e Exercícios de Fixação
+* Página 5: =ripplejs/ripple= — A Biblioteca Reativa Clássica (2013)
 
-Nesta aula, você conheceu o **Ripple.js**, uma biblioteca JavaScript dedicada a reproduzir o efeito de ondulação ao clique popularizado pelo Material Design, viu como aplicá-lo e customizá-lo, e entendeu a lógica geral por trás da sua implementação.
+Este é o projeto disponível em [[https://ripplejs.github.io/][ripplejs.github.io]] e [[https://github.com/ripplejs/ripple][github.com/ripplejs/ripple]]. Ele se descreve como *"a tiny foundation for building reactive views with plugins"* — uma base minimalista para criar *views* reativas, com **interpolação de template** (=\{\{ \}\}=) e **data-binding** automático, complementada por um ecossistema de plugins opcionais (=each=, =computed=, =events=, =refs=, entre outros).
+
+**Exemplo real de uso (conforme a documentação oficial):**
+
+#+BEGIN_SRC javascript
+var Person = ripple('<div>{{name}}</div>')
+  .attr('name', { required: true, type: 'string' });
+
+var person = new Person({ name: 'Tom' });
+person.appendTo(document.body);
+
+person.name = "Barry"; // O DOM é atualizado automaticamente
+#+END_SRC
+
+Note a diferença de filosofia em relação ao efeito visual da Página 2: aqui existe **estado** (a propriedade =name=) e o DOM reage a mudanças nesse estado — é uma biblioteca de *data-binding*, não um efeito de animação.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Nota:</strong> este projeto é de 2013 e não recebe manutenção ativa. Vale como contexto histórico — muitas ideias que ele explorou (interpolação declarativa, reatividade automática) reaparecem, de forma mais robusta, em frameworks modernos como Vue.js e no <code>Ripple-TS/ripple</code> da próxima página.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 6: =Ripple-TS/ripple= — O Framework TypeScript Moderno
+
+Este é um projeto **diferente e ativo**, disponível em [[https://github.com/Ripple-TS/ripple][github.com/Ripple-TS/ripple]]. É um framework de UI *TypeScript-first*, construído em torno de arquivos =.tsrx=, com reatividade granular, controle de fluxo nativo no template e estilos com escopo automático — comparável, em proposta, a Svelte ou SolidJS.
+
+**Instalação:**
+
+#+BEGIN_SRC bash
+npx create-ripple
+cd my-app
+npm install
+npm run dev
+#+END_SRC
+
+**Componente com estado reativo, usando =track()=:**
+
+#+BEGIN_SRC typescript
+export function Counter() @{
+  let &[count] = track(0);
+  const increment = () => count++;
+
+  <button onClick={increment}>Count:{count}</button>
+}
+#+END_SRC
+
+**Controle de fluxo nativo no template (=@if=/=@for=):**
+
+#+BEGIN_SRC typescript
+@if (condition) {
+  <p>Show this</p>
+} @else {
+  <p>Show that</p>
+}
+
+@for (const item of items; key item.id) {
+  <li>{item.name}</li>
+} @empty {
+  <li>No items</li>
+}
+#+END_SRC
+
+**Estilos com escopo automático:**
+
+#+BEGIN_SRC typescript
+<>
+  <p class="notice">Scoped text</p>
+  <style>
+    .notice {
+      color: var(--notice-color);
+      font-weight: 700;
+    }
+  </style>
+</>
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Nota:</strong> por exigir um pipeline de build próprio (plugin do Vite, arquivos <code>.tsrx</code>), este framework é mais indicado para quem já tem alguma familiaridade com TypeScript e ferramentas de build modernas — não é um "script solto" como os exemplos anteriores.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 7: Resumo e Exercícios de Fixação
+
+Nesta aula, você aprendeu a **distinguir três coisas diferentes** que compartilham o nome "Ripple" no mundo JavaScript: um padrão visual de UI (efeito de clique), uma biblioteca reativa clássica de 2013 (=ripplejs/ripple=) e um framework TypeScript moderno e ativo (=Ripple-TS/ripple=).
 
 #+BEGIN_EXPORT html
 <div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
   <strong>Perguntas de Fixação:</strong>
   <ol>
-    <li>Por que a propriedade CSS <code>overflow: hidden</code> é essencial para o efeito funcionar corretamente?</li>
-    <li>Quais informações do evento de clique são necessárias para posicionar o círculo do ripple no lugar certo?</li>
-    <li>Por que o elemento criado dinamicamente para o efeito deve ser removido do DOM ao final da animação?</li>
+    <li>Por que é importante checar o repositório oficial antes de adotar uma biblioteca com um nome genérico como "Ripple.js"?</li>
+    <li>Qual a principal diferença entre o efeito visual "ripple" e as duas bibliotecas reais apresentadas nesta aula?</li>
+    <li>O que a sintaxe <code>let &[count] = track(0)</code> representa no <code>Ripple-TS/ripple</code>, e como isso se compara ao <code>person.name = "Barry"</code> do <code>ripplejs/ripple</code>?</li>
+    <li>Por que o <code>Ripple-TS/ripple</code> exige um passo de build (Vite/CLI), enquanto o efeito visual e o <code>ripplejs/ripple</code> podem ser usados via <code>&lt;script&gt;</code> direto?</li>
   </ol>
 </div>
 #+END_EXPORT
