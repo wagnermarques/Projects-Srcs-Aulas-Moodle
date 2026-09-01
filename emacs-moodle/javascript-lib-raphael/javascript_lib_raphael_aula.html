@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-09-01 ter 14:37 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aula: Introdução à Biblioteca Raphael.js</title>
+<meta name="author" content="Prof. Wagner" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Aula: Introdução à Biblioteca Raphael.js
+<br />
+<span class="subtitle">Gráficos Vetoriais e Animações em JavaScript</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org38b7a00">1. Página 1: O que é o Raphael.js?</a></li>
+<li><a href="#org1af7317">2. Página 2: Por que usar o Raphael.js?</a></li>
+<li><a href="#org18606fc">3. Página 3: Instalando e Configurando</a></li>
+<li><a href="#orgf8a412b">4. Página 4: Criando o Primeiro Desenho</a></li>
+<li><a href="#orgdccda94">5. Página 5: Caminhos, Texto e Encadeamento de Métodos (Chaining)</a></li>
+<li><a href="#org660a0eb">6. Página 6: Eventos e Animações</a></li>
+<li><a href="#org362f300">7. Página 7: Resumo e Exercícios de Fixação</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org38b7a00" class="outline-2">
+<h2 id="org38b7a00"><span class="section-number-2">1.</span> Página 1: O que é o Raphael.js?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b><b>Raphael.js</b></b> é uma biblioteca JavaScript leve, criada por Dmitry Baranovskiy, voltada para a criação e manipulação de <b><b>gráficos vetoriais</b></b> diretamente no navegador. Ela abstrai as diferenças entre os motores gráficos usados pelos diversos navegadores, gerando <b><b>SVG</b></b> (Scalable Vector Graphics) em navegadores modernos e, historicamente, <b><b>VML</b></b> em versões antigas do Internet Explorer.
+</p>
+
+<p>
+O nome "Raphael" é uma homenagem ao pintor renascentista Rafael Sanzio, reforçando a proposta da biblioteca: tratar o navegador como uma tela (canvas) para desenho.
+</p>
+
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Compreender o propósito e o funcionamento do Raphael.js.</li>
+    <li>Criar formas vetoriais básicas (retângulos, círculos e caminhos).</li>
+    <li>Aplicar estilos, eventos e animações simples a elementos gráficos.</li>
+  </ul>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org1af7317" class="outline-2">
+<h2 id="org1af7317"><span class="section-number-2">2.</span> Página 2: Por que usar o Raphael.js?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Antes da adoção generalizada de bibliotecas como D3.js e do próprio SVG nativo bem suportado, o Raphael.js resolvia um problema real: <b><b>compatibilidade entre navegadores</b></b> na renderização de gráficos vetoriais.
+</p>
+
+<p>
+<b><b>Principais vantagens:</b></b>
+</p>
+<ul class="org-ul">
+<li>API simples e encadeável (<b>method chaining</b>), no estilo do jQuery.</li>
+<li>Não depende de nenhuma outra biblioteca (<b>zero dependencies</b>).</li>
+<li>Gera elementos SVG manipuláveis via DOM e CSS.</li>
+<li>Suporte nativo a animações e eventos de mouse/toque nas formas desenhadas.</li>
+<li>Ideal para gráficos, ícones interativos, mapas e pequenas visualizações de dados.</li>
+</ul>
+
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Nota histórica:</strong> Hoje em dia, com o SVG nativamente suportado por todos os navegadores modernos, o Raphael.js é menos usado em produção, mas continua sendo um excelente ponto de partida didático para entender manipulação de gráficos vetoriais em JavaScript antes de avançar para bibliotecas como D3.js.
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org18606fc" class="outline-2">
+<h2 id="org18606fc"><span class="section-number-2">3.</span> Página 3: Instalando e Configurando</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+A forma mais simples de utilizar o Raphael.js é incluí-lo via CDN em uma página HTML.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-html">&lt;!DOCTYPE html&gt;
+&lt;html lang="pt-br"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;Introdução ao Raphael.js&lt;/title&gt;
+  &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div id="palco" style="width: 400px; height: 300px;"&gt;&lt;/div&gt;
+
+  &lt;script src="app.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<p>
+Também é possível instalar via <b>npm</b>, para uso em projetos com bundlers:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash">npm install raphael
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-orgf8a412b" class="outline-2">
+<h2 id="orgf8a412b"><span class="section-number-2">4.</span> Página 4: Criando o Primeiro Desenho</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Todo desenho no Raphael.js começa pela criação de um <b><b>papel</b></b> (<b>paper</b>), que é a área de desenho vinculada a um elemento do DOM.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">// Cria um "papel" de 400x300 dentro do elemento com id="palco"
+var papel = Raphael("palco", 400, 300);
+
+// Desenha um círculo: centro (150,100) e raio 40
+var circulo = papel.circle(150, 100, 40);
+circulo.attr({
+  fill: "#2980b9",
+  stroke: "#1c5980",
+  "stroke-width": 3
+});
+
+// Desenha um retângulo: posição (250,60), largura 80, altura 80
+var retangulo = papel.rect(250, 60, 80, 80, 10); // último argumento = raio do canto
+retangulo.attr({ fill: "#e67e22" });
+</pre>
+</div>
+
+<p>
+Repare que o método <code>attr()</code> aceita um objeto de configuração, permitindo definir cor de preenchimento (<code>fill</code>), cor e espessura da borda (<code>stroke</code>, <code>stroke-width</code>) de forma declarativa.
+</p>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-orgdccda94" class="outline-2">
+<h2 id="orgdccda94"><span class="section-number-2">5.</span> Página 5: Caminhos, Texto e Encadeamento de Métodos (Chaining)</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Além das formas básicas, o Raphael.js permite desenhar <b><b>caminhos</b></b> (<b>paths</b>) usando a mesma sintaxe de comandos do SVG, além de inserir texto no palco.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">var papel = Raphael("palco", 400, 300);
+
+// Caminho: M (move to) e L (line to) desenham um triângulo
+var triangulo = papel.path("M 50,250 L 100,180 L 150,250 Z");
+triangulo
+  .attr({ fill: "#27ae60", stroke: "none" })
+  .transform("t20,0"); // translação (chaining de métodos)
+
+// Texto no palco
+papel.text(200, 250, "Feito com Raphael.js")
+     .attr({ "font-size": 16, fill: "#2c3e50" });
+</pre>
+</div>
+
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Dica:</strong> Assim como no jQuery, a maioria dos métodos do Raphael.js retorna o próprio objeto, permitindo <em>encadear</em> várias chamadas em sequência (<code>.attr(...).transform(...)</code>).
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org660a0eb" class="outline-2">
+<h2 id="org660a0eb"><span class="section-number-2">6.</span> Página 6: Eventos e Animações</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+O Raphael.js permite associar eventos de interação (mouse, clique, toque) diretamente às formas desenhadas, além de animar propriedades ao longo do tempo com o método <code>animate()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-javascript">var papel = Raphael("palco", 400, 300);
+var circulo = papel.circle(80, 80, 30).attr({ fill: "#8e44ad" });
+
+// Evento de clique: anima o raio e a cor do círculo
+circulo.click(function () {
+  this.animate({ r: 60, fill: "#c0392b" }, 800, "bounce");
+});
+
+// Evento de hover: muda o cursor e a opacidade
+circulo.hover(
+  function () { this.attr({ opacity: 0.7, cursor: "pointer" }); },
+  function () { this.attr({ opacity: 1 }); }
+);
+</pre>
+</div>
+
+<p>
+O terceiro parâmetro de <code>animate()</code> define o tipo de suavização (<b>easing</b>), como <code>\"linear\"</code>, <code>\"ease-in\"</code>, <code>\"bounce\"</code>, entre outros.
+</p>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org362f300" class="outline-2">
+<h2 id="org362f300"><span class="section-number-2">7.</span> Página 7: Resumo e Exercícios de Fixação</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Nesta aula, você conheceu o <b><b>Raphael.js</b></b>, uma biblioteca JavaScript para criação de gráficos vetoriais compatíveis entre navegadores, e viu como criar formas, texto, eventos e animações com uma API simples e encadeável.
+</p>
+
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Qual é o papel do objeto retornado por <code>Raphael("palco", largura, altura)</code>?</li>
+    <li>Qual a diferença entre usar <code>.circle()</code>/<code>.rect()</code> e usar <code>.path()</code> para desenhar formas?</li>
+    <li>Como o Raphael.js permite reagir a um clique do usuário sobre uma forma desenhada?</li>
+  </ol>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

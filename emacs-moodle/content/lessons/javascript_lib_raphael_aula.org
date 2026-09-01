@@ -1,0 +1,161 @@
+#+TITLE: Aula: Introdução à Biblioteca Raphael.js
+#+SUBTITLE: Gráficos Vetoriais e Animações em JavaScript
+#+AUTHOR: Prof. Wagner
+#+DATE: 2026-09-01
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Página 1: O que é o Raphael.js?
+
+**Raphael.js** é uma biblioteca JavaScript leve, criada por Dmitry Baranovskiy, voltada para a criação e manipulação de **gráficos vetoriais** diretamente no navegador. Ela abstrai as diferenças entre os motores gráficos usados pelos diversos navegadores, gerando **SVG** (Scalable Vector Graphics) em navegadores modernos e, historicamente, **VML** em versões antigas do Internet Explorer.
+
+O nome "Raphael" é uma homenagem ao pintor renascentista Rafael Sanzio, reforçando a proposta da biblioteca: tratar o navegador como uma tela (canvas) para desenho.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Compreender o propósito e o funcionamento do Raphael.js.</li>
+    <li>Criar formas vetoriais básicas (retângulos, círculos e caminhos).</li>
+    <li>Aplicar estilos, eventos e animações simples a elementos gráficos.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+---
+
+* Página 2: Por que usar o Raphael.js?
+
+Antes da adoção generalizada de bibliotecas como D3.js e do próprio SVG nativo bem suportado, o Raphael.js resolvia um problema real: **compatibilidade entre navegadores** na renderização de gráficos vetoriais.
+
+**Principais vantagens:**
+- API simples e encadeável (*method chaining*), no estilo do jQuery.
+- Não depende de nenhuma outra biblioteca (*zero dependencies*).
+- Gera elementos SVG manipuláveis via DOM e CSS.
+- Suporte nativo a animações e eventos de mouse/toque nas formas desenhadas.
+- Ideal para gráficos, ícones interativos, mapas e pequenas visualizações de dados.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Nota histórica:</strong> Hoje em dia, com o SVG nativamente suportado por todos os navegadores modernos, o Raphael.js é menos usado em produção, mas continua sendo um excelente ponto de partida didático para entender manipulação de gráficos vetoriais em JavaScript antes de avançar para bibliotecas como D3.js.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 3: Instalando e Configurando
+
+A forma mais simples de utilizar o Raphael.js é incluí-lo via CDN em uma página HTML.
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Introdução ao Raphael.js</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.3.0/raphael.min.js"></script>
+</head>
+<body>
+  <div id="palco" style="width: 400px; height: 300px;"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+#+END_SRC
+
+Também é possível instalar via *npm*, para uso em projetos com bundlers:
+
+#+BEGIN_SRC bash
+npm install raphael
+#+END_SRC
+
+---
+
+* Página 4: Criando o Primeiro Desenho
+
+Todo desenho no Raphael.js começa pela criação de um **papel** (*paper*), que é a área de desenho vinculada a um elemento do DOM.
+
+#+BEGIN_SRC javascript
+// Cria um "papel" de 400x300 dentro do elemento com id="palco"
+var papel = Raphael("palco", 400, 300);
+
+// Desenha um círculo: centro (150,100) e raio 40
+var circulo = papel.circle(150, 100, 40);
+circulo.attr({
+  fill: "#2980b9",
+  stroke: "#1c5980",
+  "stroke-width": 3
+});
+
+// Desenha um retângulo: posição (250,60), largura 80, altura 80
+var retangulo = papel.rect(250, 60, 80, 80, 10); // último argumento = raio do canto
+retangulo.attr({ fill: "#e67e22" });
+#+END_SRC
+
+Repare que o método =attr()= aceita um objeto de configuração, permitindo definir cor de preenchimento (=fill=), cor e espessura da borda (=stroke=, =stroke-width=) de forma declarativa.
+
+---
+
+* Página 5: Caminhos, Texto e Encadeamento de Métodos (Chaining)
+
+Além das formas básicas, o Raphael.js permite desenhar **caminhos** (*paths*) usando a mesma sintaxe de comandos do SVG, além de inserir texto no palco.
+
+#+BEGIN_SRC javascript
+var papel = Raphael("palco", 400, 300);
+
+// Caminho: M (move to) e L (line to) desenham um triângulo
+var triangulo = papel.path("M 50,250 L 100,180 L 150,250 Z");
+triangulo
+  .attr({ fill: "#27ae60", stroke: "none" })
+  .transform("t20,0"); // translação (chaining de métodos)
+
+// Texto no palco
+papel.text(200, 250, "Feito com Raphael.js")
+     .attr({ "font-size": 16, fill: "#2c3e50" });
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Dica:</strong> Assim como no jQuery, a maioria dos métodos do Raphael.js retorna o próprio objeto, permitindo <em>encadear</em> várias chamadas em sequência (<code>.attr(...).transform(...)</code>).
+</div>
+#+END_EXPORT
+
+---
+
+* Página 6: Eventos e Animações
+
+O Raphael.js permite associar eventos de interação (mouse, clique, toque) diretamente às formas desenhadas, além de animar propriedades ao longo do tempo com o método =animate()=.
+
+#+BEGIN_SRC javascript
+var papel = Raphael("palco", 400, 300);
+var circulo = papel.circle(80, 80, 30).attr({ fill: "#8e44ad" });
+
+// Evento de clique: anima o raio e a cor do círculo
+circulo.click(function () {
+  this.animate({ r: 60, fill: "#c0392b" }, 800, "bounce");
+});
+
+// Evento de hover: muda o cursor e a opacidade
+circulo.hover(
+  function () { this.attr({ opacity: 0.7, cursor: "pointer" }); },
+  function () { this.attr({ opacity: 1 }); }
+);
+#+END_SRC
+
+O terceiro parâmetro de =animate()= define o tipo de suavização (*easing*), como =\"linear\"=, =\"ease-in\"=, =\"bounce\"=, entre outros.
+
+---
+
+* Página 7: Resumo e Exercícios de Fixação
+
+Nesta aula, você conheceu o **Raphael.js**, uma biblioteca JavaScript para criação de gráficos vetoriais compatíveis entre navegadores, e viu como criar formas, texto, eventos e animações com uma API simples e encadeável.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Qual é o papel do objeto retornado por <code>Raphael("palco", largura, altura)</code>?</li>
+    <li>Qual a diferença entre usar <code>.circle()</code>/<code>.rect()</code> e usar <code>.path()</code> para desenhar formas?</li>
+    <li>Como o Raphael.js permite reagir a um clique do usuário sobre uma forma desenhada?</li>
+  </ol>
+</div>
+#+END_EXPORT

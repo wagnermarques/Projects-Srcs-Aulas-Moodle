@@ -1,0 +1,254 @@
+#+TITLE: Aula: Introdução à Biblioteca Ripple.js
+#+SUBTITLE: Efeitos de Ondulação (Ripple) no Estilo Material Design
+#+AUTHOR: Prof. Wagner
+#+DATE: 2026-09-01
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Página 1: O que é o Ripple.js?
+
+**Ripple.js** é uma biblioteca JavaScript leve e independente de framework, cujo objetivo é reproduzir o efeito visual de **ondulação** (*ripple effect*) ao clicar em um elemento — a mesma animação popularizada pelo **Material Design**, do Google, em botões, cards e outros componentes interativos.
+
+Ao ser clicado, o elemento exibe um pequeno círculo que nasce no ponto exato do clique/toque e se expande suavemente até cobrir a área do componente, desaparecendo em seguida. Esse feedback visual reforça para o usuário que a interação foi reconhecida pela interface.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Entender o propósito do efeito ripple em interfaces modernas.</li>
+    <li>Aplicar o Ripple.js a botões e outros elementos clicáveis.</li>
+    <li>Customizar cor, duração e comportamento do efeito.</li>
+    <li>Compreender, em linhas gerais, como o efeito é implementado por trás dos panos.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+---
+
+* Página 2: Por que usar o Ripple.js?
+
+O efeito de ondulação virou um padrão de usabilidade em várias plataformas (Android, Angular Material, MUI/React etc.), pois entrega **feedback tátil visual imediato**. Usar uma biblioteca dedicada, em vez de reimplementar o efeito manualmente em cada projeto, traz vantagens:
+
+- **Simplicidade:** basta marcar o elemento (via atributo ou classe) para que ele ganhe o efeito.
+- **Consistência visual:** mesma animação em todos os componentes da aplicação.
+- **Baixo acoplamento:** não exige um framework específico (funciona com HTML/CSS/JS puro).
+- **Leveza:** poucas linhas de JavaScript e CSS, sem dependências externas.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Atenção:</strong> existem diversas implementações e pacotes chamados "ripple" no ecossistema JavaScript (biblioteca standalone, plugins jQuery, componentes de frameworks como Angular Material e MUI). O princípio de funcionamento é o mesmo em todas; sempre confira a documentação oficial do pacote específico que seu projeto utiliza antes de aplicar em produção.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 3: Instalando e Configurando
+
+A forma mais simples de utilizar o Ripple.js é incluir o script e a folha de estilos em uma página HTML.
+
+#+BEGIN_SRC html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Introdução ao Ripple.js</title>
+  <link rel="stylesheet" href="ripple.css">
+</head>
+<body>
+  <button class="btn" data-ripple>Clique aqui</button>
+
+  <script src="ripple.js"></script>
+</body>
+</html>
+#+END_SRC
+
+Em projetos com bundler, a instalação costuma ser feita via *npm*:
+
+#+BEGIN_SRC bash
+npm install ripple-effects
+#+END_SRC
+
+---
+
+* Página 4: Uso Básico
+
+Basta marcar o elemento desejado — geralmente com um atributo (=data-ripple=) ou uma classe CSS — e inicializar a biblioteca. A partir daí, todo clique dentro do elemento dispara o efeito automaticamente.
+
+#+BEGIN_SRC javascript
+// Inicializa o efeito ripple em todos os elementos marcados na página
+Ripple.init();
+
+// Ou aplicando manualmente a um elemento específico
+var botao = document.querySelector("#meu-botao");
+Ripple.attach(botao);
+#+END_SRC
+
+#+BEGIN_SRC css
+.btn {
+  position: relative;
+  overflow: hidden; /* essencial para "recortar" o círculo dentro do elemento */
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  background-color: #2980b9;
+  color: #fff;
+  cursor: pointer;
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Dica:</strong> a propriedade CSS <code>overflow: hidden</code> no elemento pai é fundamental — é ela que impede o círculo animado de "vazar" para fora dos limites do botão.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 5: Demonstração ao Vivo
+
+Clique nos botões abaixo para ver o efeito ripple em ação. Esta demonstração é totalmente funcional e autocontida — implementada em JavaScript puro, sem depender de nenhum arquivo externo, seguindo exatamente os passos apresentados nesta aula.
+
+#+BEGIN_EXPORT html
+<style>
+.demo-ripple-wrap {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+.btn-demo-ripple {
+  position: relative;
+  overflow: hidden;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 4px;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  background-color: #2980b9;
+}
+.btn-demo-ripple.dark {
+  background-color: #2c3e50;
+}
+.btn-demo-ripple.success {
+  background-color: #27ae60;
+}
+.ripple-circulo-demo {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  background: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  animation: ripple-demo-anim 600ms ease-out;
+}
+@keyframes ripple-demo-anim {
+  to {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+</style>
+
+<div class="demo-ripple-wrap">
+  <button class="btn-demo-ripple">Clique aqui</button>
+  <button class="btn-demo-ripple dark">Botão escuro</button>
+  <button class="btn-demo-ripple success">Confirmar</button>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll(".btn-demo-ripple").forEach(function (botao) {
+    botao.addEventListener("click", function (evento) {
+      var circulo = document.createElement("span");
+      var raio = Math.max(botao.clientWidth, botao.clientHeight);
+      var rect = botao.getBoundingClientRect();
+
+      circulo.style.width = circulo.style.height = raio + "px";
+      circulo.style.left = (evento.clientX - rect.left - raio / 2) + "px";
+      circulo.style.top = (evento.clientY - rect.top - raio / 2) + "px";
+      circulo.classList.add("ripple-circulo-demo");
+
+      botao.appendChild(circulo);
+      circulo.addEventListener("animationend", function () {
+        circulo.remove();
+      });
+    });
+  });
+})();
+</script>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Importante sobre o Moodle:</strong> por padrão, o editor do Moodle (Atto/TinyMCE) remove tags <code>&lt;script&gt;</code> por segurança. Para que esta demonstração funcione dentro da página de Lesson, é preciso editar via <strong>"Editar código-fonte HTML"</strong> (ícone <code>&lt;/&gt;</code>) e/ou ter a capacidade <code>moodle/site:trustcontent</code> habilitada para o seu usuário/curso. Caso o script seja filtrado, o efeito visual não aparecerá, mas o restante do conteúdo da aula permanece intacto.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 6: Customização
+
+A maioria das implementações de Ripple.js permite configurar cor, duração e opacidade do efeito, seja via atributos =data-*= no HTML, seja via opções passadas na inicialização.
+
+#+BEGIN_SRC html
+<button class="btn"
+        data-ripple
+        data-ripple-color="rgba(255,255,255,0.4)"
+        data-ripple-duration="600">
+  Salvar
+</button>
+#+END_SRC
+
+#+BEGIN_SRC javascript
+Ripple.init({
+  color: "rgba(255, 255, 255, 0.4)", // cor do círculo
+  duration: 600,                     // duração da animação em ms
+  easing: "ease-out"                 // curva de suavização
+});
+#+END_SRC
+
+---
+
+* Página 7: Como o Efeito Funciona por Trás dos Panos
+
+Mesmo variando de implementação para implementação, o princípio do efeito ripple costuma seguir os mesmos passos:
+
+1. **Capturar o clique/toque**, obtendo a posição relativa do evento dentro do elemento (=offsetX=, =offsetY=).
+2. **Criar dinamicamente um elemento** (normalmente um =<span>=) posicionado exatamente nesse ponto.
+3. **Calcular o tamanho do círculo** de forma que ele seja grande o suficiente para cobrir todo o elemento pai, mesmo a partir de um clique na borda.
+4. **Animar** a escala (de 0 a 1) e a opacidade (de um valor visível até 0), geralmente com CSS =transition= ou =@keyframes=.
+5. **Remover o elemento** do DOM ao final da animação, usando o evento =transitionend= ou =animationend=.
+
+#+BEGIN_SRC javascript
+elemento.addEventListener("click", function (evento) {
+  var circulo = document.createElement("span");
+  var raio = Math.max(elemento.clientWidth, elemento.clientHeight);
+  var rect = elemento.getBoundingClientRect();
+
+  circulo.style.width = circulo.style.height = raio + "px";
+  circulo.style.left = (evento.clientX - rect.left - raio / 2) + "px";
+  circulo.style.top = (evento.clientY - rect.top - raio / 2) + "px";
+  circulo.classList.add("ripple-circulo");
+
+  elemento.appendChild(circulo);
+  circulo.addEventListener("animationend", function () {
+    circulo.remove();
+  });
+});
+#+END_SRC
+
+---
+
+* Página 8: Resumo e Exercícios de Fixação
+
+Nesta aula, você conheceu o **Ripple.js**, uma biblioteca JavaScript dedicada a reproduzir o efeito de ondulação ao clique popularizado pelo Material Design, viu como aplicá-lo e customizá-lo, e entendeu a lógica geral por trás da sua implementação.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Por que a propriedade CSS <code>overflow: hidden</code> é essencial para o efeito funcionar corretamente?</li>
+    <li>Quais informações do evento de clique são necessárias para posicionar o círculo do ripple no lugar certo?</li>
+    <li>Por que o elemento criado dinamicamente para o efeito deve ser removido do DOM ao final da animação?</li>
+  </ol>
+</div>
+#+END_EXPORT
