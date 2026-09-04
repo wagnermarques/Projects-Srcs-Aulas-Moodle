@@ -68,6 +68,22 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+;; Treemacs file and project navigation
+(use-package treemacs
+  :hook (emacs-startup . treemacs)
+  :bind
+  ("M-0"       . treemacs-select-window)
+  ("C-x t t"   . treemacs)
+  ("C-x t 1"   . treemacs-delete-other-windows)
+  ("C-x t d"   . treemacs-select-directory)
+  ("C-x t B"   . treemacs-bookmark)
+  ("C-x t C-t" . treemacs-find-file)
+  ("C-x t M-t" . treemacs-find-tag)
+  :config
+  (setq treemacs-width 30
+        treemacs-is-never-other-window t
+        treemacs-show-hidden-files t))
+
 ;; Markdown mode for editing documentation
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
