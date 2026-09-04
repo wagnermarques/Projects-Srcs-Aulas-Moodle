@@ -1,0 +1,278 @@
+#+TITLE: Tutorial: Introdução ao Docker e Containers
+#+SUBTITLE: Guia Prático de Fundamentos, Dockerfile e Docker Compose
+#+AUTHOR: Prof. Wagner Marques
+#+DATE: 2026-09-04
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Módulo 1: O que é Docker e Containerização?
+
+**Docker** é uma plataforma aberta para desenvolvimento, envio e execução de aplicações através de **containers**. 
+
+Ao contrário das Máquinas Virtuais (VMs) tradicionais — que emulam hardware completo e exigem um Sistema Operacional convidado (*Guest OS*) para cada instância —, os containers compartilham o mesmo núcleo (*kernel*) do sistema operacional hospedeiro, isolando apenas os processos, dependências e bibliotecas no nível de usuário (*user space*).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Compreender a diferença prática entre Containers e Máquinas Virtuais.</li>
+    <li>Conhecer os blocos fundamentais: Docker Engine, Imagens, Containers e Registries.</li>
+    <li>Dominar os comandos essenciais da CLI para gerenciar ciclo de vida de containers.</li>
+    <li>Construir imagens customizadas e otimizadas com <code>Dockerfile</code>.</li>
+    <li>Configurar persistência com Volumes e comunicação entre containers com Networks.</li>
+    <li>Orquestrar múltiplos serviços de forma declarativa com <code>docker compose</code>.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+** Comparação: Containers vs Máquinas Virtuais
+
+| Característica | Máquina Virtual (VM) | Container Docker |
+|---|---|---|
+| **Arquitetura** | Hypervisor + Guest OS completo | Compartilha o Kernel do Host |
+| **Tempo de Inicialização** | Minutos | Segundos ou milissegundos |
+| **Uso de Recursos** | Alto (RAM e CPU dedicadas) | Leve (consome apenas o necessário) |
+| **Tamanho em Disco** | Gigabytes (GB) | Megabytes (MB) |
+| **Portabilidade** | Dependente de formato/hypervisor | Alta (roda em qualquer host com Docker) |
+
+---
+
+* Módulo 2: Arquitetura e Conceitos Principais
+
+A arquitetura do Docker é baseada no modelo cliente-servidor:
+
+1. **Docker Client (`docker`)**: A interface de linha de comando (CLI) utilizada para interagir com o daemon.
+2. **Docker Daemon (`dockerd`)**: O serviço de segundo plano responsável por gerenciar imagens, containers, redes e volumes.
+3. **Imagens (`Image`)**: Modelos somente-leitura (*read-only templates*) compostos por camadas empilhadas que contêm tudo o que uma aplicação precisa para rodar.
+4. **Containers (`Container`)**: Instâncias em execução de uma imagem. Possuem uma camada de escrita temporária no topo.
+5. **Registry / Docker Hub**: Repositório central de imagens públicas ou privadas (como o [[https://hub.docker.com][Docker Hub]]).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Conceito Chave:</strong> Uma <em>Imagem</em> é a "receita" ou "classe", enquanto um <em>Container</em> é a "execução viva" ou "objeto instanciado".
+</div>
+#+END_EXPORT
+
+---
+
+* Módulo 3: Comandos Essenciais do Docker CLI
+
+** 1. Verificando o Ambiente
+#+BEGIN_SRC bash
+# Exibe a versão do Docker Client e Server
+docker version
+
+# Exibe informações detalhadas do sistema e recursos
+docker info
+#+END_SRC
+
+** 2. Executando o Primeiro Container
+#+BEGIN_SRC bash
+# Baixa a imagem 'hello-world' do Docker Hub e executa
+docker run hello-world
+
+# Executa um container Nginx em segundo plano (detached), mapeando a porta 8080 do host para a 80 do container
+docker run -d --name meu-nginx -p 8080:80 nginx:alpine
+#+END_SRC
+
+** 3. Gerenciamento e Inspeção
+#+BEGIN_SRC bash
+# Listar containers em execução
+docker ps
+
+# Listar todos os containers (inclusive os parados)
+docker ps -a
+
+# Visualizar logs da aplicação em tempo real
+docker logs -f meu-nginx
+
+# Executar um comando interativo dentro do container em execução
+docker exec -it meu-nginx sh
+
+# Parar e remover containers
+docker stop meu-nginx
+docker rm meu-nginx
+#+END_SRC
+
+---
+
+* Módulo 4: Criando Imagens com Dockerfile
+
+Um **Dockerfile** é um arquivo de texto com instruções passo a passo para construir uma imagem Docker.
+
+** Exemplo: Aplicação Python Web
+
+#+BEGIN_SRC dockerfile
+# 1. Imagem base oficial e leve
+FROM python:3.11-slim
+
+# 2. Define o diretório de trabalho no container
+WORKDIR /app
+
+# 3. Copia os arquivos de dependências
+COPY requirements.txt .
+
+# 4. Instala dependências sem cache para manter a imagem enxuta
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Copia o restante do código-fonte da aplicação
+COPY . .
+
+# 6. Define variáveis de ambiente
+ENV PORT=5000 \
+    PYTHONUNBUFFERED=1
+
+# 7. Documenta a porta que será utilizada
+EXPOSE 5000
+
+# 8. Comando padrão de inicialização
+CMD ["python", "app.py"]
+#+END_SRC
+
+** Construindo e Executando a Imagem Customizada
+#+BEGIN_SRC bash
+# Constrói a imagem com a tag 'minha-app:1.0' usando o Dockerfile do diretório atual (.)
+docker build -t minha-app:1.0 .
+
+# Roda a imagem criada
+docker run -d -p 5000:5000 --name app-rodando minha-app:1.0
+#+END_SRC
+
+---
+
+* Módulo 5: Persistência com Volumes e Redes
+
+** Volumes (Persistência de Dados)
+Por padrão, os dados dentro de um container são efêmeros (perdidos ao remover o container). Para persistir dados (como bancos de dados):
+
+#+BEGIN_SRC bash
+# Cria um volume gerenciado pelo Docker
+docker volume create dados-db
+
+# Inicia um container PostgreSQL conectando o volume criado
+docker run -d \
+  --name meu-postgres \
+  -e POSTGRES_PASSWORD=segredo \
+  -v dados-db:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:16-alpine
+#+END_SRC
+
+** Redes (Docker Networks)
+Permite que containers se comuniquem pelo nome do container sem expor portas publicamente ao host.
+
+#+BEGIN_SRC bash
+# Cria uma rede bridge isolada
+docker network create minha-rede
+
+# Conecta containers na mesma rede
+docker run -d --name backend --network minha-rede minha-api:latest
+docker run -d --name banco --network minha-rede postgres:16-alpine
+#+END_SRC
+
+---
+
+* Módulo 6: Orquestração Simples com Docker Compose
+
+O **Docker Compose** é uma ferramenta declarativa (baseada em YAML) para definir e rodar aplicações multi-container.
+
+** Exemplo de `docker-compose.yml` (Web App + PostgreSQL + Redis):
+
+#+BEGIN_SRC yaml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/meudb
+      - REDIS_URL=redis://cache:6379/0
+    depends_on:
+      - db
+      - cache
+    networks:
+      - app-net
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: meudb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  cache:
+    image: redis:7-alpine
+    networks:
+      - app-net
+
+volumes:
+  postgres_data:
+
+networks:
+  app-net:
+    driver: bridge
+#+END_SRC
+
+** Comandos do Docker Compose
+#+BEGIN_SRC bash
+# Sobe todos os serviços em segundo plano (buildando se necessário)
+docker compose up -d
+
+# Visualiza logs de todos os serviços unificados
+docker compose logs -f
+
+# Para e remove todos os containers e redes da stack
+docker compose down
+#+END_SRC
+
+---
+
+* Módulo 7: Laboratórios Práticos no Repositório GitHub
+
+Para praticar todos os conceitos, utilize o repositório oficial de laboratórios do curso:
+[[https://github.com/wagnermarques/aulas_de_docker][github.com/wagnermarques/aulas_de_docker]]
+
+#+BEGIN_SRC bash
+# 1. Clone o repositório em sua máquina
+git clone https://github.com/wagnermarques/aulas_de_docker.git
+cd aulas_de_docker
+#+END_SRC
+
+** 🧪 Prática 1: Servidor Nginx com Bind Mount
+- **Branch:** =_1_aula_nginx_container_creation=
+- **Conceitos:** Mapeamento de portas (=8080:80=) e Bind Mount (=./html=).
+#+BEGIN_SRC bash
+git checkout _1_aula_nginx_container_creation
+docker compose up -d
+# Acesse http://localhost:8080 no seu navegador!
+# Teste alterar o arquivo html/index.html e dê F5 no navegador.
+# Ao terminar:
+docker compose down
+#+END_SRC
+
+** 🧪 Prática 2: Multi-Container Nginx + PHP 8.3 & Docker Network
+- **Branch:** =_2_aula_php8_container=
+- **Conceitos:** Redes internas isoladas (=networks=) e resolução de nomes por DNS interno.
+#+BEGIN_SRC bash
+git checkout _2_aula_php8_container
+docker compose up -d
+# Acesse http://localhost:8080 e veja o PHP 8.3 FPM processando a requisição!
+# Ao terminar:
+docker compose down
+#+END_SRC
+
+** 🧪 Prática 3: Container Node.js & Variáveis de Ambiente
+- **Branch:** =_3_aula_node_container=
+- **Conceitos:** Runtime Node.js, injeção de variáveis (=environment=) e comando de inicialização (=command=).
+#+BEGIN_SRC bash
+git checkout _3_aula_node_container
+docker compose up -d
+# Acesse http://localhost:8080 e veja o servidor Node.js com as variáveis injetadas!
+# Ao terminar:
+docker compose down
+#+END_SRC

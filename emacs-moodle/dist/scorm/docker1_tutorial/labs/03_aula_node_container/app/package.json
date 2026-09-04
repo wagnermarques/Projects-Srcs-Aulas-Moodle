@@ -1,0 +1,11 @@
+{
+  "name": "aula-node-container",
+  "version": "1.0.0",
+  "description": "Exemplo prático de Node.js em Container Docker",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "Prof. Wagner Marques",
+  "license": "MIT"
+}

@@ -1,0 +1,199 @@
+<?xml version="1.0" ?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Docker/Dockerfile &amp; Compose</text>
+    </category>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Instruções do Dockerfile</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Relacione cada instrução do **Dockerfile** com sua respectiva finalidade:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[Cada instrução no Dockerfile cria uma camada ou define metadados para a imagem gerada.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[FROM]]></text>
+      <answer>
+        <text>Define a imagem base a partir da qual a nova imagem será construída.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[WORKDIR]]></text>
+      <answer>
+        <text>Define o diretório de trabalho padrão para todas as instruções subsequentes no container.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[RUN]]></text>
+      <answer>
+        <text>Executa comandos durante o build da imagem criando uma nova camada imutável.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[CMD]]></text>
+      <answer>
+        <text>Especifica o comando e argumentos padrão que serão executados quando o container iniciar.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[EXPOSE]]></text>
+      <answer>
+        <text>Documenta em quais portas de rede o container escuta conexões em tempo de execução.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[ENV]]></text>
+      <answer>
+        <text>Define variáveis de ambiente disponíveis tanto durante o build quanto na execução do container.</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Diferença entre RUN e CMD no Dockerfile</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é a diferença fundamental entre as instruções &lt;code&gt;RUN&lt;/code&gt; e &lt;code&gt;CMD&lt;/code&gt; em um &lt;code&gt;Dockerfile&lt;/code&gt;?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[RUN executa no momento da construção da imagem (build-time) criando camadas; CMD define o processo principal que rodará quando o container for iniciado (runtime).]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[=RUN= é executado durante o processo de build da imagem para instalar dependências, enquanto &lt;code&gt;CMD&lt;/code&gt; define o comando padrão executado ao iniciar o container.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! RUN ocorre em build-time e CMD em runtime.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[=RUN= executa apenas em containers com interface gráfica, enquanto &lt;code&gt;CMD&lt;/code&gt; roda no terminal.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Ambos rodam em linha de comando no ambiente do container.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[=CMD= compila o código-fonte em binário e &lt;code&gt;RUN&lt;/code&gt; apenas baixa imagens do Docker Hub.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Não há diferença, ambas são instruções equivalentes e intercambiáveis.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Suas finalidades e fases de execução são completamente distintas.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Persistência de Dados com Docker Volumes</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Quando um container Docker que utiliza um **Volume** (=docker volume=) é destruído através do comando &lt;code&gt;docker rm&lt;/code&gt;, todos os dados salvos dentro desse volume são permanentemente apagados do disco.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[Volumes Docker são gerenciados fora do ciclo de vida dos containers, garantindo que a remoção de um container não delete os dados gravados no volume.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="0">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Volumes são persistentes e independentes do ciclo de vida do container.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Volumes são criados e armazenados no host independentemente dos containers, sobrevivendo à deleção do container.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Comando para Subir Stack do Docker Compose</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual comando completo do Docker Compose é utilizado para criar, iniciar e rodar todos os serviços definidos no &lt;code&gt;docker-compose.yml&lt;/code&gt; em segundo plano (*detached mode*)?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[O comando 'docker compose up -d' ou 'docker-compose up -d' inicia todos os serviços declarados no arquivo YAML em segundo plano.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>docker compose up -d</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Sintaxe moderna com o plugin Compose v2.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>docker-compose up -d</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Sintaxe clássica do Compose v1.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Comunicação entre Containers via Rede Docker</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Ao conectar múltiplos containers a uma mesma rede customizada (*User-defined Bridge Network*), como um container de backend pode se comunicar com um container de banco de dados chamado &lt;code&gt;banco-postgres&lt;/code&gt;?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[O DNS interno do Docker permite resolução de nomes automática entre containers na mesma rede customizada.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Utilizando o próprio nome do container (=banco-postgres=) como hostname de conexão, graças ao DNS interno do Docker.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O Docker resolve o nome do container diretamente para seu IP interno.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Obrigatoriamente descobrindo e configurando o endereço IP dinâmico atribuído pelo roteador da rede física.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. O DNS interno torna desnecessário fixar ou descobrir IPs manuais.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Apenas através de um cabo de rede virtual configurado na placa-mãe do host.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Containers nunca conseguem se comunicar diretamente sem mapear portas públicas no host.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Redes internas permitem comunicação isolada sem expor portas ao mundo exterior.]]></text>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

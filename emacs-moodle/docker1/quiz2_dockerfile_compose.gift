@@ -1,0 +1,43 @@
+$CATEGORY: Docker/Dockerfile & Compose
+
+::Instruções do Dockerfile:: Relacione cada instrução do **Dockerfile** com sua respectiva finalidade: {
+  =FROM -> Define a imagem base a partir da qual a nova imagem será construída.
+  =WORKDIR -> Define o diretório de trabalho padrão para todas as instruções subsequentes no container.
+  =RUN -> Executa comandos durante o build da imagem criando uma nova camada imutável.
+  =CMD -> Especifica o comando e argumentos padrão que serão executados quando o container iniciar.
+  =EXPOSE -> Documenta em quais portas de rede o container escuta conexões em tempo de execução.
+  =ENV -> Define variáveis de ambiente disponíveis tanto durante o build quanto na execução do container.
+}
+
+
+$CATEGORY: Docker/Dockerfile & Compose
+
+::Diferença entre RUN e CMD no Dockerfile:: Qual é a diferença fundamental entre as instruções =RUN= e =CMD= em um =Dockerfile=? {
+  ==RUN= é executado durante o processo de build da imagem para instalar dependências, enquanto =CMD= define o comando padrão executado ao iniciar o container. #Correto! RUN ocorre em build-time e CMD em runtime.
+  ~=RUN= executa apenas em containers com interface gráfica, enquanto =CMD= roda no terminal. #Incorreto. Ambos rodam em linha de comando no ambiente do container.
+  ~=CMD= compila o código-fonte em binário e =RUN= apenas baixa imagens do Docker Hub. #Incorreto.
+  ~Não há diferença, ambas são instruções equivalentes e intercambiáveis. #Incorreto. Suas finalidades e fases de execução são completamente distintas.
+}
+
+
+$CATEGORY: Docker/Dockerfile & Compose
+
+::Persistência de Dados com Docker Volumes:: Quando um container Docker que utiliza um **Volume** (=docker volume=) é destruído através do comando =docker rm=, todos os dados salvos dentro desse volume são permanentemente apagados do disco. {FALSE}
+
+
+$CATEGORY: Docker/Dockerfile & Compose
+
+::Comando para Subir Stack do Docker Compose:: Qual comando completo do Docker Compose é utilizado para criar, iniciar e rodar todos os serviços definidos no =docker-compose.yml= em segundo plano (*detached mode*)? {
+  =docker compose up -d #Correto! Sintaxe moderna com o plugin Compose v2.
+  =docker-compose up -d #Correto! Sintaxe clássica do Compose v1.
+}
+
+
+$CATEGORY: Docker/Dockerfile & Compose
+
+::Comunicação entre Containers via Rede Docker:: Ao conectar múltiplos containers a uma mesma rede customizada (*User-defined Bridge Network*), como um container de backend pode se comunicar com um container de banco de dados chamado =banco-postgres=? {
+  =Utilizando o próprio nome do container (=banco-postgres=) como hostname de conexão, graças ao DNS interno do Docker. #Correto! O Docker resolve o nome do container diretamente para seu IP interno.
+  ~Obrigatoriamente descobrindo e configurando o endereço IP dinâmico atribuído pelo roteador da rede física. #Incorreto. O DNS interno torna desnecessário fixar ou descobrir IPs manuais.
+  ~Apenas através de um cabo de rede virtual configurado na placa-mãe do host. #Incorreto.
+  ~Containers nunca conseguem se comunicar diretamente sem mapear portas públicas no host. #Incorreto. Redes internas permitem comunicação isolada sem expor portas ao mundo exterior.
+}

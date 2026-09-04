@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2026-07-30 qui 22:57 -->
+<!-- 2026-08-06 qui 15:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Aula: Orientação a Objetos em Kotlin</title>
@@ -204,18 +204,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgc09903c">1. Introdução à Programação Orientada a Objetos (POO)</a></li>
-<li><a href="#orgb4ffbdd">2. 1. Classes, Objetos e Propriedades</a></li>
-<li><a href="#orgb310c8f">3. 2. Encapsulamento e Modificadores de Acesso</a></li>
-<li><a href="#org60b4cff">4. 3. Herança (<code>open class</code> e <code>override</code>)</a></li>
-<li><a href="#org657aa68">5. 4. Abstração, Interfaces e Polimorfismo</a></li>
-<li><a href="#orgaa222f5">6. 5. Recursos Poderosos do Kotlin para POO</a></li>
-<li><a href="#orgf8fab56">7. 6. Resumo e Exercícios de Fixação</a></li>
+<li><a href="#org1fb4b1b">1. Introdução à Programação Orientada a Objetos (POO)</a></li>
+<li><a href="#orge6c3855">2. 1. Classes, Objetos e Propriedades</a></li>
+<li><a href="#org6215d27">3. 2. Encapsulamento e Modificadores de Acesso</a></li>
+<li><a href="#org908ba78">4. 3. Herança (<code>open class</code> e <code>override</code>)</a></li>
+<li><a href="#orgcf339b9">5. 4. Abstração, Interfaces e Polimorfismo</a></li>
+<li><a href="#org103d521">6. 5. Recursos Poderosos do Kotlin para POO</a></li>
+<li><a href="#orgceb72f9">7. 6. Resumo e Exercícios de Fixação</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgc09903c" class="outline-2">
-<h2 id="orgc09903c"><span class="section-number-2">1.</span> Introdução à Programação Orientada a Objetos (POO)</h2>
+<div id="outline-container-org1fb4b1b" class="outline-2">
+<h2 id="org1fb4b1b"><span class="section-number-2">1.</span> Introdução à Programação Orientada a Objetos (POO)</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 A <b><b>Programação Orientada a Objetos (POO)</b></b> é um paradigma de programação que organiza o código em torno de <b><b>Objetos</b></b>, que representam entidades do mundo real encapsulando dados (atributos/propriedades) e comportamentos (métodos/funções).
@@ -245,8 +245,8 @@ Em <b><b>Kotlin</b></b>, a POO é moderna, concisa e segura por padrão:
 </p>
 </div>
 </div>
-<div id="outline-container-orgb4ffbdd" class="outline-2">
-<h2 id="orgb4ffbdd"><span class="section-number-2">2.</span> 1. Classes, Objetos e Propriedades</h2>
+<div id="outline-container-orge6c3855" class="outline-2">
+<h2 id="orge6c3855"><span class="section-number-2">2.</span> 1. Classes, Objetos e Propriedades</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Uma <b><b>Classe</b></b> é o molde (blueprint), e um <b><b>Objeto</b></b> é a instância concreta desse molde.
@@ -281,8 +281,8 @@ fun main() {
 </p>
 </div>
 </div>
-<div id="outline-container-orgb310c8f" class="outline-2">
-<h2 id="orgb310c8f"><span class="section-number-2">3.</span> 2. Encapsulamento e Modificadores de Acesso</h2>
+<div id="outline-container-org6215d27" class="outline-2">
+<h2 id="org6215d27"><span class="section-number-2">3.</span> 2. Encapsulamento e Modificadores de Acesso</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 O <b><b>Encapsulamento</b></b> esconde os detalhes internos da classe e expõe apenas o necessário através de uma interface pública segura.
@@ -334,8 +334,8 @@ O <b><b>Encapsulamento</b></b> esconde os detalhes internos da classe e expõe a
 </p>
 </div>
 </div>
-<div id="outline-container-org60b4cff" class="outline-2">
-<h2 id="org60b4cff"><span class="section-number-2">4.</span> 3. Herança (<code>open class</code> e <code>override</code>)</h2>
+<div id="outline-container-org908ba78" class="outline-2">
+<h2 id="org908ba78"><span class="section-number-2">4.</span> 3. Herança (<code>open class</code> e <code>override</code>)</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Em Kotlin, todas as classes são <code>final</code> por padrão. Para permitir que uma classe seja herdada, devemos marcou-a explicitamente com o modificador <code>open</code>.
@@ -378,8 +378,8 @@ class Gerente(
 </p>
 </div>
 </div>
-<div id="outline-container-org657aa68" class="outline-2">
-<h2 id="org657aa68"><span class="section-number-2">5.</span> 4. Abstração, Interfaces e Polimorfismo</h2>
+<div id="outline-container-orgcf339b9" class="outline-2">
+<h2 id="orgcf339b9"><span class="section-number-2">5.</span> 4. Abstração, Interfaces e Polimorfismo</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 <b><b>Classes Abstratas (<code>abstract class</code>)</b></b> não podem ser instanciadas diretamente e servem como base estrutural.
@@ -426,8 +426,8 @@ fun processarImposto(item: Tributavel) {
 </p>
 </div>
 </div>
-<div id="outline-container-orgaa222f5" class="outline-2">
-<h2 id="orgaa222f5"><span class="section-number-2">6.</span> 5. Recursos Poderosos do Kotlin para POO</h2>
+<div id="outline-container-org103d521" class="outline-2">
+<h2 id="org103d521"><span class="section-number-2">6.</span> 5. Recursos Poderosos do Kotlin para POO</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 <b><b>Data Classes:</b></b> Perfeitas para modelar objetos de transferência de dados (DTOs).
@@ -450,8 +450,8 @@ fun main() {
 </p>
 </div>
 </div>
-<div id="outline-container-orgf8fab56" class="outline-2">
-<h2 id="orgf8fab56"><span class="section-number-2">7.</span> 6. Resumo e Exercícios de Fixação</h2>
+<div id="outline-container-orgceb72f9" class="outline-2">
+<h2 id="orgceb72f9"><span class="section-number-2">7.</span> 6. Resumo e Exercícios de Fixação</h2>
 <div class="outline-text-2" id="text-7">
 <div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
   <strong>Perguntas de Fixação:</strong>

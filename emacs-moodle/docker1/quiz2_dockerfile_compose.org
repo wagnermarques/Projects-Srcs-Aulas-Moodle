@@ -1,0 +1,72 @@
+#+TITLE: Banco de Questões - Dockerfile, Armazenamento e Compose
+#+AUTHOR: Prof. Wagner Marques
+#+DATE: 2026-09-04
+
+* Category: Docker/Dockerfile & Compose
+
+** [MATCH] Instruções do Dockerfile
+:PROPERTIES:
+:TYPE: matching
+:DEFAULTGRADE: 1.0
+:FEEDBACK: Cada instrução no Dockerfile cria uma camada ou define metadados para a imagem gerada.
+:END:
+Relacione cada instrução do **Dockerfile** com sua respectiva finalidade:
+
+- FROM :: Define a imagem base a partir da qual a nova imagem será construída.
+- WORKDIR :: Define o diretório de trabalho padrão para todas as instruções subsequentes no container.
+- RUN :: Executa comandos durante o build da imagem criando uma nova camada imutável.
+- CMD :: Especifica o comando e argumentos padrão que serão executados quando o container iniciar.
+- EXPOSE :: Documenta em quais portas de rede o container escuta conexões em tempo de execução.
+- ENV :: Define variáveis de ambiente disponíveis tanto durante o build quanto na execução do container.
+
+** [MCQ] Diferença entre RUN e CMD no Dockerfile
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: RUN executa no momento da construção da imagem (build-time) criando camadas; CMD define o processo principal que rodará quando o container for iniciado (runtime).
+:END:
+Qual é a diferença fundamental entre as instruções =RUN= e =CMD= em um =Dockerfile=?
+
+- [X] =RUN= é executado durante o processo de build da imagem para instalar dependências, enquanto =CMD= define o comando padrão executado ao iniciar o container. :: Correto! RUN ocorre em build-time e CMD em runtime.
+- [ ] =RUN= executa apenas em containers com interface gráfica, enquanto =CMD= roda no terminal. :: Incorreto. Ambos rodam em linha de comando no ambiente do container.
+- [ ] =CMD= compila o código-fonte em binário e =RUN= apenas baixa imagens do Docker Hub. :: Incorreto.
+- [ ] Não há diferença, ambas são instruções equivalentes e intercambiáveis. :: Incorreto. Suas finalidades e fases de execução são completamente distintas.
+
+** [TF] Persistência de Dados com Docker Volumes
+:PROPERTIES:
+:TYPE: truefalse
+:DEFAULTGRADE: 1.0
+:FEEDBACK: Volumes Docker são gerenciados fora do ciclo de vida dos containers, garantindo que a remoção de um container não delete os dados gravados no volume.
+:END:
+Quando um container Docker que utiliza um **Volume** (=docker volume=) é destruído através do comando =docker rm=, todos os dados salvos dentro desse volume são permanentemente apagados do disco.
+
+- [ ] True :: Incorreto. Volumes são persistentes e independentes do ciclo de vida do container.
+- [X] False :: Correto! Volumes são criados e armazenados no host independentemente dos containers, sobrevivendo à deleção do container.
+
+** [SA] Comando para Subir Stack do Docker Compose
+:PROPERTIES:
+:TYPE: shortanswer
+:DEFAULTGRADE: 1.0
+:FEEDBACK: O comando 'docker compose up -d' ou 'docker-compose up -d' inicia todos os serviços declarados no arquivo YAML em segundo plano.
+:END:
+Qual comando completo do Docker Compose é utilizado para criar, iniciar e rodar todos os serviços definidos no =docker-compose.yml= em segundo plano (*detached mode*)?
+
+- [X] docker compose up -d :: Correto! Sintaxe moderna com o plugin Compose v2.
+- [X] docker-compose up -d :: Correto! Sintaxe clássica do Compose v1.
+
+** [MCQ] Comunicação entre Containers via Rede Docker
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: O DNS interno do Docker permite resolução de nomes automática entre containers na mesma rede customizada.
+:END:
+Ao conectar múltiplos containers a uma mesma rede customizada (*User-defined Bridge Network*), como um container de backend pode se comunicar com um container de banco de dados chamado =banco-postgres=?
+
+- [X] Utilizando o próprio nome do container (=banco-postgres=) como hostname de conexão, graças ao DNS interno do Docker. :: Correto! O Docker resolve o nome do container diretamente para seu IP interno.
+- [ ] Obrigatoriamente descobrindo e configurando o endereço IP dinâmico atribuído pelo roteador da rede física. :: Incorreto. O DNS interno torna desnecessário fixar ou descobrir IPs manuais.
+- [ ] Apenas através de um cabo de rede virtual configurado na placa-mãe do host. :: Incorreto.
+- [ ] Containers nunca conseguem se comunicar diretamente sem mapear portas públicas no host. :: Incorreto. Redes internas permitem comunicação isolada sem expor portas ao mundo exterior.

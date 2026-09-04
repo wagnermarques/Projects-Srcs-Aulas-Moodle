@@ -1,0 +1,229 @@
+<?xml version="1.0" ?>
+<quiz>
+  <question type="category">
+    <category>
+      <text>$course$/Docker/Fundamentos</text>
+    </category>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Diferença entre Containers e Máquinas Virtuais</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual das seguintes alternativas descreve corretamente a principal diferença de arquitetura entre um **Container Docker** e uma **Máquina Virtual (VM)**?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[Containers compartilham o kernel do host, proporcionando isolamento a nível de processos de forma leve e rápida, ao contrário de VMs que exigem um Hypervisor e um SO convidado completo.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Containers compartilham o mesmo Kernel do sistema operacional hospedeiro, enquanto VMs emulam hardware e rodam um Sistema Operacional completo (Guest OS).]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! Containers operam em nível de processo no espaço de usuário sobre o kernel do host.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Containers sempre exigem um Hypervisor Type-1 dedicado para gerenciar recursos de hardware.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Quem utiliza hypervisor são as máquinas virtuais.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Máquinas virtuais inicializam muito mais rápido que containers porque não possuem isolamento de bibliotecas.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. VMs demoram minutos para inicializar pois precisam dar boot em todo o SO.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Containers não conseguem isolar arquivos, portas de rede ou processos.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. O Docker utiliza cgroups e namespaces do Linux para isolar processos, redes e sistema de arquivos.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="truefalse">
+    <name>
+      <text>Camada de Escrita em Containers</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Uma imagem Docker é somente-leitura (*read-only*), e todas as alterações feitas durante a execução do container são gravadas em uma camada temporária de escrita (*writable layer*) no topo da imagem.]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[As imagens Docker são compostas por camadas somente-leitura (read-only). Ao iniciar um container, o Docker adiciona uma camada fina de leitura/escrita (writable container layer) no topo.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <answer fraction="100">
+      <text>true</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! O container adiciona uma camada de escrita temporária sobre as camadas imutáveis da imagem.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0">
+      <text>false</text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. A imagem é de fato somente-leitura e as alterações ficam na camada temporária do container.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="shortanswer">
+    <name>
+      <text>Comando para Listar Containers Ativos</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Qual é o comando do Docker CLI utilizado para listar apenas os containers que estão atualmente em execução?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[O comando 'docker ps' (ou 'docker container ls') lista todos os containers em execução.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>docker ps</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `docker ps` exibe a tabela de containers ativos.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>docker container ls</text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `docker container ls` é a sintaxe de gerenciamento moderna do Docker.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Execução de Containers em Segundo Plano (Detached)</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Ao executar o comando &lt;code&gt;docker run&lt;/code&gt;, qual parâmetro (flag) deve ser utilizado para que o container seja executado em segundo plano (*detached mode*), liberando o terminal imediatamente?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[A flag -d (--detach) roda o container em segundo plano e imprime o ID do container.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[-d]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! `-d` ou `--detach` executa o container em background.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[-it]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. `-it` aloca um pseudo-TTY e mantém o stdin aberto para modo interativo.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[--rm]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. `--rm` remove o container automaticamente quando ele é finalizado.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[-p]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. `-p` mapeia portas entre o host e o container.]]></text>
+      </feedback>
+    </answer>
+  </question>
+  <question type="matching">
+    <name>
+      <text>Conceitos Fundamentais do Ecossistema Docker</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[Relacione cada elemento da arquitetura Docker à sua respectiva definição:]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[Relacione cada termo do Docker com sua respectiva definição ou função.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <shuffleanswers>true</shuffleanswers>
+    <subquestion format="html">
+      <text><![CDATA[Imagem (Image)]]></text>
+      <answer>
+        <text>Modelo somente-leitura composto por camadas empilhadas contendo aplicação e dependências.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Container]]></text>
+      <answer>
+        <text>Instância em execução de uma imagem com camada de escrita própria e isolamento de processo.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Docker Hub / Registry]]></text>
+      <answer>
+        <text>Repositório central para armazenamento e compartilhamento de imagens de container.</text>
+      </answer>
+    </subquestion>
+    <subquestion format="html">
+      <text><![CDATA[Dockerfile]]></text>
+      <answer>
+        <text>Arquivo de texto declarativo com instruções para construir uma imagem de forma automatizada.</text>
+      </answer>
+    </subquestion>
+  </question>
+  <question type="multichoice">
+    <name>
+      <text>Mapeamento de Portas no Docker Run</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[No comando &lt;code&gt;docker run -d -p 8080:80 nginx:alpine&lt;/code&gt;, o que significa o trecho &lt;code&gt;-p 8080:80&lt;/code&gt;?]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text><![CDATA[A sintaxe -p &lt;porta-no-host&gt;:&lt;porta-no-container&gt; redireciona tráfego do host para dentro do container.]]></text>
+    </generalfeedback>
+    <defaultgrade>1.0</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <idnumber/>
+    <single>true</single>
+    <shuffleanswers>true</shuffleanswers>
+    <answernumbering>abc</answernumbering>
+    <answer fraction="100" format="html">
+      <text><![CDATA[Redireciona a porta 8080 do computador hospedeiro (host) para a porta 80 dentro do container.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Correto! A ordem é sempre host:container.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Redireciona a porta 80 do computador hospedeiro para a porta 8080 dentro do container.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. A porta do host vem primeiro antes dos dois pontos.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Abre 8080 portas simultâneas para balanceamento de carga com timeout de 80 segundos.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto. Trata-se de mapeamento direto de portas de rede.]]></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="html">
+      <text><![CDATA[Limita o container a usar apenas a faixa de IPs entre 8080 e 80.]]></text>
+      <feedback format="html">
+        <text><![CDATA[Incorreto.]]></text>
+      </feedback>
+    </answer>
+  </question>
+</quiz>

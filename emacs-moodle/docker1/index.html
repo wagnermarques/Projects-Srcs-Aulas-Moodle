@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2026-09-04 sex 11:33 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Tutorial: Introdução ao Docker e Containers</title>
+<meta name="author" content="Prof. Wagner Marques" />
+<meta name="generator" content="Org Mode" />
+<style type="text/css">
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+  <script src="scorm_api.js"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Tutorial: Introdução ao Docker e Containers
+<br />
+<span class="subtitle">Guia Prático de Fundamentos, Dockerfile e Docker Compose</span>
+</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org3bab5d9">1. Módulo 1: O que é Docker e Containerização?</a>
+<ul>
+<li><a href="#org20e6b87">1.1. Comparação: Containers vs Máquinas Virtuais</a></li>
+</ul>
+</li>
+<li><a href="#org527fadd">2. Módulo 2: Arquitetura e Conceitos Principais</a></li>
+<li><a href="#org6b0f5a4">3. Módulo 3: Comandos Essenciais do Docker CLI</a>
+<ul>
+<li><a href="#org7d17468">3.1. 1. Verificando o Ambiente</a></li>
+<li><a href="#org9bc2de8">3.2. 2. Executando o Primeiro Container</a></li>
+<li><a href="#orgc714bed">3.3. 3. Gerenciamento e Inspeção</a></li>
+</ul>
+</li>
+<li><a href="#org9f83ba4">4. Módulo 4: Criando Imagens com Dockerfile</a>
+<ul>
+<li><a href="#orgaee6c45">4.1. Exemplo: Aplicação Python Web</a></li>
+<li><a href="#orgc2f6bd6">4.2. Construindo e Executando a Imagem Customizada</a></li>
+</ul>
+</li>
+<li><a href="#org0989a0e">5. Módulo 5: Persistência com Volumes e Redes</a>
+<ul>
+<li><a href="#orgb538b73">5.1. Volumes (Persistência de Dados)</a></li>
+<li><a href="#org7c4b65d">5.2. Redes (Docker Networks)</a></li>
+</ul>
+</li>
+<li><a href="#orgb6a67d7">6. Módulo 6: Orquestração Simples com Docker Compose</a>
+<ul>
+<li><a href="#org009aa9b">6.1. Exemplo de `docker-compose.yml` (Web App + PostgreSQL + Redis):</a></li>
+<li><a href="#orga4f705a">6.2. Comandos do Docker Compose</a></li>
+</ul>
+</li>
+<li><a href="#org5da2a63">7. Módulo 7: Laboratórios Práticos no Repositório GitHub</a>
+<ul>
+<li><a href="#orgdf9c9df">7.1. 🧪 Prática 1: Servidor Nginx com Bind Mount</a></li>
+<li><a href="#orgaa6c0e3">7.2. 🧪 Prática 2: Multi-Container Nginx + PHP 8.3 &amp; Docker Network</a></li>
+<li><a href="#orgeb5db10">7.3. 🧪 Prática 3: Container Node.js &amp; Variáveis de Ambiente</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org3bab5d9" class="outline-2">
+<h2 id="org3bab5d9"><span class="section-number-2">1.</span> Módulo 1: O que é Docker e Containerização?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b><b>Docker</b></b> é uma plataforma aberta para desenvolvimento, envio e execução de aplicações através de <b><b>containers</b></b>. 
+</p>
+
+<p>
+Ao contrário das Máquinas Virtuais (VMs) tradicionais — que emulam hardware completo e exigem um Sistema Operacional convidado (<b>Guest OS</b>) para cada instância —, os containers compartilham o mesmo núcleo (<b>kernel</b>) do sistema operacional hospedeiro, isolando apenas os processos, dependências e bibliotecas no nível de usuário (<b>user space</b>).
+</p>
+
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Compreender a diferença prática entre Containers e Máquinas Virtuais.</li>
+    <li>Conhecer os blocos fundamentais: Docker Engine, Imagens, Containers e Registries.</li>
+    <li>Dominar os comandos essenciais da CLI para gerenciar ciclo de vida de containers.</li>
+    <li>Construir imagens customizadas e otimizadas com <code>Dockerfile</code>.</li>
+    <li>Configurar persistência com Volumes e comunicação entre containers com Networks.</li>
+    <li>Orquestrar múltiplos serviços de forma declarativa com <code>docker compose</code>.</li>
+  </ul>
+</div>
+</div>
+<div id="outline-container-org20e6b87" class="outline-3">
+<h3 id="org20e6b87"><span class="section-number-3">1.1.</span> Comparação: Containers vs Máquinas Virtuais</h3>
+<div class="outline-text-3" id="text-1-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Característica</th>
+<th scope="col" class="org-left">Máquina Virtual (VM)</th>
+<th scope="col" class="org-left">Container Docker</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><b><b>Arquitetura</b></b></td>
+<td class="org-left">Hypervisor + Guest OS completo</td>
+<td class="org-left">Compartilha o Kernel do Host</td>
+</tr>
+
+<tr>
+<td class="org-left"><b><b>Tempo de Inicialização</b></b></td>
+<td class="org-left">Minutos</td>
+<td class="org-left">Segundos ou milissegundos</td>
+</tr>
+
+<tr>
+<td class="org-left"><b><b>Uso de Recursos</b></b></td>
+<td class="org-left">Alto (RAM e CPU dedicadas)</td>
+<td class="org-left">Leve (consome apenas o necessário)</td>
+</tr>
+
+<tr>
+<td class="org-left"><b><b>Tamanho em Disco</b></b></td>
+<td class="org-left">Gigabytes (GB)</td>
+<td class="org-left">Megabytes (MB)</td>
+</tr>
+
+<tr>
+<td class="org-left"><b><b>Portabilidade</b></b></td>
+<td class="org-left">Dependente de formato/hypervisor</td>
+<td class="org-left">Alta (roda em qualquer host com Docker)</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org527fadd" class="outline-2">
+<h2 id="org527fadd"><span class="section-number-2">2.</span> Módulo 2: Arquitetura e Conceitos Principais</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+A arquitetura do Docker é baseada no modelo cliente-servidor:
+</p>
+
+<ol class="org-ol">
+<li><b><b>Docker Client (`docker`)</b></b>: A interface de linha de comando (CLI) utilizada para interagir com o daemon.</li>
+<li><b><b>Docker Daemon (`dockerd`)</b></b>: O serviço de segundo plano responsável por gerenciar imagens, containers, redes e volumes.</li>
+<li><b><b>Imagens (`Image`)</b></b>: Modelos somente-leitura (<b>read-only templates</b>) compostos por camadas empilhadas que contêm tudo o que uma aplicação precisa para rodar.</li>
+<li><b><b>Containers (`Container`)</b></b>: Instâncias em execução de uma imagem. Possuem uma camada de escrita temporária no topo.</li>
+<li><b><b>Registry / Docker Hub</b></b>: Repositório central de imagens públicas ou privadas (como o <a href="https://hub.docker.com">Docker Hub</a>).</li>
+</ol>
+
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Conceito Chave:</strong> Uma <em>Imagem</em> é a "receita" ou "classe", enquanto um <em>Container</em> é a "execução viva" ou "objeto instanciado".
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+<div id="outline-container-org6b0f5a4" class="outline-2">
+<h2 id="org6b0f5a4"><span class="section-number-2">3.</span> Módulo 3: Comandos Essenciais do Docker CLI</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org7d17468" class="outline-3">
+<h3 id="org7d17468"><span class="section-number-3">3.1.</span> 1. Verificando o Ambiente</h3>
+<div class="outline-text-3" id="text-3-1">
+<div class="org-src-container">
+<pre class="src src-bash"># Exibe a versão do Docker Client e Server
+docker version
+
+# Exibe informações detalhadas do sistema e recursos
+docker info
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org9bc2de8" class="outline-3">
+<h3 id="org9bc2de8"><span class="section-number-3">3.2.</span> 2. Executando o Primeiro Container</h3>
+<div class="outline-text-3" id="text-3-2">
+<div class="org-src-container">
+<pre class="src src-bash"># Baixa a imagem 'hello-world' do Docker Hub e executa
+docker run hello-world
+
+# Executa um container Nginx em segundo plano (detached), mapeando a porta 8080 do host para a 80 do container
+docker run -d --name meu-nginx -p 8080:80 nginx:alpine
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc714bed" class="outline-3">
+<h3 id="orgc714bed"><span class="section-number-3">3.3.</span> 3. Gerenciamento e Inspeção</h3>
+<div class="outline-text-3" id="text-3-3">
+<div class="org-src-container">
+<pre class="src src-bash"># Listar containers em execução
+docker ps
+
+# Listar todos os containers (inclusive os parados)
+docker ps -a
+
+# Visualizar logs da aplicação em tempo real
+docker logs -f meu-nginx
+
+# Executar um comando interativo dentro do container em execução
+docker exec -it meu-nginx sh
+
+# Parar e remover containers
+docker stop meu-nginx
+docker rm meu-nginx
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9f83ba4" class="outline-2">
+<h2 id="org9f83ba4"><span class="section-number-2">4.</span> Módulo 4: Criando Imagens com Dockerfile</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+Um <b><b>Dockerfile</b></b> é um arquivo de texto com instruções passo a passo para construir uma imagem Docker.
+</p>
+</div>
+<div id="outline-container-orgaee6c45" class="outline-3">
+<h3 id="orgaee6c45"><span class="section-number-3">4.1.</span> Exemplo: Aplicação Python Web</h3>
+<div class="outline-text-3" id="text-4-1">
+<div class="org-src-container">
+<pre class="src src-dockerfile"># 1. Imagem base oficial e leve
+FROM python:3.11-slim
+
+# 2. Define o diretório de trabalho no container
+WORKDIR /app
+
+# 3. Copia os arquivos de dependências
+COPY requirements.txt .
+
+# 4. Instala dependências sem cache para manter a imagem enxuta
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Copia o restante do código-fonte da aplicação
+COPY . .
+
+# 6. Define variáveis de ambiente
+ENV PORT=5000 \
+    PYTHONUNBUFFERED=1
+
+# 7. Documenta a porta que será utilizada
+EXPOSE 5000
+
+# 8. Comando padrão de inicialização
+CMD ["python", "app.py"]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgc2f6bd6" class="outline-3">
+<h3 id="orgc2f6bd6"><span class="section-number-3">4.2.</span> Construindo e Executando a Imagem Customizada</h3>
+<div class="outline-text-3" id="text-4-2">
+<div class="org-src-container">
+<pre class="src src-bash"># Constrói a imagem com a tag 'minha-app:1.0' usando o Dockerfile do diretório atual (.)
+docker build -t minha-app:1.0 .
+
+# Roda a imagem criada
+docker run -d -p 5000:5000 --name app-rodando minha-app:1.0
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org0989a0e" class="outline-2">
+<h2 id="org0989a0e"><span class="section-number-2">5.</span> Módulo 5: Persistência com Volumes e Redes</h2>
+<div class="outline-text-2" id="text-5">
+</div>
+<div id="outline-container-orgb538b73" class="outline-3">
+<h3 id="orgb538b73"><span class="section-number-3">5.1.</span> Volumes (Persistência de Dados)</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+Por padrão, os dados dentro de um container são efêmeros (perdidos ao remover o container). Para persistir dados (como bancos de dados):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"># Cria um volume gerenciado pelo Docker
+docker volume create dados-db
+
+# Inicia um container PostgreSQL conectando o volume criado
+docker run -d \
+  --name meu-postgres \
+  -e POSTGRES_PASSWORD=segredo \
+  -v dados-db:/var/lib/postgresql/data \
+  -p 5432:5432 \
+  postgres:16-alpine
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org7c4b65d" class="outline-3">
+<h3 id="org7c4b65d"><span class="section-number-3">5.2.</span> Redes (Docker Networks)</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+Permite que containers se comuniquem pelo nome do container sem expor portas publicamente ao host.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"># Cria uma rede bridge isolada
+docker network create minha-rede
+
+# Conecta containers na mesma rede
+docker run -d --name backend --network minha-rede minha-api:latest
+docker run -d --name banco --network minha-rede postgres:16-alpine
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb6a67d7" class="outline-2">
+<h2 id="orgb6a67d7"><span class="section-number-2">6.</span> Módulo 6: Orquestração Simples com Docker Compose</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+O <b><b>Docker Compose</b></b> é uma ferramenta declarativa (baseada em YAML) para definir e rodar aplicações multi-container.
+</p>
+</div>
+<div id="outline-container-org009aa9b" class="outline-3">
+<h3 id="org009aa9b"><span class="section-number-3">6.1.</span> Exemplo de `docker-compose.yml` (Web App + PostgreSQL + Redis):</h3>
+<div class="outline-text-3" id="text-6-1">
+<div class="org-src-container">
+<pre class="src src-yaml">version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://user:pass@db:5432/meudb
+      - REDIS_URL=redis://cache:6379/0
+    depends_on:
+      - db
+      - cache
+    networks:
+      - app-net
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: meudb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  cache:
+    image: redis:7-alpine
+    networks:
+      - app-net
+
+volumes:
+  postgres_data:
+
+networks:
+  app-net:
+    driver: bridge
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orga4f705a" class="outline-3">
+<h3 id="orga4f705a"><span class="section-number-3">6.2.</span> Comandos do Docker Compose</h3>
+<div class="outline-text-3" id="text-6-2">
+<div class="org-src-container">
+<pre class="src src-bash"># Sobe todos os serviços em segundo plano (buildando se necessário)
+docker compose up -d
+
+# Visualiza logs de todos os serviços unificados
+docker compose logs -f
+
+# Para e remove todos os containers e redes da stack
+docker compose down
+</pre>
+</div>
+
+<p>
+&#x2014;
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org5da2a63" class="outline-2">
+<h2 id="org5da2a63"><span class="section-number-2">7.</span> Módulo 7: Laboratórios Práticos no Repositório GitHub</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Para praticar todos os conceitos, utilize o repositório oficial de laboratórios do curso:
+<a href="https://github.com/wagnermarques/aulas_de_docker">github.com/wagnermarques/aulas<sub>de</sub><sub>docker</sub></a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-bash"># 1. Clone o repositório em sua máquina
+git clone https://github.com/wagnermarques/aulas_de_docker.git
+cd aulas_de_docker
+</pre>
+</div>
+</div>
+<div id="outline-container-orgdf9c9df" class="outline-3">
+<h3 id="orgdf9c9df"><span class="section-number-3">7.1.</span> 🧪 Prática 1: Servidor Nginx com Bind Mount</h3>
+<div class="outline-text-3" id="text-7-1">
+<ul class="org-ul">
+<li><b><b>Branch:</b></b> <code>_1_aula_nginx_container_creation</code></li>
+<li><b><b>Conceitos:</b></b> Mapeamento de portas (<code>8080:80</code>) e Bind Mount (<code>./html</code>).</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">git checkout _1_aula_nginx_container_creation
+docker compose up -d
+# Acesse http://localhost:8080 no seu navegador!
+# Teste alterar o arquivo html/index.html e dê F5 no navegador.
+# Ao terminar:
+docker compose down
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgaa6c0e3" class="outline-3">
+<h3 id="orgaa6c0e3"><span class="section-number-3">7.2.</span> 🧪 Prática 2: Multi-Container Nginx + PHP 8.3 &amp; Docker Network</h3>
+<div class="outline-text-3" id="text-7-2">
+<ul class="org-ul">
+<li><b><b>Branch:</b></b> <code>_2_aula_php8_container</code></li>
+<li><b><b>Conceitos:</b></b> Redes internas isoladas (<code>networks</code>) e resolução de nomes por DNS interno.</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">git checkout _2_aula_php8_container
+docker compose up -d
+# Acesse http://localhost:8080 e veja o PHP 8.3 FPM processando a requisição!
+# Ao terminar:
+docker compose down
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgeb5db10" class="outline-3">
+<h3 id="orgeb5db10"><span class="section-number-3">7.3.</span> 🧪 Prática 3: Container Node.js &amp; Variáveis de Ambiente</h3>
+<div class="outline-text-3" id="text-7-3">
+<ul class="org-ul">
+<li><b><b>Branch:</b></b> <code>_3_aula_node_container</code></li>
+<li><b><b>Conceitos:</b></b> Runtime Node.js, injeção de variáveis (<code>environment</code>) e comando de inicialização (<code>command</code>).</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-bash">git checkout _3_aula_node_container
+docker compose up -d
+# Acesse http://localhost:8080 e veja o servidor Node.js com as variáveis injetadas!
+# Ao terminar:
+docker compose down
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

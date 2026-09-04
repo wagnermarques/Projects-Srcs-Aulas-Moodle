@@ -1,0 +1,4 @@
+#+Title: Matemática Índice
+
+
+[[./statistica/multivariada/index.org]]

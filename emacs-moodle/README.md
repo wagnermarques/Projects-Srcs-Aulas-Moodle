@@ -5,7 +5,6 @@ A complete, portable, native-first infrastructure for authoring, managing, and b
 ---
 
 ## 🌟 Key Features
-
 - **Single Source of Truth**: Draft all course material (lessons, quizzes, formulas, code snippets) in plain-text Org files.
 - **Multi-Format Moodle Export**:
   - **Moodle XML** (`.xml`): Full-featured native Moodle format supporting HTML, TeX math, categories, feedback, default grades, penalties, essay properties, and matching pairs.
@@ -25,12 +24,16 @@ A complete, portable, native-first infrastructure for authoring, managing, and b
 emacs-moodle/
 ├── README.md                      # Infrastructure overview and documentation
 ├── QUICKSTART.md                  # Quickstart guide
+├── FAQ.md                         # Frequently Asked Questions (SCORM, Moodle XML, GIFT, etc.)
+├── docs/                          # Comprehensive in-depth documentation
+│   └── SCORM_TUTORIAL.md          # Complete guide for generating and importing SCORM packages
 ├── init.el                        # Standalone Emacs setup with MELPA & dev packages
 ├── Makefile                       # Automated build and validation targets
 ├── .dir-locals.el                 # Automated Emacs setup upon opening workspace
 ├── elisp/
 │   └── emacs-moodle.el            # Emacs Lisp package & minor mode
 ├── scripts/
+│   ├── build_scorm.py             # Generates standard SCORM 1.2 packages (.zip)
 │   ├── org_to_moodle_xml.py       # Converts Org-mode quiz files to Moodle XML
 │   ├── org_to_gift.py             # Converts Org-mode quiz files to GIFT format
 │   └── gift_validator.py          # GIFT syntax validator

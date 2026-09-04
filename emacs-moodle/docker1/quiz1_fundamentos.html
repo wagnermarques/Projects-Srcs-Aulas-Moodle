@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco de Questões - Docker Fundamentos e CLI</title>
+  <script src="scorm_api.js"></script>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: #1e293b;
+      background: #f8fafc;
+      margin: 0;
+      padding: 30px 15px;
+    }
+    .quiz-container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+    }
+    h1 {
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+      margin-top: 0;
+    }
+    .q-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      transition: all 0.2s ease;
+    }
+    .q-card.correct {
+      border-left: 5px solid #10b981;
+      background: #f0fdf4;
+    }
+    .q-card.incorrect {
+      border-left: 5px solid #ef4444;
+      background: #fef2f2;
+    }
+    .q-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #1e293b;
+    }
+    .q-body {
+      margin-bottom: 15px;
+      color: #334155;
+    }
+    .option-label {
+      display: block;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .option-label:hover {
+      background: #f1f5f9;
+    }
+    .input-text {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    .match-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 15px;
+    }
+    .match-left {
+      flex: 1;
+      font-weight: 500;
+    }
+    .match-select {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.95rem;
+    }
+    .feedback-box {
+      margin-top: 12px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .feedback-box.show {
+      display: block;
+    }
+    .fb-correct {
+      background: #dcfce7;
+      color: #166534;
+    }
+    .fb-incorrect {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+    .btn-submit {
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      padding: 14px 28px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s ease;
+    }
+    .btn-submit:hover {
+      background: #0369a1;
+    }
+    .score-banner {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 1.3rem;
+      font-weight: 700;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>📝 Banco de Questões - Docker Fundamentos e CLI</h1>
+    <p>Responda às questões abaixo e clique em <strong>Submeter Respostas</strong> para validar e enviar sua nota para o Moodle.</p>
+    
+    <div id="questions-root"></div>
+    
+    <button class="btn-submit" id="btn-submit" onclick="gradeQuiz()">Submeter Respostas</button>
+    <div class="score-banner" id="score-banner"></div>
+  </div>
+
+  <script>
+    const quizData = [{"id": "q_1", "type": "multichoice", "title": "Diferença entre Containers e Máquinas Virtuais", "properties": {"TYPE": "multichoice", "SINGLE": "true", "SHUFFLE": "true", "DEFAULTGRADE": "1.0", "FEEDBACK": "Containers compartilham o kernel do host, proporcionando isolamento a nível de processos de forma leve e rápida, ao contrário de VMs que exigem um Hypervisor e um SO convidado completo."}, "body": "Qual das seguintes alternativas descreve corretamente a principal diferença de arquitetura entre um **Container Docker** e uma **Máquina Virtual (VM)**?", "options": [{"text": "Containers compartilham o mesmo Kernel do sistema operacional hospedeiro, enquanto VMs emulam hardware e rodam um Sistema Operacional completo (Guest OS).", "is_correct": true, "feedback": "Correto! Containers operam em nível de processo no espaço de usuário sobre o kernel do host."}, {"text": "Containers sempre exigem um Hypervisor Type-1 dedicado para gerenciar recursos de hardware.", "is_correct": false, "feedback": "Incorreto. Quem utiliza hypervisor são as máquinas virtuais."}, {"text": "Máquinas virtuais inicializam muito mais rápido que containers porque não possuem isolamento de bibliotecas.", "is_correct": false, "feedback": "Incorreto. VMs demoram minutos para inicializar pois precisam dar boot em todo o SO."}, {"text": "Containers não conseguem isolar arquivos, portas de rede ou processos.", "is_correct": false, "feedback": "Incorreto. O Docker utiliza cgroups e namespaces do Linux para isolar processos, redes e sistema de arquivos."}]}, {"id": "q_2", "type": "truefalse", "title": "Camada de Escrita em Containers", "properties": {"TYPE": "truefalse", "DEFAULTGRADE": "1.0", "FEEDBACK": "As imagens Docker são compostas por camadas somente-leitura (read-only). Ao iniciar um container, o Docker adiciona uma camada fina de leitura/escrita (writable container layer) no topo."}, "body": "Uma imagem Docker é somente-leitura (*read-only*), e todas as alterações feitas durante a execução do container são gravadas em uma camada temporária de escrita (*writable layer*) no topo da imagem.", "options": [{"text": "True", "is_correct": true, "feedback": "Correto! O container adiciona uma camada de escrita temporária sobre as camadas imutáveis da imagem."}, {"text": "False", "is_correct": false, "feedback": "Incorreto. A imagem é de fato somente-leitura e as alterações ficam na camada temporária do container."}]}, {"id": "q_3", "type": "shortanswer", "title": "Comando para Listar Containers Ativos", "properties": {"TYPE": "shortanswer", "DEFAULTGRADE": "1.0", "FEEDBACK": "O comando 'docker ps' (ou 'docker container ls') lista todos os containers em execução."}, "body": "Qual é o comando do Docker CLI utilizado para listar apenas os containers que estão atualmente em execução?", "options": [{"text": "docker ps", "is_correct": true, "feedback": "Correto! `docker ps` exibe a tabela de containers ativos."}, {"text": "docker container ls", "is_correct": true, "feedback": "Correto! `docker container ls` é a sintaxe de gerenciamento moderna do Docker."}]}, {"id": "q_4", "type": "multichoice", "title": "Execução de Containers em Segundo Plano (Detached)", "properties": {"TYPE": "multichoice", "SINGLE": "true", "SHUFFLE": "true", "DEFAULTGRADE": "1.0", "FEEDBACK": "A flag -d (--detach) roda o container em segundo plano e imprime o ID do container."}, "body": "Ao executar o comando =docker run=, qual parâmetro (flag) deve ser utilizado para que o container seja executado em segundo plano (*detached mode*), liberando o terminal imediatamente?", "options": [{"text": "-d", "is_correct": true, "feedback": "Correto! `-d` ou `--detach` executa o container em background."}, {"text": "-it", "is_correct": false, "feedback": "Incorreto. `-it` aloca um pseudo-TTY e mantém o stdin aberto para modo interativo."}, {"text": "--rm", "is_correct": false, "feedback": "Incorreto. `--rm` remove o container automaticamente quando ele é finalizado."}, {"text": "-p", "is_correct": false, "feedback": "Incorreto. `-p` mapeia portas entre o host e o container."}]}, {"id": "q_5", "type": "matching", "title": "Conceitos Fundamentais do Ecossistema Docker", "properties": {"TYPE": "matching", "DEFAULTGRADE": "1.0", "FEEDBACK": "Relacione cada termo do Docker com sua respectiva definição ou função."}, "body": "Relacione cada elemento da arquitetura Docker à sua respectiva definição:", "options": [{"left": "Imagem (Image)", "right": "Modelo somente-leitura composto por camadas empilhadas contendo aplicação e dependências."}, {"left": "Container", "right": "Instância em execução de uma imagem com camada de escrita própria e isolamento de processo."}, {"left": "Docker Hub / Registry", "right": "Repositório central para armazenamento e compartilhamento de imagens de container."}, {"left": "Dockerfile", "right": "Arquivo de texto declarativo com instruções para construir uma imagem de forma automatizada."}]}, {"id": "q_6", "type": "multichoice", "title": "Mapeamento de Portas no Docker Run", "properties": {"TYPE": "multichoice", "SINGLE": "true", "SHUFFLE": "true", "DEFAULTGRADE": "1.0", "FEEDBACK": "A sintaxe -p <porta-no-host>:<porta-no-container> redireciona tráfego do host para dentro do container."}, "body": "No comando =docker run -d -p 8080:80 nginx:alpine=, o que significa o trecho =-p 8080:80=?", "options": [{"text": "Redireciona a porta 8080 do computador hospedeiro (host) para a porta 80 dentro do container.", "is_correct": true, "feedback": "Correto! A ordem é sempre host:container."}, {"text": "Redireciona a porta 80 do computador hospedeiro para a porta 8080 dentro do container.", "is_correct": false, "feedback": "Incorreto. A porta do host vem primeiro antes dos dois pontos."}, {"text": "Abre 8080 portas simultâneas para balanceamento de carga com timeout de 80 segundos.", "is_correct": false, "feedback": "Incorreto. Trata-se de mapeamento direto de portas de rede."}, {"text": "Limita o container a usar apenas a faixa de IPs entre 8080 e 80.", "is_correct": false, "feedback": "Incorreto."}]}];
+
+    function renderQuiz() {
+      const root = document.getElementById('questions-root');
+      root.innerHTML = '';
+
+      quizData.forEach((q, idx) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = 'card-' + q.id;
+
+        let contentHtml = `<div class="q-title">Questão ${idx + 1}: ${escapeHtml(q.title)}</div>`;
+        if (q.body) {
+          contentHtml += `<div class="q-body">${escapeHtml(q.body)}</div>`;
+        }
+
+        if (q.type === 'multichoice' || q.type === 'truefalse') {
+          q.options.forEach((opt, oIdx) => {
+            contentHtml += `
+              <label class="option-label">
+                <input type="radio" name="${q.id}" value="${oIdx}">
+                ${escapeHtml(opt.text)}
+              </label>
+            `;
+          });
+        } else if (q.type === 'shortanswer') {
+          contentHtml += `
+            <div>
+              <input type="text" class="input-text" id="input-${q.id}" placeholder="Digite sua resposta...">
+            </div>
+          `;
+        } else if (q.type === 'matching') {
+          const rights = q.options.map(o => o.right).sort(() => Math.random() - 0.5);
+          q.options.forEach((opt, mIdx) => {
+            contentHtml += `
+              <div class="match-row">
+                <span class="match-left">${escapeHtml(opt.left)}</span>
+                <select class="match-select" id="match-${q.id}-${mIdx}">
+                  <option value="">-- Escolha a correspondência --</option>
+                  ${rights.map(r => `<option value="${escapeHtml(r)}">${escapeHtml(r)}</option>`).join('')}
+                </select>
+              </div>
+            `;
+          });
+        }
+
+        contentHtml += `<div class="feedback-box" id="fb-${q.id}"></div>`;
+        card.innerHTML = contentHtml;
+        root.appendChild(card);
+      });
+    }
+
+    function gradeQuiz() {
+      let total = quizData.length;
+      let score = 0;
+
+      quizData.forEach((q, idx) => {
+        const card = document.getElementById('card-' + q.id);
+        const fb = document.getElementById('fb-' + q.id);
+        let isCorrect = false;
+        let feedbackText = "";
+
+        if (q.type === 'multichoice' || q.type === 'truefalse') {
+          const checked = document.querySelector(`input[name="${q.id}"]:checked`);
+          if (checked) {
+            const optIdx = parseInt(checked.value, 10);
+            const opt = q.options[optIdx];
+            if (opt.is_correct) {
+              isCorrect = true;
+              feedbackText = opt.feedback || "Correto!";
+            } else {
+              feedbackText = opt.feedback || "Incorreto.";
+            }
+          } else {
+            feedbackText = "Nenhuma alternativa selecionada.";
+          }
+        } else if (q.type === 'shortanswer') {
+          const inputVal = (document.getElementById('input-' + q.id).value || '').trim().toLowerCase();
+          const correctOpts = q.options.filter(o => o.is_correct || o.text).map(o => o.text.trim().toLowerCase());
+          if (correctOpts.includes(inputVal)) {
+            isCorrect = true;
+            feedbackText = "Correto!";
+          } else {
+            feedbackText = `Incorreto. Resposta esperada: ${q.options[0] ? q.options[0].text : ''}`;
+          }
+        } else if (q.type === 'matching') {
+          let matchAll = true;
+          q.options.forEach((opt, mIdx) => {
+            const sel = document.getElementById(`match-${q.id}-${mIdx}`);
+            if (!sel || sel.value !== opt.right) {
+              matchAll = false;
+            }
+          });
+          isCorrect = matchAll;
+          feedbackText = isCorrect ? "Todas as associações corretas!" : "Algumas associações estão incorretas.";
+        }
+
+        card.className = 'q-card ' + (isCorrect ? 'correct' : 'incorrect');
+        fb.className = 'feedback-box show ' + (isCorrect ? 'fb-correct' : 'fb-incorrect');
+        fb.innerHTML = feedbackText;
+
+        if (isCorrect) {
+          score++;
+        }
+      });
+
+      const percentage = (score / total) * 100;
+      const banner = document.getElementById('score-banner');
+      banner.style.display = 'block';
+      banner.style.background = percentage >= 60 ? '#ecfdf5' : '#fef2f2';
+      banner.style.color = percentage >= 60 ? '#065f46' : '#991b1b';
+      banner.style.border = `2px solid ${percentage >= 60 ? '#10b981' : '#ef4444'}`;
+      banner.innerHTML = `Sua Pontuação: ${score} de ${total} (${percentage.toFixed(0)}%)`;
+
+      // Report score to Moodle SCORM API
+      if (typeof scorm !== 'undefined') {
+        scorm.complete(percentage);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    window.addEventListener('DOMContentLoaded', renderQuiz);
+  </script>
+</body>
+</html>

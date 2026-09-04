@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  aula_nginx:
+    image: nginx:alpine
+    container_name: aula_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - aula_php
+    networks:
+      - aula-rede
+    restart: unless-stopped
+
+  aula_php:
+    image: php:8.3-fpm-alpine
+    container_name: aula_php
+    volumes:
+      - ./src:/var/www/html
+    networks:
+      - aula-rede
+    restart: unless-stopped
+
+networks:
+  aula-rede:
+    driver: bridge

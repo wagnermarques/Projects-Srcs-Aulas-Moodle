@@ -14,11 +14,16 @@ MBZ_OUTS := $(patsubst $(CONTENT_DIR)/quizzes/%.org,$(DIST_DIR)/mbz/%.mbz,$(QUIZ
 LESSON_SRCS := $(wildcard $(CONTENT_DIR)/lessons/*.org)
 LESSON_HTMLS := $(patsubst $(CONTENT_DIR)/lessons/%.org,$(DIST_DIR)/lessons/%.html,$(LESSON_SRCS))
 
-.PHONY: all build quizzes gift mbz lessons courses validate clean help
+.PHONY: all build quizzes gift mbz lessons scorm courses validate clean help
 
 all: build validate
 
-build: quizzes gift mbz lessons courses
+build: quizzes gift mbz lessons scorm courses
+
+scorm:
+	@mkdir -p $(DIST_DIR)/scorm
+	@echo "[*] Building SCORM packages for course folders..."
+	@$(PYTHON) $(SCRIPTS_DIR)/build_scorm.py docker1 -o $(DIST_DIR)/scorm/docker1_completo.zip -t "Curso Completo: Docker & Containers"
 
 courses:
 	@echo "[*] Running Automated Batch Moodle Course Builder..."

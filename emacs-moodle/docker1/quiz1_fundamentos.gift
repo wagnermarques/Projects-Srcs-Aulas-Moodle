@@ -1,0 +1,51 @@
+$CATEGORY: Docker/Fundamentos
+
+::Diferença entre Containers e Máquinas Virtuais:: Qual das seguintes alternativas descreve corretamente a principal diferença de arquitetura entre um **Container Docker** e uma **Máquina Virtual (VM)**? {
+  =Containers compartilham o mesmo Kernel do sistema operacional hospedeiro, enquanto VMs emulam hardware e rodam um Sistema Operacional completo (Guest OS). #Correto! Containers operam em nível de processo no espaço de usuário sobre o kernel do host.
+  ~Containers sempre exigem um Hypervisor Type-1 dedicado para gerenciar recursos de hardware. #Incorreto. Quem utiliza hypervisor são as máquinas virtuais.
+  ~Máquinas virtuais inicializam muito mais rápido que containers porque não possuem isolamento de bibliotecas. #Incorreto. VMs demoram minutos para inicializar pois precisam dar boot em todo o SO.
+  ~Containers não conseguem isolar arquivos, portas de rede ou processos. #Incorreto. O Docker utiliza cgroups e namespaces do Linux para isolar processos, redes e sistema de arquivos.
+}
+
+
+$CATEGORY: Docker/Fundamentos
+
+::Camada de Escrita em Containers:: Uma imagem Docker é somente-leitura (*read-only*), e todas as alterações feitas durante a execução do container são gravadas em uma camada temporária de escrita (*writable layer*) no topo da imagem. {TRUE}
+
+
+$CATEGORY: Docker/Fundamentos
+
+::Comando para Listar Containers Ativos:: Qual é o comando do Docker CLI utilizado para listar apenas os containers que estão atualmente em execução? {
+  =docker ps #Correto! `docker ps` exibe a tabela de containers ativos.
+  =docker container ls #Correto! `docker container ls` é a sintaxe de gerenciamento moderna do Docker.
+}
+
+
+$CATEGORY: Docker/Fundamentos
+
+::Execução de Containers em Segundo Plano (Detached):: Ao executar o comando =docker run=, qual parâmetro (flag) deve ser utilizado para que o container seja executado em segundo plano (*detached mode*), liberando o terminal imediatamente? {
+  =-d #Correto! `-d` ou `--detach` executa o container em background.
+  ~-it #Incorreto. `-it` aloca um pseudo-TTY e mantém o stdin aberto para modo interativo.
+  ~--rm #Incorreto. `--rm` remove o container automaticamente quando ele é finalizado.
+  ~-p #Incorreto. `-p` mapeia portas entre o host e o container.
+}
+
+
+$CATEGORY: Docker/Fundamentos
+
+::Conceitos Fundamentais do Ecossistema Docker:: Relacione cada elemento da arquitetura Docker à sua respectiva definição: {
+  =Imagem (Image) -> Modelo somente-leitura composto por camadas empilhadas contendo aplicação e dependências.
+  =Container -> Instância em execução de uma imagem com camada de escrita própria e isolamento de processo.
+  =Docker Hub / Registry -> Repositório central para armazenamento e compartilhamento de imagens de container.
+  =Dockerfile -> Arquivo de texto declarativo com instruções para construir uma imagem de forma automatizada.
+}
+
+
+$CATEGORY: Docker/Fundamentos
+
+::Mapeamento de Portas no Docker Run:: No comando =docker run -d -p 8080:80 nginx:alpine=, o que significa o trecho =-p 8080:80=? {
+  =Redireciona a porta 8080 do computador hospedeiro (host) para a porta 80 dentro do container. #Correto! A ordem é sempre host:container.
+  ~Redireciona a porta 80 do computador hospedeiro para a porta 8080 dentro do container. #Incorreto. A porta do host vem primeiro antes dos dois pontos.
+  ~Abre 8080 portas simultâneas para balanceamento de carga com timeout de 80 segundos. #Incorreto. Trata-se de mapeamento direto de portas de rede.
+  ~Limita o container a usar apenas a faixa de IPs entre 8080 e 80. #Incorreto.
+}

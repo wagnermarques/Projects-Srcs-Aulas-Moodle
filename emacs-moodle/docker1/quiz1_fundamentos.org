@@ -1,0 +1,85 @@
+#+TITLE: Banco de Questões - Docker Fundamentos e CLI
+#+AUTHOR: Prof. Wagner Marques
+#+DATE: 2026-09-04
+
+* Category: Docker/Fundamentos
+
+** [MCQ] Diferença entre Containers e Máquinas Virtuais
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: Containers compartilham o kernel do host, proporcionando isolamento a nível de processos de forma leve e rápida, ao contrário de VMs que exigem um Hypervisor e um SO convidado completo.
+:END:
+Qual das seguintes alternativas descreve corretamente a principal diferença de arquitetura entre um **Container Docker** e uma **Máquina Virtual (VM)**?
+
+- [X] Containers compartilham o mesmo Kernel do sistema operacional hospedeiro, enquanto VMs emulam hardware e rodam um Sistema Operacional completo (Guest OS). :: Correto! Containers operam em nível de processo no espaço de usuário sobre o kernel do host.
+- [ ] Containers sempre exigem um Hypervisor Type-1 dedicado para gerenciar recursos de hardware. :: Incorreto. Quem utiliza hypervisor são as máquinas virtuais.
+- [ ] Máquinas virtuais inicializam muito mais rápido que containers porque não possuem isolamento de bibliotecas. :: Incorreto. VMs demoram minutos para inicializar pois precisam dar boot em todo o SO.
+- [ ] Containers não conseguem isolar arquivos, portas de rede ou processos. :: Incorreto. O Docker utiliza cgroups e namespaces do Linux para isolar processos, redes e sistema de arquivos.
+
+** [TF] Camada de Escrita em Containers
+:PROPERTIES:
+:TYPE: truefalse
+:DEFAULTGRADE: 1.0
+:FEEDBACK: As imagens Docker são compostas por camadas somente-leitura (read-only). Ao iniciar um container, o Docker adiciona uma camada fina de leitura/escrita (writable container layer) no topo.
+:END:
+Uma imagem Docker é somente-leitura (*read-only*), e todas as alterações feitas durante a execução do container são gravadas em uma camada temporária de escrita (*writable layer*) no topo da imagem.
+
+- [X] True :: Correto! O container adiciona uma camada de escrita temporária sobre as camadas imutáveis da imagem.
+- [ ] False :: Incorreto. A imagem é de fato somente-leitura e as alterações ficam na camada temporária do container.
+
+** [SA] Comando para Listar Containers Ativos
+:PROPERTIES:
+:TYPE: shortanswer
+:DEFAULTGRADE: 1.0
+:FEEDBACK: O comando 'docker ps' (ou 'docker container ls') lista todos os containers em execução.
+:END:
+Qual é o comando do Docker CLI utilizado para listar apenas os containers que estão atualmente em execução?
+
+- [X] docker ps :: Correto! `docker ps` exibe a tabela de containers ativos.
+- [X] docker container ls :: Correto! `docker container ls` é a sintaxe de gerenciamento moderna do Docker.
+
+** [MCQ] Execução de Containers em Segundo Plano (Detached)
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: A flag -d (--detach) roda o container em segundo plano e imprime o ID do container.
+:END:
+Ao executar o comando =docker run=, qual parâmetro (flag) deve ser utilizado para que o container seja executado em segundo plano (*detached mode*), liberando o terminal imediatamente?
+
+- [X] -d :: Correto! `-d` ou `--detach` executa o container em background.
+- [ ] -it :: Incorreto. `-it` aloca um pseudo-TTY e mantém o stdin aberto para modo interativo.
+- [ ] --rm :: Incorreto. `--rm` remove o container automaticamente quando ele é finalizado.
+- [ ] -p :: Incorreto. `-p` mapeia portas entre o host e o container.
+
+** [MATCH] Conceitos Fundamentais do Ecossistema Docker
+:PROPERTIES:
+:TYPE: matching
+:DEFAULTGRADE: 1.0
+:FEEDBACK: Relacione cada termo do Docker com sua respectiva definição ou função.
+:END:
+Relacione cada elemento da arquitetura Docker à sua respectiva definição:
+
+- Imagem (Image) :: Modelo somente-leitura composto por camadas empilhadas contendo aplicação e dependências.
+- Container :: Instância em execução de uma imagem com camada de escrita própria e isolamento de processo.
+- Docker Hub / Registry :: Repositório central para armazenamento e compartilhamento de imagens de container.
+- Dockerfile :: Arquivo de texto declarativo com instruções para construir uma imagem de forma automatizada.
+
+** [MCQ] Mapeamento de Portas no Docker Run
+:PROPERTIES:
+:TYPE: multichoice
+:SINGLE: true
+:SHUFFLE: true
+:DEFAULTGRADE: 1.0
+:FEEDBACK: A sintaxe -p <porta-no-host>:<porta-no-container> redireciona tráfego do host para dentro do container.
+:END:
+No comando =docker run -d -p 8080:80 nginx:alpine=, o que significa o trecho =-p 8080:80=?
+
+- [X] Redireciona a porta 8080 do computador hospedeiro (host) para a porta 80 dentro do container. :: Correto! A ordem é sempre host:container.
+- [ ] Redireciona a porta 80 do computador hospedeiro para a porta 8080 dentro do container. :: Incorreto. A porta do host vem primeiro antes dos dois pontos.
+- [ ] Abre 8080 portas simultâneas para balanceamento de carga com timeout de 80 segundos. :: Incorreto. Trata-se de mapeamento direto de portas de rede.
+- [ ] Limita o container a usar apenas a faixa de IPs entre 8080 e 80. :: Incorreto.

@@ -1,0 +1,166 @@
+#+TITLE: Aula: Visão Geral do SurrealDB
+#+SUBTITLE: Banco de Dados Multimodelo para Aplicações Modernas e IA
+#+AUTHOR: Prof. Wagner
+#+DATE: 2026-09-01
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+* Página 1: O que é o SurrealDB?
+
+**SurrealDB** é um banco de dados **multimodelo**: em um único motor com garantias **ACID**, ele suporta documentos, grafos, vetores e séries temporais — dados que, tradicionalmente, exigiriam bancos separados (um documental, um de grafos, um vetorial...).
+
+A proposta oficial do projeto é ser *"graphs, vectors, documents, and relational data in one engine"*, posicionando-se também como uma **camada de dados unificada para aplicações de IA**, servindo tanto como banco de dados de propósito geral quanto como camada de memória para agentes.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Objetivos de Aprendizagem:</strong>
+  <ul>
+    <li>Entender a proposta de um banco de dados multimodelo e quando ela é vantajosa.</li>
+    <li>Instalar o SurrealDB e iniciar uma instância local.</li>
+    <li>Escrever consultas básicas em SurrealQL, incluindo campos aninhados.</li>
+    <li>Modelar relacionamentos como grafos usando <code>RELATE</code>.</li>
+    <li>Reconhecer casos de uso do SurrealDB em aplicações de IA (RAG, memória de agentes).</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+---
+
+* Página 2: Por que um Banco de Dados Multimodelo?
+
+Em uma arquitetura tradicional, é comum combinar várias ferramentas especializadas: um banco relacional para dados transacionais, um banco documental para conteúdo flexível, um banco de grafos para relacionamentos e um banco vetorial para busca por similaridade (embeddings de IA). Cada peça extra soma **complexidade operacional**: mais serviços para manter, sincronizar e garantir consistência entre si.
+
+O SurrealDB unifica esses modelos em um único motor:
+
+- **Documentos:** registros flexíveis, sem esquema rígido obrigatório.
+- **Grafos:** relacionamentos modelados como arestas de primeira classe, com travessia nativa na linguagem de consulta.
+- **Vetores:** suporte a busca por similaridade, útil para RAG (*Retrieval-Augmented Generation*) e outras aplicações de IA.
+- **Séries temporais e dados relacionais:** consultas estruturadas tradicionais, com transações ACID.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-warning" style="padding: 15px; background-color: #fef9e7; border-left: 5px solid #f39c12; margin-bottom: 20px;">
+  <strong>Nota:</strong> "multimodelo" não significa que todo projeto deva usar todos os modelos de uma vez. A vantagem é ter a opção de combinar documentos, grafos e vetores na mesma base, com uma única linguagem de consulta, sem precisar operar bancos distintos.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 3: Instalando e Iniciando um Servidor Local
+
+**Linux:**
+#+BEGIN_SRC bash
+curl -sSf https://install.surrealdb.com | sh
+#+END_SRC
+
+**macOS (via Homebrew):**
+#+BEGIN_SRC bash
+brew install surrealdb/tap/surreal
+#+END_SRC
+
+**Verificando a instalação:**
+#+BEGIN_SRC bash
+surreal version
+#+END_SRC
+
+**Iniciando uma instância local em memória** (ideal para testes e aprendizado, sem persistência em disco):
+#+BEGIN_SRC bash
+surreal start --user root --pass root memory
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Dica:</strong> o SurrealDB também pode ser usado como <em>banco embutido</em> (rodando dentro do próprio processo da aplicação, via SDKs para Rust, Go, TypeScript e Python) ou como sistema <em>distribuído</em>, com múltiplos nós de escrita e armazenamento compatível com S3 — dependendo apenas de qual <em>backend</em> de armazenamento você escolhe ao iniciar o servidor.
+</div>
+#+END_EXPORT
+
+---
+
+* Página 4: SurrealQL — A Linguagem de Consulta
+
+O SurrealDB usa **SurrealQL**, uma linguagem de sintaxe próxima ao SQL, porém estendida para lidar naturalmente com objetos aninhados e travessia de grafos.
+
+**Criando e consultando registros:**
+#+BEGIN_SRC surql
+-- Cria um registro na tabela "person"
+CREATE person:tom SET name = "Tom", age = 28;
+
+-- Consulta simples, com filtro
+SELECT name, age
+FROM person
+WHERE age >= 18;
+#+END_SRC
+
+**Consultando campos aninhados e relações, em uma única consulta:**
+#+BEGIN_SRC surql
+SELECT name,
+       metadata.{
+          date_registered,
+          last_login
+       },
+       ->wrote->post AS posts
+FROM user
+WHERE age >= 18;
+#+END_SRC
+
+Note como `->wrote->post` já realiza, dentro do próprio `SELECT`, uma travessia de grafo — sem a necessidade de `JOIN`s explícitos como em um banco relacional tradicional.
+
+---
+
+* Página 5: Modelagem de Grafos com =RELATE=
+
+Relacionamentos no SurrealDB são registros de primeira classe, criados com a instrução =RELATE=. Isso evita duplicar a informação de relacionamento dentro das tabelas envolvidas.
+
+#+BEGIN_SRC surql
+CREATE person:aristotle, article:on_sleep_and_sleeplessness;
+
+RELATE person:aristotle->wrote->article:on_sleep_and_sleeplessness;
+#+END_SRC
+
+Esse comando gera automaticamente um registro na tabela de aresta =wrote=, com campos =in= (origem) e =out= (destino):
+
+#+BEGIN_SRC surql
+[
+  {
+    id: wrote:bpbrj5kd7smu3ahlf55r,
+    in: person:aristotle,
+    out: article:on_sleep_and_sleeplessness
+  }
+]
+#+END_SRC
+
+Como a documentação oficial destaca: nenhuma informação de relacionamento fica armazenada nas tabelas =person= ou =article= — ela vive na aresta =wrote=, permitindo travessias eficientes sem necessidade de =JOIN=.
+
+---
+
+* Página 6: SurrealDB em Aplicações de IA
+
+Além de uso geral, o SurrealDB é posicionado como uma **camada de memória para agentes de IA**, combinando busca vetorial (embeddings), grafos de conhecimento e documentos na mesma base — o que é particularmente útil em pipelines de **RAG** (*Retrieval-Augmented Generation*).
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Exemplos citados pelo próprio SurrealDB:</strong>
+  <ul>
+    <li>A Tencent executa mais de <strong>10.000 consultas por segundo</strong> sobre arestas de grafo.</li>
+    <li>A PolyAI relata latência de aproximadamente <strong>30ms</strong> em operações de RAG.</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+A ideia central é reduzir a fragmentação típica de pipelines de IA — onde embeddings, metadados e relacionamentos ficam espalhados em bancos vetoriais, documentais e de grafos separados — unificando tudo em um único motor consultável via SurrealQL.
+
+---
+
+* Página 7: Resumo e Exercícios de Fixação
+
+Nesta aula, você conheceu o **SurrealDB**, um banco de dados multimodelo com suporte nativo a documentos, grafos, vetores e séries temporais em um único motor ACID, viu como instalá-lo, escrever consultas básicas em SurrealQL e modelar relacionamentos com =RELATE=, além de entender seu papel em aplicações de IA.
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas de Fixação:</strong>
+  <ol>
+    <li>Qual é a principal vantagem de um banco multimodelo em relação a usar bancos separados para documentos, grafos e vetores?</li>
+    <li>O que a expressão <code>->wrote->post</code> representa dentro de uma consulta SurrealQL?</li>
+    <li>O que a instrução <code>RELATE</code> cria, e por que ela evita duplicar informação de relacionamento nas tabelas envolvidas?</li>
+    <li>Por que o SurrealDB é frequentemente citado como opção de "camada de memória" para agentes de IA?</li>
+  </ol>
+</div>
+#+END_EXPORT
