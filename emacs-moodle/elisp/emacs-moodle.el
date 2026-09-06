@@ -9,9 +9,18 @@
 ;; lessons directly in Emacs using Org-mode. Supports exporting to native
 ;; Moodle XML and GIFT formats.
 
-;;; Code:
-
 (require 'org)
+(require 'ob-java nil t)
+(require 'ob-rust nil t)
+
+(when (fboundp 'org-babel-do-load-languages)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((java . t)
+     (rust . t)
+     (shell . t)
+     (emacs-lisp . t)
+     (python . t))))
 
 (defgroup emacs-moodle nil
   "Customizations for Emacs Moodle infrastructure."

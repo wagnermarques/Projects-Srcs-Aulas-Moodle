@@ -1,0 +1,287 @@
+#+TITLE: Aula: Polimorfismo Comparativo (Java vs Rust)
+#+SUBTITLE: Dynamic Dispatch, Static Dispatch, VTable, Stack e Inspeção de Memória no Heap
+#+AUTHOR: Prof. Wagner
+#+DATE: 2026-09-05
+#+OPTIONS: toc:t num:t html-postamble:nil
+
+#+BEGIN_SRC emacs-lisp :results silent :exports none
+;; Ativação do Babel para Java e Rust no buffer (execute C-c C-c aqui se o Emacs ainda não carregou)
+(require 'ob-java nil t)
+(require 'ob-rust nil t)
+(when (fboundp 'org-babel-do-load-languages)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((java . t)
+     (rust . t)
+     (shell . t)
+     (emacs-lisp . t)
+     (python . t))))
+(setq org-confirm-babel-evaluate nil)
+#+END_SRC
+
+* Introdução: O Desafio do Polimorfismo
+
+O **Polimorfismo** (do grego: *muitas formas*) é a capacidade de tratar objetos de diferentes tipos concretos por meio de uma interface ou contrato comum.
+
+Embora o objetivo final seja o mesmo — escrever código genérico e reutilizável —, **Java** e **Rust** possuem filosofias de gerenciamento de memória e arquitetura fundamentalmente distintas:
+
+#+BEGIN_EXPORT html
+<div class="alert alert-info" style="padding: 15px; background-color: #e8f4f8; border-left: 5px solid #2980b9; margin-bottom: 20px;">
+  <strong>Diferença de Paradigma Fundamental:</strong>
+  <ul>
+    <li><strong>Java (Por Referência e Heap por Padrão):</strong> Todo objeto criado com <code>new</code> é alocado no Heap. Variáveis guardam referências (ponteiros) e os métodos usam <em>Dynamic Dispatch</em> (resolução em tempo de execução via Tabela Virtual / vtable) por padrão.</li>
+    <li><strong>Rust (Por Valor e Stack por Padrão):</strong> Tipos concretos residem na Stack por padrão. Rust separa explicitamente o polimorfismo em duas estratégias: <strong>Estático</strong> (tempo de compilação / sem custo de vtable) e <strong>Dinâmico</strong> (tempo de execução / via <code>dyn Trait</code> e alocação explícita no Heap com <code>Box</code>).</li>
+  </ul>
+</div>
+#+END_EXPORT
+
+---
+
+* 1. Polimorfismo em Java (Dynamic Dispatch & Heap Obrigatório)
+
+Em Java:
+1. Definimos uma =interface= ou classe abstrata =Animal=.
+2. Criamos implementações como =Cachorro= e =Gato=.
+3. Uma lista polimórfica =List<Animal>= armazena referências para esses objetos.
+4. Quando invocamos =animal.falar()=, a JVM consulta em tempo de execução a **vtable** (Virtual Method Table) associada à classe concreta do objeto para disparar o método correto.
+
+**Onde vivem os dados no Java?**
+- As variáveis locais (referências) ficam na **Stack**.
+- Os dados reais das instâncias criadas com =new= residem compulsoriamente na memória **Heap** gerenciada pelo *Garbage Collector*.
+
+**Código Executável em Java (Babel):**
+Execute com =C-c C-c= no bloco abaixo:
+
+#+NAME: javacode1
+#+BEGIN_SRC java :results output :classname Main
+import java.util.*;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+
+// 1. Contrato Polimórfico (Interface)
+interface Animal {
+    void falar();
+}
+
+// 2. Implementações Concretas
+class Cachorro implements Animal {
+    private String nome;
+
+    public Cachorro(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public void falar() {
+        System.out.println(nome + " diz: Au Au! (Dynamic Dispatch via VTable em Java)");
+    }
+}
+
+class Gato implements Animal {
+    private String nome;
+
+    public Gato(String nome) {
+        this.nome = nome;
+    }
+
+    @Override
+    public void falar() {
+        System.out.println(nome + " diz: Miau! (Dynamic Dispatch via VTable em Java)");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== 1. Polimorfismo Dinâmico em Java ===");
+        List<Animal> animais = new ArrayList<>();
+        animais.add(new Cachorro("Totó"));
+        animais.add(new Gato("Mimi"));
+
+        for (Animal a : animais) {
+            a.falar();
+        }
+
+        System.out.println("\n=== 2. Comprovando Alocação no Heap em Java ===");
+        // Inspeção de memória usada pela JVM
+        long memoriaTotal = Runtime.getRuntime().totalMemory();
+        long memoriaLivre = Runtime.getRuntime().freeMemory();
+        long heapEmUso = memoriaTotal - memoriaLivre;
+
+        System.out.printf("Memória Heap atualmente alocada na JVM: %,d bytes%n", heapEmUso);
+
+        for (int i = 0; i < animais.size(); i++) {
+            Animal a = animais.get(i);
+            // O identityHashCode reflete a identidade física do objeto no Heap
+            int identityHash = System.identityHashCode(a);
+            System.out.printf("Objeto [%d] -> Classe: %-16s | Hash de Identidade Heap: 0x%08X | Ref: %s@%x%n",
+                i, a.getClass().getSimpleName(), identityHash, a.getClass().getName(), identityHash);
+        }
+        System.out.println(">> Todos os objetos instanciados com 'new' residem no Heap e são gerenciados pelo GC.");
+    }
+}
+#+END_SRC
+
+#+RESULTS: javacode1
+: === 1. Polimorfismo Dinâmico em Java ===
+: Totó diz: Au Au! (Dynamic Dispatch via VTable em Java)
+: Mimi diz: Miau! (Dynamic Dispatch via VTable em Java)
+: 
+: === 2. Comprovando Alocação no Heap em Java ===
+: Memória Heap atualmente alocada na JVM: 2.337.928 bytes
+: Objeto [0] -> Classe: Cachorro         | Hash de Identidade Heap: 0x33909752 | Ref: Cachorro@33909752
+: Objeto [1] -> Classe: Gato             | Hash de Identidade Heap: 0x55F96302 | Ref: Gato@55f96302
+: >> Todos os objetos instanciados com 'new' residem no Heap e são gerenciados pelo GC.
+
+---
+
+* 2. Polimorfismo em Rust: As Duas Peças (=dyn= e =Box=)
+
+Rust não possui classes nem herança clássica. Em vez disso, usa **Traits** (análogo a interfaces) e **Structs**.
+
+Além disso, o Rust dá controle total ao programador, permitindo escolher entre **Polimorfismo Estático** e **Polimorfismo Dinâmico**.
+
+**A. Polimorfismo Estático (=impl Trait= ou Generics):**
+- O compilador gera uma cópia especializada do código para cada tipo concreto (processo chamado de **Monomorfização** / *Monomorphization*).
+- **Vantagem:** Desempenho máximo (*Zero-Cost Abstraction*), chamadas de função diretas (sem vtable) e *inlining*.
+- **Localização:** Os dados ficam alocados diretamente na **Stack**.
+
+**B. Polimorfismo Dinâmico (=dyn Trait= + =Box=):**
+- O que é o =dyn=? Transforma uma =Trait= em um tipo dinâmico chamado **Trait Object**.
+- O tipo exato é resolvido em tempo de execução através de uma **vtable**, exatamente como no Java.
+- **Por que precisamos do =Box=?**
+  Em Rust, todo tipo na Stack precisa ter tamanho conhecido em tempo de compilação (=Sized=). Como =Cachorro= e =Gato= podem ter tamanhos diferentes em bytes, o tipo =dyn Animal= é *Dynamically Sized* (=!Sized=).
+  Para colocá-los em um vetor heterogêneo (=Vec=), colocamos cada objeto dentro de um **=Box<dyn Animal>=**, que aloca o dado no **Heap** e guarda um *Fat Pointer* (ponteiro para o dado + ponteiro para a vtable).
+
+**Código Executável em Rust (Babel):**
+Execute com =C-c C-c= no bloco abaixo:
+
+#+NAME: rustcode1
+#+BEGIN_SRC rust :results output
+// 1. Definição do Contrato (Trait)
+trait Animal {
+    fn falar(&self);
+}
+
+// 2. Structs Concretas com dados
+struct Cachorro {
+    nome: String,
+}
+
+impl Animal for Cachorro {
+    fn falar(&self) {
+        println!("{} diz: Au Au!", self.nome);
+    }
+}
+
+struct Gato {
+    nome: String,
+}
+
+impl Animal for Gato {
+    fn falar(&self) {
+        println!("{} diz: Miau!", self.nome);
+    }
+}
+
+// -------------------------------------------------------------
+// A) POLIMORFISMO ESTÁTICO (Static Dispatch via Monomorfização)
+// Alocação pura na Stack - Sem vtable, sem Box, sem overhead.
+// -------------------------------------------------------------
+fn emitir_som_estatico<T: Animal>(animal: &T) {
+    animal.falar();
+}
+
+fn main() {
+    println!("=== 1. Polimorfismo Estático (Stack / Compile-Time) ===");
+    let c_stack = Cachorro { nome: String::from("Rex (Stack)") };
+    let g_stack = Gato { nome: String::from("Miau (Stack)") };
+
+    emitir_som_estatico(&c_stack);
+    emitir_som_estatico(&g_stack);
+
+    println!("\n=== 2. Polimorfismo Dinâmico (Heap / dyn Trait + Box) ===");
+    // Vec heterogêneo: cada elemento é um Box alocado no Heap
+    let animais: Vec<Box<dyn Animal>> = vec![
+        Box::new(Cachorro { nome: String::from("Totó (Heap)") }),
+        Box::new(Gato { nome: String::from("Mimi (Heap)") }),
+    ];
+
+    for a in &animais {
+        a.falar(); // Dynamic Dispatch via vtable do Trait Object
+    }
+
+    println!("\n=== 3. Comprovando Alocação na Memória (Stack vs Heap) ===");
+    let var_stack: i64 = 42;
+    println!("Variável inteira na Stack             : {:p}", &var_stack);
+    println!("Instância 'c_stack' alocada na Stack  : {:p}", &c_stack);
+
+    for (i, a) in animais.iter().enumerate() {
+        // Endereço do Box (o ponteiro inteligente)
+        let ptr_box_na_stack = a as *const Box<dyn Animal>;
+        // Endereço REAL do dado dentro do Heap (onde o Box aponta)
+        let ptr_heap_real: *const dyn Animal = &**a;
+        let ptr_heap_raw = ptr_heap_real as *const ();
+
+        println!("Elemento [{}] -> Box pointer: {:p} | DADOS NO HEAP: {:p}",
+            i, ptr_box_na_stack, ptr_heap_raw);
+    }
+
+    println!("\n>> Observe a diferença nos endereços:");
+    println!("   Stack: Endereços altos (ex: 0x7ff...) gerenciados pelo frame da função.");
+    println!("   Heap : Endereços médios/baixos (ex: 0x55... ou 0x60...) gerenciados pelo alocador global.");
+}
+#+END_SRC
+
+#+RESULTS: rustcode1
+#+begin_example
+=== 1. Polimorfismo Estático (Stack / Compile-Time) ===
+Rex (Stack) diz: Au Au!
+Miau (Stack) diz: Miau!
+
+=== 2. Polimorfismo Dinâmico (Heap / dyn Trait + Box) ===
+Totó (Heap) diz: Au Au!
+Mimi (Heap) diz: Miau!
+
+=== 3. Comprovando Alocação na Memória (Stack vs Heap) ===
+Variável inteira na Stack             : 0x7ffcacd2d9a0
+Instância 'c_stack' alocada na Stack  : 0x7ffcacd2d890
+Elemento [0] -> Box pointer: 0x5558c8427a50 | DADOS NO HEAP: 0x5558c8427d30
+Elemento [1] -> Box pointer: 0x5558c8427a60 | DADOS NO HEAP: 0x5558c8427d70
+
+>> Observe a diferença nos endereços:
+   Stack: Endereços altos (ex: 0x7ff...) gerenciados pelo frame da função.
+   Heap : Endereços médios/baixos (ex: 0x55... ou 0x60...) gerenciados pelo alocador global.
+#+end_example
+
+---
+
+* 3. Quadro Comparativo: Java vs Rust
+
+| Característica             | Java                            | Rust (Estático)                                | Rust (Dinâmico)                       |
+|----------------------------+---------------------------------+------------------------------------------------+---------------------------------------|
+| **Abstração**                | =interface= / =abstract class=      | =trait=                                          | =dyn Trait=                             |
+| **Resolução do Método**      | Tempo de execução (VTable)      | Tempo de compilação (Monomorfização)           | Tempo de execução (VTable)            |
+| **Local de Armazenamento**   | Sempre no **Heap**                | Sempre na **Stack** (por padrão)                 | No **Heap** (com =Box=)                   |
+| **Custo de Chamada**         | Indireção de ponteiro da vtable | Custo zero (função direta / inlining)          | Indireção de *fat pointer*              |
+| **Coleções Heterogêneas**    | Suportado nativamente (=List<T>=) | Não (tipos homogêneos)                         | Suportado via =Vec<Box<dyn T>>=         |
+| **Gerenciamento de Memória** | *Garbage Collector (GC)*          | *Ownership / RAII* (automático e determinístico) | *Ownership / RAII* (liberação imediata) |
+
+---
+
+* 4. Exercícios de Fixação
+
+#+BEGIN_EXPORT html
+<div class="alert alert-success" style="padding: 15px; background-color: #e8f8f5; border-left: 5px solid #2ecc71; margin-bottom: 20px;">
+  <strong>Perguntas para Reflexão:</strong>
+  <ol>
+    <li>Por que em Rust não é possível criar uma coleção do tipo <code>Vec&lt;dyn Animal&gt;</code> diretamente na Stack sem usar ponteiros como <code>Box</code>?</li>
+    <li>Qual o impacto de desempenho do polimorfismo estático (Monomorfização) em comparação com o polimorfismo dinâmico (VTable)?</li>
+    <li>Como podemos verificar empiricamente que um objeto em Rust foi alocado no Heap e não na Stack?</li>
+  </ol>
+</div>
+#+END_EXPORT
+
+**Gabarito Comentado:**
+1. *Tamanho Desconhecido em Tempo de Compilação:* Tipos que implementam uma =Trait= podem ter tamanhos diferentes em bytes. Para alocar na Stack, o Rust exige que o tipo implemente a trait =Sized=. Como =dyn Animal= é um *Dynamically Sized Type* (=!Sized=), precisamos armazená-lo através de um ponteiro de tamanho fixo, como =Box<dyn Animal>=.
+2. *Monomorfização vs VTable:* O polimorfismo estático permite que o compilador realize *inlining* e otimizações agressivas a nível de instrução de máquina sem nenhum custo de salto indireto de ponteiro. Já a VTable introduz uma indireção em tempo de execução.
+3. *Inspeção de Ponteiros:* Imprimindo o endereço com o formatador `{:p}`, vemos que variáveis da Stack residem no topo do espaço de endereçamento (`0x7ffe...`), enquanto o conteúdo apontado pelo `Box` (`&**box_var as *const ()`) reside no segmento de alocação de Heap (`0x55...` ou `0x60...`).

@@ -103,9 +103,9 @@
   (company-minimum-prefix-length 1)
   (company-idle-delay 0.1))
 
-;; ==========================================
-;; 4. Org Mode & Moodle Integration
-;; ==========================================
+;; ob-rust and ob-java Babel execution
+(use-package ob-rust)
+
 (use-package org
   :ensure nil ; Built-in with Emacs
   :config
@@ -116,7 +116,9 @@
    'org-babel-load-languages
    '((python . t)
      (emacs-lisp . t)
-     (shell . t))))
+     (shell . t)
+     (java . t)
+     (rust . t))))
 
 ;; Load local Moodle mode package
 (let ((moodle-pkg (expand-file-name "elisp/emacs-moodle.el"
