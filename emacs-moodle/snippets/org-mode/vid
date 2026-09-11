@@ -1,0 +1,20 @@
+# -*- mode: snippet -*-
+# name: vid
+# key: vid
+# --
+#+CAPTION: ${1:Descrição do vídeo}
+#+NAME: vid:${2:rotulo}
+#+BEGIN_EXPORT html
+<div align="${3:center}">
+  <video width="${4:800}" controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <source src="${5:./videos-apresentacao/video.mp4}" type="video/mp4">
+    Seu navegador não suporta a reprodução deste vídeo.
+  </video>
+</div>
+#+END_EXPORT
+#+BEGIN_EXPORT latex
+\begin{center}
+\href{run:${5:./videos-apresentacao/video.mp4}}{\textbf{▶ Vídeo: ${1:Descrição do vídeo} (Clique para abrir)}}
+\end{center}
+#+END_EXPORT
+$0

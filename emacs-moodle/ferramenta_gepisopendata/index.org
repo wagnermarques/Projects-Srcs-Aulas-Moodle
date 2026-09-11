@@ -11,9 +11,35 @@ A apresentação será totalmente de forma prática e conceitos ou informações
 ** Fazendo do download
    + entrar no [[https://github.com/grupo-de-pesquisa-gepis/gepisopendata/releases][link de releases ]]
    + baixar a última versão
-     
-     [[./imgs-apresentacao/img1.png]]
-     
+
+   #+CAPTION: Descrição da imagem
+   #+NAME: fig:rotulo
+   #+ATTR_HTML: :width 800px :align center
+   #+ATTR_LATEX: :width 0.8\textwidth :placement [htbp]
+   #+ATTR_ORG: :width 600
+   [[./imgs-apresentacao/img1.png]]
+
+   #+CAPTION: Demonstração da ferramenta
+   #+NAME: vid:apresentacao
+   #+BEGIN_EXPORT html
+   <div align="center">
+     <video width="800" controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+       <source src="./videos-apresentacao/Gravando 2026-09-11 155849.mp4" type="video/mp4">
+       Seu navegador não suporta a reprodução deste vídeo.
+     </video>
+   </div>
+   #+END_EXPORT
+   #+BEGIN_EXPORT latex
+   \begin{figure}[htbp]
+     \centering
+     \href{run:./videos-apresentacao/Gravando 2026-09-11 155849.mp4}{%
+       \includegraphics[width=0.8\textwidth]{./videos-apresentacao/thumb-video.png}%
+     }
+     \caption{\label{vid:apresentacao}\textbf{Vídeo: Demonstração da ferramenta} (Clique na imagem para reproduzir)}
+   \end{figure}
+   #+END_EXPORT
+
+   
 * Configuração
  
 * Obtendo os microdados

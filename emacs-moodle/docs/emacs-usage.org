@@ -23,18 +23,20 @@ mkdir -p ~/.config/emacs
 ln -sf /home/wgn/mnt/ext4/Projects-Srcs/Projects-Srcs-Aulas-Moodle/emacs-moodle/init.el ~/.config/emacs/init.el
 #+END_SRC
 
+
 * 2. Treemacs (Navegação de Arquivos e Projetos)
 
 O *Treemacs* é aberto automaticamente na inicialização do Emacs.
 
 | Atalho      | Ação                                      |
 |-------------+-------------------------------------------|
-| ~M-0~       | Focar / selecionar a janela do Treemacs   |
+| ~<F8>~ / ~M-0~ | Focar / selecionar a janela do Treemacs |
 | ~C-x t t~   | Alternar exibição do Treemacs (toggle)    |
 | ~C-x t 1~   | Fechar outras janelas mantendo Treemacs   |
 | ~C-x t d~   | Selecionar diretório no Treemacs          |
 | ~C-x t B~   | Gerenciar favoritos/bookmarks no Treemacs |
 | ~C-x t C-t~ | Localizar arquivo via Treemacs            |
+
 
 * 3. Magit (Controle de Versão Git)
 
@@ -56,6 +58,7 @@ Para abrir o painel de status do Magit:
 | ~l l~ | Ver log de commits                            |
 | ~q~   | Fechar a janela atual do Magit                |
 
+
 * 4. Dired & WDired (Gerenciador de Arquivos)
 
 O Dired permite navegar e manipular arquivos e diretórios de forma rápida.
@@ -72,6 +75,7 @@ O Dired permite navegar e manipular arquivos e diretórios de forma rápida.
 | ~C~     | Copiar arquivo (com DWIM para outro painel aberto)      |
 | ~R~     | Renomear / Mover arquivo                                |
 | ~C-x C-q~ | Entrar no modo *WDired* (permite editar nomes em lote) |
+
 
 * 5. YASnippet & Imagens Org-mode / LaTeX
 
@@ -105,6 +109,40 @@ Digite =<img= e pressione =TAB= para expandir o template estruturado imediatamen
 
 *** Visualização de Imagens no Buffer Org:
 - Atalho: ~C-c C-x C-v~ (alterna a exibição das imagens embutidas no buffer do Org-mode).
+
+** Inserção de Vídeos no Org-mode (Exportação HTML e LaTeX)
+
+Para incluir vídeos com player interativo no documento HTML exportado e link clicável na exportação LaTeX/PDF:
+
+*** Método A: Via YASnippet (~video + TAB~ ou ~vid + TAB~)
+
+Digite =video= ou =vid= e pressione =TAB=. O snippet expandirá os blocos de exportação com player HTML5 responsivo:
+
+#+BEGIN_SRC org
+#+CAPTION: Descrição do vídeo
+#+NAME: vid:rotulo
+#+BEGIN_EXPORT html
+<div align="center">
+  <video width="800" controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);">
+    <source src="./videos-apresentacao/video.mp4" type="video/mp4">
+    Seu navegador não suporta a reprodução deste vídeo.
+  </video>
+</div>
+#+END_EXPORT
+#+BEGIN_EXPORT latex
+\begin{center}
+\href{run:./videos-apresentacao/video.mp4}{\textbf{▶ Vídeo: Descrição do vídeo (Clique para abrir)}}
+\end{center}
+#+END_EXPORT
+#+END_SRC
+
+*** Método B: Via Org-Tempo (~<video + TAB~ ou ~<vid + TAB~)
+
+Digite =<video= ou =<vid= e tecle =TAB= para expandir o bloco diretamente.
+
+*** Como funciona a exportação para HTML e PDF:
+- *HTML* (~C-c C-e h h~ / ~C-c C-e h o~): Insere o player de vídeo interativo HTML5 com controles completos (play, pause, volume, tela cheia).
+- *PDF* (~C-c C-e l p~): Insere o link clicável direto para a mídia com comando nativo =run:=, permitindo que o leitor de PDF abra o vídeo diretamente no reprodutor de mídia do sistema operacional.
 
 ** Snippets LaTeX e Fórmulas
 

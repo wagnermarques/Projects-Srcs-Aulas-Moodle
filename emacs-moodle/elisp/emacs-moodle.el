@@ -206,6 +206,24 @@
           ":END:\n"
           "Provide a comprehensive essay response explaining your reasoning:\n\n"))
 
+(defun emacs-moodle-convert-video-to-gif (video-file &optional fps width)
+  "Convert VIDEO-FILE to animated GIF and thumbnail PNG using video_to_gif.sh.
+FPS defaults to 10 and WIDTH defaults to 800."
+  (interactive "fVideo file to convert: \nNFrame rate (FPS, default 10): \nNWidth in px (default 800): ")
+  (let* ((fps (if (or (null fps) (zerop fps)) 10 fps))
+         (width (if (or (null width) (zerop width)) 800 width))
+         (script (expand-file-name "video_to_gif.sh" emacs-moodle-script-dir))
+         (cmd (format "%s %s %s %d %d"
+                      (shell-quote-argument script)
+                      (shell-quote-argument (expand-file-name video-file))
+                      (shell-quote-argument (concat (file-name-sans-extension (expand-file-name video-file)) ".gif"))
+                      fps
+                      width)))
+    (message "Converting video to GIF & thumbnail...")
+    (if (zerop (shell-command cmd "*Video to GIF Log*"))
+        (message "GIF and thumbnail generated successfully for %s!" video-file)
+      (error "Video conversion failed. Check *Video to GIF Log* buffer"))))
+
 ;;; Keymap & Minor Mode
 (defvar emacs-moodle-mode-map
   (let ((map (make-sparse-keymap)))
@@ -213,6 +231,7 @@
     (define-key map (kbd "C-c m g") #'emacs-moodle-export-to-gift)
     (define-key map (kbd "C-c m p") #'emacs-moodle-package-to-mbz)
     (define-key map (kbd "C-c m c") #'emacs-moodle-build-course-folder)
+    (define-key map (kbd "C-c m v") #'emacs-moodle-convert-video-to-gif)
     (define-key map (kbd "C-c m i m") #'emacs-moodle-insert-mcq)
     (define-key map (kbd "C-c m i t") #'emacs-moodle-insert-truefalse)
     (define-key map (kbd "C-c m i s") #'emacs-moodle-insert-shortanswer)

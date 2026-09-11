@@ -79,6 +79,7 @@
 (use-package treemacs
   :hook (emacs-startup . treemacs)
   :bind
+  ("<f8>"      . treemacs-select-window)
   ("M-0"       . treemacs-select-window)
   ("C-x t t"   . treemacs)
   ("C-x t 1"   . treemacs-delete-other-windows)
@@ -134,6 +135,10 @@
   (require 'org-tempo)
   (add-to-list 'org-structure-template-alist
                '("img" . "#+CAPTION: ?\n#+NAME: fig:?\n#+ATTR_HTML: :width 800px :align center\n#+ATTR_LATEX: :width 0.8\\textwidth :placement [htbp]\n#+ATTR_ORG: :width 600\n[[?]]"))
+  (add-to-list 'org-structure-template-alist
+               '("video" . "#+CAPTION: ?\n#+NAME: vid:?\n#+BEGIN_EXPORT html\n<div align=\"center\">\n  <video width=\"800\" controls style=\"max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);\">\n    <source src=\"?\" type=\"video/mp4\">\n    Seu navegador não suporta a reprodução deste vídeo.\n  </video>\n</div>\n#+END_EXPORT\n#+BEGIN_EXPORT latex\n\\begin{center}\n\\href{run:?}{\\textbf{▶ Vídeo: ? (Clique para abrir)}}\n\\end{center}\n#+END_EXPORT"))
+  (add-to-list 'org-structure-template-alist
+               '("vid" . "#+CAPTION: ?\n#+NAME: vid:?\n#+BEGIN_EXPORT html\n<div align=\"center\">\n  <video width=\"800\" controls style=\"max-width: 100%; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.15);\">\n    <source src=\"?\" type=\"video/mp4\">\n    Seu navegador não suporta a reprodução deste vídeo.\n  </video>\n</div>\n#+END_EXPORT\n#+BEGIN_EXPORT latex\n\\begin{center}\n\\href{run:?}{\\textbf{▶ Vídeo: ? (Clique para abrir)}}\n\\end{center}\n#+END_EXPORT"))
   (setq org-hide-emphasis-markers t)
   (setq org-support-shift-select t)
   (setq org-confirm-babel-evaluate nil)
