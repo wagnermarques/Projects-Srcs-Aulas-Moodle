@@ -1,0 +1,148 @@
+#+TITLE: Guia de Uso do Emacs - emacs-moodle
+#+AUTHOR: Wagner Marques
+#+DATE: [2026-09-11]
+#+OPTIONS: toc:2 num:t
+
+* 1. Instalação e Setup
+
+O arquivo =init.el= na raiz deste repositório foi construído de forma reprodutível e autocontida.
+
+** Como utilizar a configuração
+
+Você pode iniciar o Emacs diretamente apontando para este arquivo de configuração:
+
+#+BEGIN_SRC shell
+# Iniciar o Emacs carregando este init.el específico:
+emacs -q -l /home/wgn/mnt/ext4/Projects-Srcs/Projects-Srcs-Aulas-Moodle/emacs-moodle/init.el
+#+END_SRC
+
+Ou criar um link simbólico para a pasta de configuração padrão do Emacs:
+
+#+BEGIN_SRC shell
+mkdir -p ~/.config/emacs
+ln -sf /home/wgn/mnt/ext4/Projects-Srcs/Projects-Srcs-Aulas-Moodle/emacs-moodle/init.el ~/.config/emacs/init.el
+#+END_SRC
+
+* 2. Treemacs (Navegação de Arquivos e Projetos)
+
+O *Treemacs* é aberto automaticamente na inicialização do Emacs.
+
+| Atalho      | Ação                                      |
+|-------------+-------------------------------------------|
+| ~M-0~       | Focar / selecionar a janela do Treemacs   |
+| ~C-x t t~   | Alternar exibição do Treemacs (toggle)    |
+| ~C-x t 1~   | Fechar outras janelas mantendo Treemacs   |
+| ~C-x t d~   | Selecionar diretório no Treemacs          |
+| ~C-x t B~   | Gerenciar favoritos/bookmarks no Treemacs |
+| ~C-x t C-t~ | Localizar arquivo via Treemacs            |
+
+* 3. Magit (Controle de Versão Git)
+
+O *Magit* é a interface completa para operações do Git diretamente dentro do Emacs.
+
+Para abrir o painel de status do Magit:
+- Atalho: ~C-x g~ (=magit-status=)
+
+** Comandos Rápidos no Painel Magit:
+
+| Tecla | Ação                                          |
+|-------+-----------------------------------------------|
+| ~s~   | Stage (adicionar arquivo ou hunk ao commit)   |
+| ~u~   | Unstage (remover arquivo ou hunk da staging)  |
+| ~c c~ | Criar commit (~C-c C-c~ para confirmar texto) |
+| ~P p~ | Push para o repositório remoto                |
+| ~F p~ | Pull do repositório remoto                    |
+| ~b b~ | Switch branch (alternar de branch)            |
+| ~l l~ | Ver log de commits                            |
+| ~q~   | Fechar a janela atual do Magit                |
+
+* 4. Dired & WDired (Gerenciador de Arquivos)
+
+O Dired permite navegar e manipular arquivos e diretórios de forma rápida.
+
+** Atalhos Úteis no Dired:
+
+| Atalho  | Ação                                                    |
+|---------+---------------------------------------------------------|
+| ~C-x d~ | Abrir diretório no Dired                                |
+| ~+~     | Criar novo diretório                                    |
+| ~C-x C-f~ | Criar novo arquivo no diretório atual                 |
+| ~d~     | Marcar arquivo para deleção                             |
+| ~x~     | Executar deleção dos arquivos marcados                  |
+| ~C~     | Copiar arquivo (com DWIM para outro painel aberto)      |
+| ~R~     | Renomear / Mover arquivo                                |
+| ~C-x C-q~ | Entrar no modo *WDired* (permite editar nomes em lote) |
+
+* 5. YASnippet & Imagens Org-mode / LaTeX
+
+** Inserção de Imagens no Org-mode
+
+Criamos dois métodos para facilitar a inclusão de imagens com metadados de exportação (HTML, LaTeX/PDF e visualização no Emacs):
+
+*** Método A: Via YASnippet (~img + TAB~)
+
+Em qualquer arquivo ~.org~, digite =img= e pressione =TAB=. O snippet expandirá com navegação interativa pelos campos (use =TAB= para avançar para o próximo campo):
+
+#+BEGIN_SRC org
+#+CAPTION: Descrição da imagem
+#+NAME: fig:rotulo
+#+ATTR_HTML: :width 800px :align center
+#+ATTR_LATEX: :width 0.8\textwidth :placement [htbp]
+#+ATTR_ORG: :width 600
+[[./images/nome_da_imagem.png]]
+#+END_SRC
+
+*** Método B: Via Org-Tempo (~<img + TAB~)
+
+Digite =<img= e pressione =TAB= para expandir o template estruturado imediatamente.
+
+*** Descrição dos Atributos Gerados:
+- =#+CAPTION:=: Legenda exibida abaixo da imagem no documento exportado.
+- =#+NAME:=: Identificador para referências cruzadas internas (ex: =[[fig:rotulo]]=).
+- =#+ATTR_HTML:=: Define largura (=:width=) e alinhamento (=:align=) na exportação HTML.
+- =#+ATTR_LATEX:=: Define dimensões (=:width 0.8\textwidth=) e posicionamento flutuante (=:placement [htbp]=) em PDF/LaTeX.
+- =#+ATTR_ORG:=: Define o tamanho de visualização da imagem dentro do próprio buffer do Emacs.
+
+*** Visualização de Imagens no Buffer Org:
+- Atalho: ~C-c C-x C-v~ (alterna a exibição das imagens embutidas no buffer do Org-mode).
+
+** Snippets LaTeX e Fórmulas
+
+*** Equação LaTeX em Org-mode (~eq + TAB~)
+Digite =eq= e tecle =TAB= dentro de um arquivo ~.org~:
+#+BEGIN_SRC latex
+\begin{equation}
+\label{eq:rotulo}
+  E = mc^2
+\end{equation}
+#+END_SRC
+
+*** Ambiente de Figura em Arquivo LaTeX (~fig + TAB~)
+Digite =fig= e tecle =TAB= dentro de um arquivo ~.tex~:
+#+BEGIN_SRC latex
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.8\textwidth]{imagem.png}
+  \caption{Legenda da figura}
+  \label{fig:rotulo}
+\end{figure}
+#+END_SRC
+
+** Gerenciamento Geral de Snippets
+
+| Atalho    | Ação                                             |
+|-----------+--------------------------------------------------|
+| ~C-c y i~ | Buscar e inserir qualquer snippet ativo          |
+| ~C-c y n~ | Criar um novo snippet interativamente            |
+| ~C-c y v~ | Visitar e editar arquivo de snippet existente    |
+
+* 6. Busca e Navegação (Consult + Vertico)
+
+A pilha moderna de completação facilita a navegação rápida em arquivos e buffers:
+
+| Atalho      | Comando               | Ação                                                    |
+|-------------+-----------------------+---------------------------------------------------------|
+| ~C-s~       | ~consult-line~        | Busca interativa por linha no buffer atual              |
+| ~C-x b~     | ~consult-buffer~      | Alternar buffers, arquivos recentes e bookmarks         |
+| ~M-g g~     | ~consult-goto-line~   | Pular diretamente para o número da linha especificada   |
+| ~M-g M-g~   | ~consult-goto-line~   | Pular para linha (combinação clássica)                  |

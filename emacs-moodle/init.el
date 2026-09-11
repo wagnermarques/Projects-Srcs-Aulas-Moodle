@@ -41,7 +41,7 @@
 (setq make-backup-files nil)
 (setq auto-save-default nil)
 
-;; Modern completion stack (Vertico + Marginalia + Orderless)
+;; Modern completion stack (Vertico + Marginalia + Orderless + Consult)
 (use-package vertico
   :init
   (vertico-mode 1))
@@ -55,6 +55,13 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package consult
+  :bind
+  (("C-s"   . consult-line)
+   ("C-x b" . consult-buffer)
+   ("M-g g" . consult-goto-line)
+   ("M-g M-g" . consult-goto-line)))
 
 ;; Which-key for command guidance
 (use-package which-key
@@ -90,11 +97,23 @@
 
 ;; YASnippet for code/template expansions
 (use-package yasnippet
+  :bind
+  (("C-c y i" . yas-insert-snippet)
+   ("C-c y n" . yas-new-snippet)
+   ("C-c y v" . yas-visit-snippet-file))
   :config
   (let ((proj-snippets (expand-file-name "snippets" (file-name-directory (or load-file-name buffer-file-name default-directory)))))
     (when (file-exists-p proj-snippets)
       (add-to-list 'yas-snippet-dirs proj-snippets)))
   (yas-global-mode 1))
+
+;; YASnippet community snippets library
+(use-package yasnippet-snippets
+  :after yasnippet)
+
+;; AUCTeX for advanced LaTeX editing
+(use-package auctex
+  :defer t)
 
 ;; Company for auto-completion
 (use-package company
@@ -108,10 +127,17 @@
 
 (use-package org
   :ensure nil ; Built-in with Emacs
+  :bind
+  (:map org-mode-map
+        ("C-c C-x C-v" . org-toggle-inline-images))
   :config
+  (require 'org-tempo)
+  (add-to-list 'org-structure-template-alist
+               '("img" . "#+CAPTION: ?\n#+NAME: fig:?\n#+ATTR_HTML: :width 800px :align center\n#+ATTR_LATEX: :width 0.8\\textwidth :placement [htbp]\n#+ATTR_ORG: :width 600\n[[?]]"))
   (setq org-hide-emphasis-markers t)
   (setq org-support-shift-select t)
   (setq org-confirm-babel-evaluate nil)
+  (setq org-image-actual-width nil)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((python . t)
