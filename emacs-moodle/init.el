@@ -8,6 +8,10 @@
 
 ;;; Code:
 
+(defvar emacs-moodle-root-dir
+  (file-name-directory (or load-file-name buffer-file-name default-directory))
+  "Root directory of the emacs-moodle project.")
+
 ;; ==========================================
 ;; 1. Package Manager Setup (MELPA & GNU ELPA)
 ;; ==========================================
@@ -75,9 +79,18 @@
 (use-package magit
   :bind ("C-x g" . magit-status))
 
+;; Projectile for project management and navigation
+(use-package projectile
+  :init
+  (projectile-mode +1)
+  :bind-keymap
+  ("C-c p" . projectile-command-map)
+  :config
+  (when (and emacs-moodle-root-dir (file-directory-p emacs-moodle-root-dir))
+    (projectile-add-known-project emacs-moodle-root-dir)))
+
 ;; Treemacs file and project navigation
 (use-package treemacs
-  :hook (emacs-startup . treemacs)
   :bind
   ("<f8>"      . treemacs-select-window)
   ("M-0"       . treemacs-select-window)
@@ -92,6 +105,25 @@
         treemacs-is-never-other-window t
         treemacs-show-hidden-files t))
 
+;; Treemacs integration with Projectile
+(use-package treemacs-projectile
+  :after (treemacs projectile))
+
+;; Ensure treemacs opens with current project in workspace on startup
+(defun emacs-moodle--setup-treemacs-project ()
+  "Add project to treemacs workspace and open treemacs buffer."
+  (require 'treemacs)
+  (when (and emacs-moodle-root-dir (file-directory-p emacs-moodle-root-dir))
+    (treemacs-do-add-project-to-workspace
+     emacs-moodle-root-dir
+     (file-name-nondirectory (directory-file-name emacs-moodle-root-dir))))
+  (treemacs)
+  (treemacs-select-window))
+
+(if after-init-time
+    (emacs-moodle--setup-treemacs-project)
+  (add-hook 'emacs-startup-hook #'emacs-moodle--setup-treemacs-project))
+
 ;; Markdown mode for editing documentation
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode))
@@ -103,7 +135,7 @@
    ("C-c y n" . yas-new-snippet)
    ("C-c y v" . yas-visit-snippet-file))
   :config
-  (let ((proj-snippets (expand-file-name "snippets" (file-name-directory (or load-file-name buffer-file-name default-directory)))))
+  (let ((proj-snippets (expand-file-name "snippets" emacs-moodle-root-dir)))
     (when (file-exists-p proj-snippets)
       (add-to-list 'yas-snippet-dirs proj-snippets)))
   (yas-global-mode 1))
@@ -152,8 +184,7 @@
      (rust . t))))
 
 ;; Load local Moodle mode package
-(let ((moodle-pkg (expand-file-name "elisp/emacs-moodle.el"
-                                    (file-name-directory (or load-file-name buffer-file-name default-directory)))))
+(let ((moodle-pkg (expand-file-name "elisp/emacs-moodle.el" emacs-moodle-root-dir)))
   (when (file-exists-p moodle-pkg)
     (load moodle-pkg)
     (add-hook 'org-mode-hook #'emacs-moodle-mode)))
